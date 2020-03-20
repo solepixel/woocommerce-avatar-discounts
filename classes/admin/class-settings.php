@@ -31,6 +31,9 @@ defined( 'ABSPATH' ) or exit;
  */
 class Settings {
 
+	/** @var string  Settings prefix */
+	private $prefix = 'woocommerce_avatar_discounts_';
+
 	/** @var Settings class instance */
 	protected static $instance;
 
@@ -54,11 +57,44 @@ class Settings {
 
 
 	/**
+	 * Get a setting value.
+	 *
+	 * @param string $setting  The Setting ID (without the prefix)
+	 *
+	 * @return string  The setting value.
+	 */
+	public function get_setting( $setting ) {
+
+		$defaults = $this->defaults();
+		$default  = isset( $defaults[ $setting ] ) ? $defaults[ $setting ] : '';
+		return get_option( $this->prefix . $setting, $default );
+
+	}
+
+
+	/**
+	 * Plugin settings defaults.
+	 *
+	 * @return array  Array of default settings.
+	 */
+	public function defaults() {
+
+		return array(
+			'limit'          => 0,
+			'encourage_text' => __( 'Upload your photo to get discounts on your orders!', 'woocommerce-avatar-discounts' ),
+		);
+
+	}
+
+
+	/**
 	 * Get Admin Settings array.
 	 *
 	 * @return array  Array of settings.
 	 */
 	public function get_settings() {
+
+		$defaults = $this->defaults();
 
 		return apply_filters(
 			'woocommerce_avatar_discounts_settings',
@@ -74,8 +110,8 @@ class Settings {
 				array(
 					'title'            => __( 'Maximum Allowed Avatars', 'woocommerce-avatar-discounts' ),
 					'desc_tip'         => __( 'Set a limit on how many avatars your customers can upload to their profile. Zero (0) will allow unlimited photo uploads.', 'woocommerce-avatar-discounts' ),
-					'id'               => 'woocommerce_avatar_discounts_limit',
-					'default'          => 0,
+					'id'               => $this->prefix . 'limit',
+					'default'          => $defaults['limit'],
 					'type'             => 'number',
 					'css'              => 'width: 60px; text-align: center;',
 					'autoload'         => false,
@@ -90,8 +126,8 @@ class Settings {
 				array(
 					'title'    => __( 'Avatar Instruction Text', 'woocommerce-avatar-discounts' ),
 					'desc_tip' => __( 'Tell your users why they should upload a photo to their account.', 'woocommerce-avatar-discounts' ),
-					'id'       => 'woocommerce_avatar_discounts_encourage_text',
-					'default'  => __( 'Upload your photo to get discounts on your orders!', 'woocommerce-avatar-discounts' ),
+					'id'       => $this->prefix . 'encourage_text',
+					'default'  => $defaults['encourage_text'],
 					'type'     => 'textarea',
 					'css'      => 'min-width: 50%; height: 75px;',
 					'autoload' => false,
