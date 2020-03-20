@@ -45,7 +45,9 @@ class Checkout {
 		/** Order processed hook to store current user profile photo. */
 		add_action( 'woocommerce_checkout_order_processed', array( $this, 'save_user_avatar' ), 10, 3 );
 
-		// TODO: Hook into Cart, Insert profile photo selection interface either below Order Notes or below Order total/summary.
+		/** Display Manage Avatars interface at Checkout below Order Notes */
+		add_action( 'woocommerce_after_order_notes', array( $this, 'manage_avatars' ) );
+
 		// TODO: Hook into Order Confirmation Page, Display avatar used at time of purchase.
 
 	}
@@ -56,11 +58,23 @@ class Checkout {
 	 *
 	 * @param int $order_id  The order ID.
 	 * @param array $posted_data  Posted data array.
-	 * @param \WooCommerce\Order $order  WooCommerce Order object
+	 * @param \WC_Order $order  WooCommerce Order object
 	 */
 	public function save_user_avatar( $order_id, $posted_data, $order ) {
 
 		// TODO: Save user avatar.
+
+	}
+
+
+	/**
+	 * Manage Avatar under Checkout, below Order Notes
+	 *
+	 * @param \WC_Checkout $checkout  WooCommerce Checkout object
+	 */
+	public function manage_avatars( $checkout ) {
+
+		woocommerce_avatar_discounts()->avatars()->manage();
 
 	}
 
