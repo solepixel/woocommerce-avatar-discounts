@@ -58,6 +58,11 @@ if ( ! empty( $avatars ) ) {
 				}
 				?>
 				<a href="#avatar" class="status-<?php echo esc_attr( $avatar->status ); ?>" data-avatar-id="<?php echo esc_attr( $avatar->id ); ?>">
+					<!--
+						These buttons would be hidden with CSS until the parent
+						element has "expanded" class. Then they can be bound to
+						controls to edit/delete avatars.
+					-->
 					<!--<button class="edit-avatar">Edit</button>-->
 					<!--<button class="delete-avatar">Delete</button>-->
 					<img src="<?php echo esc_attr( $avatar->url ); ?>">
