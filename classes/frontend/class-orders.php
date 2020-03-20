@@ -49,7 +49,7 @@ class Orders {
 
 
 	/**
-	 * Gets the singleton instance of the profile.
+	 * Gets the singleton instance of the frontend orders class.
 	 *
 	 * @since 1.0.0
 	 *

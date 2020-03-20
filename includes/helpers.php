@@ -33,6 +33,7 @@ function woocommerce_avatar_discounts() {
 
 	// Load necessary core classes.
 	WooCommerce_Avatar_Discounts_Loader::load_class( 'Core', 'class-core' );
+	// TODO: Load Globals\Avatars globals/class-avatars.
 	// TODO: Load Frontend\Profile frontend/class-profile.
 	// TODO: Load Frontend\Checkout frontend/class-checkout.
 	// TODO: Load Frontend\Orders frontend/class-orders.

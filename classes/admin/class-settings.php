@@ -48,7 +48,7 @@ class Settings {
 
 
 	/**
-	 * Gets the singleton instance of the profile.
+	 * Gets the singleton instance of the admin settings class.
 	 *
 	 * @since 1.0.0
 	 *

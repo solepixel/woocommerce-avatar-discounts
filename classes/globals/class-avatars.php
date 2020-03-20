@@ -19,41 +19,84 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-namespace WooCommerceAvatarDiscounts\Frontend;
+namespace WooCommerceAvatarDiscounts\Globals;
 
 defined( 'ABSPATH' ) or exit;
 
 
 /**
- * The Frontend Checkout class.
+ * The Avatars class.
  *
  * @since 1.0.0
  */
-class Checkout {
+class Avatars {
 
-	/** @var Checkout class instance */
+	/** @var Avatars class instance */
 	protected static $instance;
 
 
 	/**
-	 * Frontend checkout hooks.
+	 * Avatars init.
 	 *
 	 * @since 1.0.0
 	 */
 	public function __construct() {
 
-		// TODO: Hook into Cart, Insert profile photo selection interface either below Order Notes or below Order total/summary.
-		// TODO: (Maybe) Hook into Order Confirmation Page, Display avatar used at time of purchase.
+		// Probably do nothing here.
 
 	}
 
 
 	/**
-	 * Gets the singleton instance of the frontend checkout class.
+	 * Outputs the Manage Avatars interface
+	 *
+	 * @param string $interface  Either frontend or admin.
+	 */
+	public function manage( $interface = 'frontend' ) {
+		if ( 'frontend' === $interface ) {
+			$this->frontend();
+		} elseif ( 'admin' === $interface ) {
+			$this->admin();
+		}
+	}
+
+
+	/**
+	 * Display the avatar used at time of order.
+	 */
+	public function order() {
+
+		// TODO: Display the user's avatar for the current order.
+
+	}
+
+
+	/**
+	 * Displays the Frontend Manage Avatars Interface
+	 */
+	private function frontend() {
+
+		// TODO: Display Frontend Manage Avatars Interface
+
+	}
+
+
+	/**
+	 * Displays the Admin Manage Avatars Interface
+	 */
+	private function admin() {
+
+		// TODO: Display Admin Manage Avatars Interface
+
+	}
+
+
+	/**
+	 * Gets the singleton instance of the avatars class.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return Checkout
+	 * @return Avatars
 	 */
 	public static function instance() {
 

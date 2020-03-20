@@ -41,6 +41,7 @@ class Core {
 	/** plugin ID */
 	const PLUGIN_ID = 'woocommerce-avatar-discounts';
 
+	// TODO: Globals Avatars class instance property.
 	// TODO: Frontend Profile class instance property.
 	// TODO: Frontend Checkout class instance property.
 	// TODO: Frontend Orders class instance property.
@@ -87,6 +88,7 @@ class Core {
 	public function init() {
 
 		// TODO: Init core functionality:
+		//   Globals Avatars class instance
 		//   Frontend Profile class instance
 		//   Frontend Checkout class instance
 		//   Frontend Orders class instance

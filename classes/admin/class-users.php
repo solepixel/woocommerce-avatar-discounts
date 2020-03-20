@@ -48,7 +48,7 @@ class Users {
 
 
 	/**
-	 * Gets the singleton instance of the profile.
+	 * Gets the singleton instance of the admin users class.
 	 *
 	 * @since 1.0.0
 	 *

@@ -48,7 +48,7 @@ class Profile {
 
 
 	/**
-	 * Gets the singleton instance of the profile.
+	 * Gets the singleton instance of the frontend profile class.
 	 *
 	 * @since 1.0.0
 	 *
