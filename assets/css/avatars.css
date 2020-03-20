@@ -1,3 +1,11 @@
+.wc-ad-manage-avatars {
+	margin: 20px 0;
+}
+
+.wc-ad-manage-avatars a {
+	position: relative;
+}
+
 .wc-ad-manage-avatars a,
 .wc-ad-manage-avatars a img {
 	display: inline-block;
@@ -24,7 +32,8 @@ body.wp-admin .wc-ad-manage-avatars .upload-avatar {
 
 .wc-ad-manage-avatars a,
 .wc-ad-manage-avatars a img,
-.wc-ad-manage-avatars .upload-avatar {
+.wc-ad-manage-avatars .upload-avatar,
+body:not(.wp-admin) .wc-ad-manage-avatars a.status-featured:hover::before {
 	transition: all 200ms ease-in-out;
 }
 
@@ -38,5 +47,32 @@ body:not(.wp-admin) .wc-ad-manage-avatars.expanded .upload-avatar {
 }
 
 .wc-ad-manage-avatars a.status-featured img {
-	border-color: blue;
+	border-color: red;
+}
+
+body:not(.wp-admin) .wc-ad-manage-avatars a.status-featured::before {
+	content: '\270E';
+	position: absolute;
+	z-index: 2;
+	top: 5px;
+	right: 5px;
+	border-radius: 100%;
+	width: 25px;
+	height: 25px;
+	line-height: 25px;
+	text-align: center;
+	background-color: red;
+	color: #fff;
+	font-size: 16px;
+	-webkit-box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.25);
+	-moz-box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.25);
+	box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.25);
+	opacity: 0;
+}
+
+body:not(.wp-admin) .wc-ad-manage-avatars a.status-featured:hover::before {
+	opacity: 1;
+}
+body:not(.wp-admin) .wc-ad-manage-avatars.expanded a.status-featured:hover::before {
+	opacity: 0;
 }

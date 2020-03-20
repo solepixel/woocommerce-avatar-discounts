@@ -25,10 +25,14 @@ if ( empty( $avatars ) ) {
 	return;
 }
 
-$selected = '';
+$encourage_text = woocommerce_avatar_discounts()->admin_settings()->get_setting( 'encourage_text' );
+$selected       = '';
 
 ?>
 <div class="wc-ad-manage-avatars">
+	<?php if ( $encourage_text ) : ?>
+		<p class="encourage-text"><?php echo esc_html( $encourage_text ); ?></p>
+	<?php endif; ?>
 	<?php
 	foreach ( $avatars as $index => $avatar ) :
 		if ( 'deleted' === $avatar['status'] ) :
