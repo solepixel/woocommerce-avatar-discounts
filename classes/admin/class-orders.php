@@ -42,7 +42,20 @@ class Orders {
 	 */
 	public function __construct() {
 
-		// TODO: Hook into WooCommerce > Orders > Detail, Display user profile photo at time of purchase in Order details box, below Billing/Shipping, (Maybe) next to Email/Phone.
+		/** Add customer avatar field to Order Details meta box, below Billing/Shipping address */
+		add_action( 'woocommerce_admin_order_data_after_shipping_address', array( $this, 'insert_customer_avatar' ) );
+
+	}
+
+
+	/**
+	 * Insert customer avatar into Order Detail meta box.
+	 *
+	 * @param \WooCommerce\Order $order  WooCommerce Order object.
+	 */
+	public function insert_customer_avatar( $order ) {
+
+		// TODO: Display order avatar.
 
 	}
 
