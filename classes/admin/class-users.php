@@ -71,6 +71,8 @@ class Users {
 	 */
 	public function manage_avatars( $avatar, $id_or_email, $size, $default, $alt, $args ) {
 
+		// TODO: Make sure we're only changing the Avatar on the Edit User screen.
+
 		// TODO: Check permission if current user can modify active user.
 
 		woocommerce_avatar_discounts()->avatars()->set_original( $avatar );
