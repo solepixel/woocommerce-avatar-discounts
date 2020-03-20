@@ -51,13 +51,23 @@ class Avatars {
 	 * Outputs the Manage Avatars interface
 	 *
 	 * @param string $interface  Either frontend or admin.
+	 *
+	 * @return string|null  HTML for manage avatars.
 	 */
-	public function manage( $interface = 'frontend' ) {
+	public function manage( $echo = true, $interface = 'frontend' ) {
+		$output = '';
+
 		if ( 'frontend' === $interface ) {
-			$this->frontend();
+			$output = $this->frontend();
 		} elseif ( 'admin' === $interface ) {
-			$this->admin();
+			$output = $this->admin();
 		}
+
+		if ( true !== $echo ) {
+			return $output;
+		}
+
+		echo $output;
 	}
 
 
@@ -74,21 +84,29 @@ class Avatars {
 
 
 	/**
-	 * Displays the Frontend Manage Avatars Interface
+	 * Gets the Frontend Manage Avatars Interface
+	 *
+	 * @return string  HTML for Manage Avatars (Frontend)
 	 */
 	private function frontend() {
 
 		// TODO: Display Frontend Manage Avatars Interface
 
+		return '';
+
 	}
 
 
 	/**
-	 * Displays the Admin Manage Avatars Interface
+	 * Gets the Admin Manage Avatars Interface
+	 *
+	 * @return string  HTML for Manage Avatars (Admin)
 	 */
 	private function admin() {
 
 		// TODO: Display Admin Manage Avatars Interface
+
+		return '';
 
 	}
 
