@@ -382,15 +382,16 @@ class Avatars {
 	 * @since 1.0.0
 	 *
 	 * @param int $order_id  The Order ID.
+	 * @param int $user_id   The User ID.
 	 *
 	 * @return int  Order Avatar ID.
 	 */
-	public function get_order_avatar( $order_id ) {
+	public function get_order_avatar( $order_id, $user_id = false ) {
 		$avatar_id = (int) get_post_meta( $order_id, $this->get_avatar_meta_key(), true );
 		if ( ! $avatar_id ) {
 			return false;
 		}
-		return $this->get( $avatar_id );
+		return $this->get( $avatar_id, $user_id );
 	}
 
 
@@ -464,7 +465,7 @@ class Avatars {
 			return;
 		}
 
-		$avatar = $this->get_order_avatar( $this->order->get_order_number() );
+		$avatar = $this->get_order_avatar( $this->order->get_order_number(), $this->order->get_customer_id() );
 		if ( ! $avatar ) {
 			return;
 		}
@@ -528,10 +529,12 @@ class Avatars {
 		$count       =  0;
 		$button_text = __( 'Select Your Photo', 'woocommerce-avatar-discounts' );
 		$badge_title = '';
+
 		if ( ! empty( $avatars ) ) {
 			$button_text = __( 'Upload Another Photo', 'woocommerce-avatar-discounts' );
 			$count       = count( $avatars );
 			$badge_title = $count . ' ' . __( 'Avatars to choose from', 'woocommerce-avatar-discounts' );
+			$selected    = $avatars[0]->id; // Default to first avatar.
 		}
 
 		if ( is_admin() && ! $count ) {

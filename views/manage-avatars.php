@@ -21,20 +21,26 @@
 
 defined( 'ABSPATH' ) or exit;
 
+/** Bail early if we have no avatars and no encourage text. */
 if ( empty( $avatars ) && ! $encourage_text ) {
 	return;
 }
 
 ?>
 <div class="wc-ad-manage-avatars<?php echo esc_attr( $classname ); ?>">
+
 	<?php if ( $encourage_text && ! is_admin() ) : ?>
 		<h4 class="encourage-text"><?php echo esc_html( $encourage_text ); ?></h4>
 	<?php endif; ?>
+
 	<?php if ( ! empty( $avatars ) ) : ?>
+
 		<div class="wc-ad-avatar-selection">
+
 			<?php if ( $badge_title ) : ?>
 				<b class="badge-count" title="<?php echo esc_attr( $badge_title ); ?>"><?php echo esc_html( $count ); ?></b>
 			<?php endif; ?>
+
 			<?php
 			foreach ( $avatars as $avatar ) :
 				// TODO: Set selected in class based on database data.
@@ -54,7 +60,9 @@ if ( empty( $avatars ) && ! $encourage_text ) {
 				</a>
 			<?php endforeach; ?>
 		</div>
+
 	<?php endif; ?>
+
 	<div class="upload-avatar">
 		<button class="upload-button">
 			<?php echo esc_html( $button_text ); ?>

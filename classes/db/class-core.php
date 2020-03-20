@@ -79,6 +79,8 @@ class Core {
 	/**
 	 * Add table schema to tables array.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $schema Table Schema
 	 */
 	public function add_table( $schema ) {
@@ -89,6 +91,8 @@ class Core {
 	/**
 	 * Set the settings prefix.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $prefix  Prefix for settings.
 	 */
 	public function set_setting_prefix( $prefix ) {
@@ -98,6 +102,8 @@ class Core {
 
 	/**
 	 * Set the table prefix.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $prefix  Prefix for tables.
 	 */

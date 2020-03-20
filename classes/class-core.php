@@ -245,6 +245,8 @@ class Core {
 	/**
 	 * Gets the Admin Users instance.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return Admin\Users
 	 */
 	public function admin_users() {
