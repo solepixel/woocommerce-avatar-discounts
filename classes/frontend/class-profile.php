@@ -42,7 +42,20 @@ class Profile {
 	 */
 	public function __construct() {
 
-		// TODO: Hook into My Account > Account Details, Insert profile photo selection interface.
+		/** Insert profile photo selection interface. */
+		add_action( 'woocommerce_edit_account_form', array( $this, 'manage_avatars' ) );
+
+		// TODO: Hook into Save Account Details to store Avatar data.
+
+	}
+
+
+	/**
+	 * Manage Avatar under My Account > Account Details.
+	 */
+	public function manage_avatars() {
+
+		woocommerce_avatar_discounts()->avatars()->manage();
 
 	}
 
