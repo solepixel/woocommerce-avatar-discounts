@@ -43,7 +43,6 @@ class Orders {
 	public function __construct() {
 
 		// TODO: Hook into My Account > Orders > Order Details, Display profile photo used at time of purchase below Billing/Shipping Address.
-		// TODO: Hook into order processing, attach user photo attachment ID to order postmeta.
 
 	}
 
