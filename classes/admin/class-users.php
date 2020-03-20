@@ -72,7 +72,7 @@ class Users {
 	public function manage_avatars( $avatar, $id_or_email, $size, $default, $alt, $args ) {
 
 		// Make sure we can get the current screen.
-		if ( ! did_action( 'admin_init' ) ) {
+		if ( ! did_action( 'user_edit_form_tag' ) ) {
 			return $avatar;
 		}
 
@@ -82,7 +82,7 @@ class Users {
 			return $avatar;
 		}
 
-		if ( empty( $screen->id ) || 'profile' !== $screen->id ) {
+		if ( empty( $screen->id ) || ! in_array( $screen->id, array( 'profile', 'user-edit' ), true )  ) {
 			return $avatar;
 		}
 
@@ -90,6 +90,9 @@ class Users {
 		if ( ! current_user_can( 'edit_users' ) ) {
 			return $avatar;
 		}
+
+		// Run only once.
+		remove_filter( 'get_avatar', array( $this, 'manage_avatars' ), 10, 6 );
 
 		woocommerce_avatar_discounts()->avatars()->set_original( $avatar );
 		woocommerce_avatar_discounts()->avatars()->set_original_args( $args );

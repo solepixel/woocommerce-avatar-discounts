@@ -32,7 +32,17 @@ if ( empty( $avatars ) ) {
 		if ( 'deleted' === $avatar['status'] ) :
 			continue;
 		endif;
+		$href = '#select-avatar';
+		if ( 'featured' === $avatar['status'] ) {
+			$href = '#choose-avatar';
+		}
 		?>
-		<img src="<?php echo esc_attr( $avatar['url'] ); ?>">
+		<a href="<?php echo esc_attr( $href ); ?>" class="status-<?php echo esc_attr( $avatar['status'] ); ?>">
+			<button class="edit-avatar">Edit</button>
+			<img src="<?php echo esc_attr( $avatar['url'] ); ?>">
+		</a>
 	<?php endforeach; ?>
+	<div class="upload-avatar">
+		<button>Upload New Avatar</button>
+	</div>
 </div>
