@@ -156,7 +156,7 @@ class WooCommerce_Avatar_Discounts_Loader {
 	 */
 	public static function load_view( $_view, $vars = array(), $echo = true ) {
 
-		$_view_path = $this->locate_view( $_view );
+		$_view_path = self::locate_view( $_view );
 
 		if ( false === $_view_path ) {
 			return false;

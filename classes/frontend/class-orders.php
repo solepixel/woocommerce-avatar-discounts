@@ -42,7 +42,10 @@ class Orders {
 	 */
 	public function __construct() {
 
-		/** Show Order Avatar on Order Details page below Billing/Shipping Address */
+		/**
+		 * Show Order Avatar on Order Details page below Billing/Shipping Address
+		 * as well as on Order Confirmation page.
+		 */
 		add_action( 'woocommerce_order_details_after_customer_details', array( $this, 'show_avatar' ) );
 	}
 

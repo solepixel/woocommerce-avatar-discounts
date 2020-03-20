@@ -119,7 +119,7 @@ class Avatars {
 			$this->order = $order;
 		}
 
-		// TODO: Display the user's avatar for the current order.
+		\WooCommerce_Avatar_Discounts_Loader::load_view( 'order-avatar' );
 
 	}
 
@@ -135,7 +135,7 @@ class Avatars {
 
 		// TODO: Display Frontend Manage Avatars Interface
 
-		return '';
+		return \WooCommerce_Avatar_Discounts_Loader::get_view( 'manage-avatars' );
 
 	}
 
@@ -155,7 +155,7 @@ class Avatars {
 			$return = $this->original;
 		}
 
-		return $return;
+		return \WooCommerce_Avatar_Discounts_Loader::get_view( 'manage-avatars', compact( 'return' ) );
 
 	}
 

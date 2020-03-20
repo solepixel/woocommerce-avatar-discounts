@@ -48,9 +48,6 @@ class Checkout {
 		/** Display Manage Avatars interface at Checkout below Order Notes */
 		add_action( 'woocommerce_after_order_notes', array( $this, 'manage_avatars' ) );
 
-		/** Show Order Avatar on Order Confirmation page */
-		add_action( 'woocommerce_thankyou', array( $this, 'show_avatar' ), 11 );
-
 	}
 
 
@@ -80,20 +77,6 @@ class Checkout {
 	public function manage_avatars( $checkout ) {
 
 		woocommerce_avatar_discounts()->avatars()->manage();
-
-	}
-
-
-	/**
-	 * Show customer avatar on Order Confirmation page.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param \WC_Order $order  WooCommerce Order object.
-	 */
-	public function show_avatar( $order = false ) {
-
-		woocommerce_avatar_discounts()->avatars()->order( $order );
 
 	}
 
