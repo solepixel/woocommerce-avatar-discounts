@@ -56,6 +56,8 @@ class Checkout {
 	/**
 	 * Save current user avatar into order meta.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param int $order_id  The order ID.
 	 * @param array $posted_data  Posted data array.
 	 * @param \WC_Order $order  WooCommerce Order object
@@ -69,6 +71,8 @@ class Checkout {
 
 	/**
 	 * Manage Avatar under Checkout, below Order Notes
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param \WC_Checkout $checkout  WooCommerce Checkout object
 	 */

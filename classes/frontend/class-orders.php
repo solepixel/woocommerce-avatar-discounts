@@ -51,6 +51,8 @@ class Orders {
 	/**
 	 * Display Avatar at time of Order under My Account > Orders > Order Details
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param \WC_Order $order  WooCommerce Order object.
 	 */
 	public function show_avatar( $order ) {

@@ -52,6 +52,8 @@ class Profile {
 
 	/**
 	 * Manage Avatar under My Account > Account Details.
+	 *
+	 * @since 1.0.0
 	 */
 	public function manage_avatars() {
 

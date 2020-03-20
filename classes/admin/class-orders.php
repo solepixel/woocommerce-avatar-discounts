@@ -56,6 +56,8 @@ class Orders {
 	/**
 	 * Show customer avatar into Order Detail meta box.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param \WC_Order $order  WooCommerce Order object.
 	 */
 	public function show_avatar( $order ) {

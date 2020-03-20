@@ -59,6 +59,8 @@ class Settings {
 	/**
 	 * Get a setting value.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $setting  The Setting ID (without the prefix)
 	 *
 	 * @return string  The setting value.
@@ -75,6 +77,8 @@ class Settings {
 	/**
 	 * Plugin settings defaults.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return array  Array of default settings.
 	 */
 	public function defaults() {
@@ -89,6 +93,8 @@ class Settings {
 
 	/**
 	 * Get Admin Settings array.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return array  Array of settings.
 	 */
@@ -147,6 +153,8 @@ class Settings {
 	 * Modify Account Settings array to add new section for User Avatars.
 	 *
 	 * // TODO: Check WC Version Compatibility.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param array $account_settings  Account Settings array.
 	 *

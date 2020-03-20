@@ -47,9 +47,36 @@ class Users {
 			return;
 		}
 
-		// TODO: Hook into Users > Edit > About Yourself > Profile Picture, Insert profile photo selection interface.
-		// TODO: Use filter 'get_avatar'. Check permission if current user can modify active user.
+		add_filter( 'get_avatar', array( $this, 'manage_avatars' ), 10, 6 );
 
+	}
+
+
+	/**
+	 * Get Manage Avatars Interface
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $avatar      &lt;img&gt; tag for the user's avatar.
+	 * @param mixed  $id_or_email The Gravatar to retrieve. Accepts a user_id, gravatar md5 hash,
+	 *                            user email, WP_User object, WP_Post object, or WP_Comment object.
+	 * @param int    $size        Square avatar width and height in pixels to retrieve.
+	 * @param string $default     URL for the default image or a default type. Accepts '404', 'retro', 'monsterid',
+	 *                            'wavatar', 'indenticon','mystery' (or 'mm', or 'mysteryman'), 'blank', or 'gravatar_default'.
+	 *                            Default is the value of the 'avatar_default' option, with a fallback of 'mystery'.
+	 * @param string $alt         Alternative text to use in the avatar image tag. Default empty.
+	 * @param array  $args        Arguments passed to get_avatar_data(), after processing.
+	 *
+	 * @return string  HTML for manage avatars interface.
+	 */
+	public function manage_avatars( $avatar, $id_or_email, $size, $default, $alt, $args ) {
+
+		// TODO: Check permission if current user can modify active user.
+
+		woocommerce_avatar_discounts()->avatars()->set_original( $avatar );
+		woocommerce_avatar_discounts()->avatars()->set_original_args( $args );
+
+		return woocommerce_avatar_discounts()->avatars()->manage( false, 'admin' );
 	}
 
 

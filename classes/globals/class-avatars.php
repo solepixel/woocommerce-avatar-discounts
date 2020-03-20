@@ -31,6 +31,12 @@ defined( 'ABSPATH' ) or exit;
  */
 class Avatars {
 
+	/** @var string Original Avatar image HTML */
+	private $original;
+
+	/** @var array Original Avatar args */
+	private $original_args;
+
 	/** @var Avatars class instance */
 	protected static $instance;
 
@@ -48,7 +54,33 @@ class Avatars {
 
 
 	/**
+	 * Sets the original img from `get_avatar`.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $original  Original avatar image.
+	 */
+	public function set_original( $original ) {
+		$this->original = $original;
+	}
+
+
+	/**
+	 * Sets the original args from `get_avatar`.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args  Array of args.
+	 */
+	public function set_original_args( $args ) {
+		$this->original_args = $args;
+	}
+
+
+	/**
 	 * Outputs the Manage Avatars interface
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $interface  Either frontend or admin.
 	 *
@@ -74,6 +106,8 @@ class Avatars {
 	/**
 	 * Display the avatar used at time of order.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param \WC_Order $order  WooCommerce Order object.
 	 */
 	public function order( $order ) {
@@ -85,6 +119,8 @@ class Avatars {
 
 	/**
 	 * Gets the Frontend Manage Avatars Interface
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return string  HTML for Manage Avatars (Frontend)
 	 */
@@ -100,13 +136,19 @@ class Avatars {
 	/**
 	 * Gets the Admin Manage Avatars Interface
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return string  HTML for Manage Avatars (Admin)
 	 */
 	private function admin() {
 
 		// TODO: Display Admin Manage Avatars Interface
+		$return = '';
+		if ( $this->original ) {
+			$return = $this->original;
+		}
 
-		return '';
+		return $return;
 
 	}
 
