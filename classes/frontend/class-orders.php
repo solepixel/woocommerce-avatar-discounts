@@ -44,6 +44,7 @@ class Orders {
 
 		// TODO: (Maybe) Hook into My Account > Orders, Display profile photo used at time of purchase next to each order.
 		// TODO: Hook into My Account > Orders > Order Details, Display profile photo used at time of purchase below Billing/Shipping Address.
+		// TODO: Hook into order processing, attach user photo attachment ID to order postmeta.
 
 	}
 
