@@ -25,24 +25,24 @@ defined( 'ABSPATH' ) or exit;
 
 
 /**
- * The Frontend Profile class.
+ * The Frontend Checkout class.
  *
  * @since 1.0.0
  */
-class Profile {
+class Checkout {
 
-	/** @var Profile class instance */
+	/** @var Checkout class instance */
 	protected static $instance;
 
 
 	/**
-	 * Frontend profile hooks.
+	 * Frontend checkout hooks.
 	 *
 	 * @since 1.0.0
 	 */
 	public function __construct() {
 
-		// TODO: Hook into My Account > Account Details, Insert profile photo selection interface.
+		// TODO: Hook into Cart, Insert profile photo selection interface.
 
 	}
 
@@ -52,7 +52,7 @@ class Profile {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return Profile
+	 * @return Checkout
 	 */
 	public static function instance() {
 

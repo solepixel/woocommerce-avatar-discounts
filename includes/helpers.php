@@ -34,6 +34,7 @@ function woocommerce_avatar_discounts() {
 	// Load necessary core classes.
 	WooCommerce_Avatar_Discounts_Loader::load_class( 'Core', 'class-core' );
 	// TODO: Load Frontend\Profile frontend/class-profile.
+	// TODO: Load Frontend\Checkout frontend/class-checkout.
 
 	return \WooCommerceAvatarDiscounts\Core::instance();
 }

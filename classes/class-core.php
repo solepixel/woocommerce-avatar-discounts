@@ -24,6 +24,7 @@ namespace WooCommerceAvatarDiscounts;
 defined( 'ABSPATH' ) or exit;
 
 // TODO: Use Frontend Profile class.
+// TODO: Use Frontend Checkout class.
 
 /**
  * The main plugin class.
@@ -40,6 +41,7 @@ class Core {
 	const PLUGIN_ID = 'woocommerce-avatar-discounts';
 
 	// TODO: Frontend Profile class instance property.
+	// TODO: Frontend Checkout class instance property.
 
 	/** @var Core plugin instance */
 	protected static $instance;
@@ -81,6 +83,7 @@ class Core {
 
 		// TODO: Init core functionality:
 		//   Frontend Profile class instance
+		//   Frontend Checkout class instance
 
 	}
 
