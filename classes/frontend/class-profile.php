@@ -45,8 +45,6 @@ class Profile {
 		/** Insert profile photo selection interface. */
 		add_action( 'woocommerce_edit_account_form', array( $this, 'manage_avatars' ) );
 
-		// TODO: Hook into Save Account Details to store Avatar data.
-
 	}
 
 

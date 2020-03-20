@@ -118,7 +118,7 @@ class Users {
 
 		$user_id = ! empty( $_GET['user_id'] ) ? (int) sanitize_text_field( $_GET['user_id'] ) : get_current_user_id();
 
-		return woocommerce_avatar_discounts()->avatars()->manage( $user_id, false, 'admin' );
+		return woocommerce_avatar_discounts()->avatars()->manage( $user_id, false );
 
 	}
 

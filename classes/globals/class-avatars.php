@@ -454,25 +454,18 @@ class Avatars {
 	 * @since 1.0.0
 	 *
 	 * @param int $user_id  The user ID.
-	 *
-	 * @param string $interface  Either frontend or admin.
+	 * @param bool $echo    Either echo or return.
 	 *
 	 * @return string|null  HTML for manage avatars.
 	 */
-	public function manage( $user_id = false, $echo = true, $interface = 'frontend' ) {
+	public function manage( $user_id = false, $echo = true ) {
 
 		// TODO: Add Gravatar support.
 
 		woocommerce_avatar_discounts()->enqueue_script( 'manage-avatars' );
 		woocommerce_avatar_discounts()->enqueue_style( 'avatars' );
 
-		$output = '';
-
-		if ( 'frontend' === $interface ) {
-			$output = $this->frontend( $user_id );
-		} elseif ( 'admin' === $interface ) {
-			$output = $this->admin( $user_id );
-		}
+		$output = $this->manage_avatars( $user_id );
 
 		if ( true !== $echo ) {
 			return $output;
@@ -511,41 +504,7 @@ class Avatars {
 
 
 	/**
-	 * Gets the Frontend Manage Avatars Interface
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param int $user_id  The user ID.
-	 *
-	 * @return string  HTML for Manage Avatars (Frontend)
-	 */
-	private function frontend( $user_id = false ) {
-
-		// TODO: Display Frontend Manage Avatars Interface
-		return $this->manage_avatars( $user_id );
-
-	}
-
-
-	/**
-	 * Gets the Admin Manage Avatars Interface
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param int $user_id  The user ID.
-	 *
-	 * @return string  HTML for Manage Avatars (Admin)
-	 */
-	private function admin( $user_id = false ) {
-
-		// TODO: Display Admin Manage Avatars Interface
-		return $this->manage_avatars( $user_id );
-
-	}
-
-
-	/**
-	 * Temp function (maybe).
+	 * Display Manage Avatars interface.
 	 *
 	 * @since 1.0.0
 	 *
