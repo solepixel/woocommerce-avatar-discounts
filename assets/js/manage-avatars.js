@@ -29,7 +29,7 @@ WoocommerceAvatarDiscounts.ManageAvatars = ( function( $ ) {
 	},
 
 	is_expanded = function() {
-		$( '.wc-ad-manage-avatars' ).hasClass( 'expanded' );
+		return $( '.wc-ad-manage-avatars' ).hasClass( 'expanded' );
 	},
 
 	expand_avatars = function() {
@@ -41,9 +41,14 @@ WoocommerceAvatarDiscounts.ManageAvatars = ( function( $ ) {
 	},
 
 	set_avatar = function( id ) {
-		// TODO: Set hidden input value to this id.
-		// TODO: Change class from status-active to status-featured.
-		// TODO: Change URL from #select-avatar to #manage-avatars
+		// Set hidden input to Avatar ID.
+		$( 'input[name="woocommerce_avatar_discounts_avatar"]' ).val( id );
+
+		// Change featured Avatar.
+		$( '.wc-ad-manage-avatars a.status-featured' ).removeClass( 'status-featured' );
+		$( '.wc-ad-manage-avatars a[data-avatar-id="' + id + '"]' ).addClass( 'status-featured' );
+
+		// Collapse interface.
 		collapse_avatars();
 	};
 

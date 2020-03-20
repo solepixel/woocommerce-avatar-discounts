@@ -39,7 +39,7 @@ $selected = '';
 			$selected = $index;
 		}
 		?>
-		<a href="#avatar" class="status-<?php echo esc_attr( $avatar['status'] ); ?>" data-id="<?php echo esc_attr( $index ); ?>">
+		<a href="#avatar" class="status-<?php echo esc_attr( $avatar['status'] ); ?>" data-avatar-id="<?php echo esc_attr( $index ); ?>">
 			<!--<button class="edit-avatar">Edit</button>-->
 			<img src="<?php echo esc_attr( $avatar['url'] ); ?>">
 		</a>
