@@ -25,26 +25,27 @@ if ( empty( $avatars ) ) {
 	return;
 }
 
+$selected = '';
+
 ?>
 <div class="wc-ad-manage-avatars">
 	<?php
-	foreach ( $avatars as $avatar ) :
+	foreach ( $avatars as $index => $avatar ) :
 		if ( 'deleted' === $avatar['status'] ) :
 			continue;
 		endif;
 
-		$href = '#select-avatar';
-
 		if ( 'featured' === $avatar['status'] ) {
-			$href = '#choose-avatar';
+			$selected = $index;
 		}
 		?>
-		<a href="<?php echo esc_attr( $href ); ?>" class="status-<?php echo esc_attr( $avatar['status'] ); ?>">
-			<button class="edit-avatar">Edit</button>
+		<a href="#avatar" class="status-<?php echo esc_attr( $avatar['status'] ); ?>" data-id="<?php echo esc_attr( $index ); ?>">
+			<!--<button class="edit-avatar">Edit</button>-->
 			<img src="<?php echo esc_attr( $avatar['url'] ); ?>">
 		</a>
 	<?php endforeach; ?>
 	<div class="upload-avatar">
 		<button>Upload New Avatar</button>
 	</div>
+	<input type="hidden" name="woocommerce_avatar_discounts_avatar" value="<?php echo esc_attr( $selected ); ?>">
 </div>
