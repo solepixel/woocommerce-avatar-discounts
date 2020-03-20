@@ -145,6 +145,15 @@ class Core {
 			wp_register_script( self::PLUGIN_ID . '-manage-avatars', $js_url, array( 'jquery' ), $version, true );
 		}
 
+		$css_file = 'assets/css/avatars.css';
+		$css_url  = Loader::get_plugin_url() . $css_file;
+		$css_path = Loader::get_plugin_path() . $css_file;
+
+		if ( file_exists( $css_path ) ) {
+			$version = filemtime( $css_path );
+			wp_register_style( self::PLUGIN_ID . '-avatars', $css_url, array(), $version );
+		}
+
 	}
 
 
@@ -155,6 +164,16 @@ class Core {
 	 */
 	public function enqueue_script( $script_name ) {
 		wp_enqueue_script( self::PLUGIN_ID . '-' . $script_name );
+	}
+
+
+	/**
+	 * Enqueue a CSS file.
+	 *
+	 * @param string $style_name  Style name.
+	 */
+	public function enqueue_style( $style_name ) {
+		wp_enqueue_style( self::PLUGIN_ID . '-' . $style_name );
 	}
 
 

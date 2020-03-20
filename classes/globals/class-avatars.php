@@ -132,6 +132,9 @@ class Avatars {
 	 * @return string|null  HTML for manage avatars.
 	 */
 	public function manage( $echo = true, $interface = 'frontend' ) {
+		woocommerce_avatar_discounts()->enqueue_script( 'manage-avatars' );
+		woocommerce_avatar_discounts()->enqueue_style( 'avatars' );
+
 		$output = '';
 
 		if ( 'frontend' === $interface ) {
@@ -157,6 +160,8 @@ class Avatars {
 	 */
 	public function order( $order = false ) {
 
+		woocommerce_avatar_discounts()->enqueue_style( 'avatars' );
+
 		if ( $order ) {
 			$this->order = $order;
 		}
@@ -175,8 +180,6 @@ class Avatars {
 	 */
 	private function frontend() {
 
-		woocommerce_avatar_discounts()->enqueue_script( 'manage-avatars' );
-
 		// TODO: Display Frontend Manage Avatars Interface
 		$avatars = $this->get_user_avatars();
 
@@ -193,8 +196,6 @@ class Avatars {
 	 * @return string  HTML for Manage Avatars (Admin)
 	 */
 	private function admin() {
-
-		woocommerce_avatar_discounts()->enqueue_script( 'manage-avatars' );
 
 		// TODO: Display Admin Manage Avatars Interface
 		$avatars = $this->get_user_avatars();
