@@ -47,6 +47,7 @@ $selected = '';
 		?>
 		<a href="#avatar" class="status-<?php echo esc_attr( $avatar['status'] ); ?>" data-avatar-id="<?php echo esc_attr( $avatar['id'] ); ?>">
 			<!--<button class="edit-avatar">Edit</button>-->
+			<!--<button class="delete-avatar">Delete</button>-->
 			<img src="<?php echo esc_attr( $avatar['url'] ); ?>">
 		</a>
 	<?php endforeach; ?>
