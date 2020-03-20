@@ -47,11 +47,26 @@ class Users {
 			return;
 		}
 
+		/** Add multipart form-data to form */
+		add_filter( 'user_edit_form_tag', array( $this, 'edit_form_attr' ) );
+
 		/** Insert Manage Avatars inteface where user avatar is displayed */
 		add_filter( 'get_avatar', array( $this, 'manage_avatars' ), 10, 6 );
 
 		/** Process User profile save. */
-		add_action( 'profile_update', array( $this, 'process_profile_update' ), 10, 2 );
+		add_action( 'user_profile_update_errors', array( $this, 'process_profile_update' ), 10, 3 );
+
+	}
+
+
+	/**
+	 * Add enctype attribute to your-profile
+	 *
+	 * @since 1.0.0
+	 */
+	public function edit_form_attr() {
+
+		echo 'enctype="multipart/form-data"';
 
 	}
 
@@ -113,15 +128,17 @@ class Users {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param int $user_id  The edited user's ID.
-	 * @param array $old_user_data  Array of old user data.
+	 * @param \WP_Error $errors  WP_Error object.
+	 * @param bool      $update  If update.
+	 * @param \WP_User  $user    WP_User object.
 	 */
-	public function process_profile_update( $user_id, $old_user_data ) {
-		// Only do this once.
-		remove_action( 'profile_update', array( $this, 'process_profile_update' ), 10, 2 );
+	public function process_profile_update( &$errors, $update, &$user ) {
 
-		woocommerce_avatar_discounts()->avatars()->handle_avatar_upload( $user_id );
-		woocommerce_avatar_discounts()->avatars()->handle_featured_avatar( $user_id );
+		// Only do this once.
+		remove_action( 'user_profile_update_errors', array( $this, 'process_profile_update' ), 10, 3 );
+
+		woocommerce_avatar_discounts()->avatars()->handle_featured_avatar( $user->ID, $errors );
+		woocommerce_avatar_discounts()->avatars()->handle_avatar_upload( $user->ID, $errors );
 	}
 
 

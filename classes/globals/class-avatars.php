@@ -61,7 +61,10 @@ class Avatars {
 
 		add_image_size( $thumb, 300, 300, true );
 
+		/** Add multipart form-data to form */
 		add_filter( 'woocommerce_edit_account_form_tag', array( $this, 'account_form_attr' ) );
+
+		/** Handle uploads, stop on error */
 		add_action( 'woocommerce_save_account_details_errors', array( $this, 'process_account_details' ), 10, 2 );
 
 	}
@@ -151,8 +154,8 @@ class Avatars {
 		// Only do it once.
 		remove_action( 'woocommerce_save_account_details_errors', array( $this, 'process_account_details' ), 10, 2 );
 
-		$this->handle_avatar_upload( $user->ID, $errors );
 		$this->handle_featured_avatar( $user->ID, $errors );
+		$this->handle_avatar_upload( $user->ID, $errors );
 	}
 
 
@@ -180,10 +183,8 @@ class Avatars {
 		$avatars = $this->get_user_avatars( $user_id, true );
 		$count   = count( $avatars );
 		$limit   = woocommerce_avatar_discounts()->admin_settings()->get_setting( 'limit' );
-		if ( $count >= $limit ) {
-			if ( $errors ) {
-				$errors->add( 'woocommerce-avatar-discounts-limit-reached', __( 'You have reached the maximum number of avatars', 'woocommerce-avatar-discounts' ) . ': ' . $limit . '.' );
-			}
+		if ( $limit > 0 && $count >= $limit ) {
+			$errors->add( 'woocommerce-avatar-discounts-limit-reached', __( 'You have reached the maximum number of avatars', 'woocommerce-avatar-discounts' ) . ': ' . $limit . '.' );
 			return false;
 		}
 
@@ -192,9 +193,7 @@ class Avatars {
 		);
 		$attachment = media_handle_upload( 'woocommerce_avatar_discounts_upload', 0, $post_data );
 		if ( is_wp_error( $attachment ) ) {
-			if ( $errors ) {
-				$errors->add( 'woocommerce-avatar-discounts-upload-error', __( 'There was an error processing your upload.', 'woocommerce-avatar-discounts' ) . ': ' . $attachment->get_error_message() );
-			}
+			$errors->add( 'woocommerce-avatar-discounts-upload-error', __( 'There was an error processing your upload.', 'woocommerce-avatar-discounts' ) . ': ' . $attachment->get_error_message() );
 			return false;
 		}
 
@@ -208,10 +207,14 @@ class Avatars {
 			'url'           => $image[0],
 		);
 
-		if ( false === $this->db->save( $data ) ) {
+		$save = $this->db->save( $data );
+
+		if ( false === $save ) {
 			$errors->add( 'woocommerce-avatar-discounts-save-error', __( 'There was an error saving your profile.', 'woocommerce-avatar-discounts' ) . ': ' . $attachment->get_error_message() );
 			return false;
 		}
+
+		$this->set_featured_avatar( $save );
 	}
 
 
@@ -229,31 +232,45 @@ class Avatars {
 
 			// Make sure avatar belongs to this user.
 			if ( ! $this->validate( $selected, $user_id ) ) {
-				if ( $errors ) {
-					$errors->add( 'woocommerce-avatar-discounts-validation-error', __( 'Avatar ID does not match user.', 'woocommerce-avatar-discounts' ) );
-				}
+				$errors->add( 'woocommerce-avatar-discounts-validation-error', __( 'Avatar ID does not match user.', 'woocommerce-avatar-discounts' ) );
 				return;
 			}
 
-			$this->db->update(
-				array(
-					'status'  => 'active',
-				),
-				array(
-					'user_id' => $user_id,
-					'status'  => 'featured',
-				)
-			);
-			$this->db->update(
-				array(
-					'status'  => 'featured',
-				),
-				array(
-					'user_id' => $user_id,
-					'id'      => $selected,
-				)
-			);
+			$this->set_featured_avatar( $selected );
 		}
+	}
+
+
+	/**
+	 * Set the user's featured avatar photo.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param int $avatar_id  The avatar ID.
+	 * @param bool $user_id  The User ID.
+	 */
+	public function set_featured_avatar( $avatar_id, $user_id = false ) {
+		if ( false === $user_id ) {
+			$user_id = get_current_user_id();
+		}
+		$this->db->update(
+			array(
+				'status'  => 'active',
+			),
+			array(
+				'user_id' => $user_id,
+				'status'  => 'featured',
+			)
+		);
+		$this->db->update(
+			array(
+				'status'  => 'featured',
+			),
+			array(
+				'user_id' => $user_id,
+				'id'      => $avatar_id,
+			)
+		);
 	}
 
 

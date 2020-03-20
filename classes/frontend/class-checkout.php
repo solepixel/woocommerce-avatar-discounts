@@ -42,6 +42,9 @@ class Checkout {
 	 */
 	public function __construct() {
 
+		/** Save uploads before order processed */
+		add_action( 'woocommerce_after_checkout_validation', array( $this, 'process_checkout' ), 10, 2 );
+
 		/** Order processed hook to store current user profile photo. */
 		add_action( 'woocommerce_checkout_order_processed', array( $this, 'save_user_avatar' ), 10, 3 );
 
@@ -87,6 +90,24 @@ class Checkout {
 		}
 
 		update_post_meta( $order_id, woocommerce_avatar_discounts()->avatars()->get_avatar_meta_key(), $avatar_id );
+
+	}
+
+
+	/**
+	 * Save Upload at checkout.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array     $data        Order Data.
+	 * @param \WP_error $errors  WP Error object.
+	 */
+	public function process_checkout( $data, $errors ) {
+
+		$user_id = get_current_user_id();
+
+		woocommerce_avatar_discounts()->avatars()->handle_featured_avatar( $user_id, $errors );
+		woocommerce_avatar_discounts()->avatars()->handle_avatar_upload( $user_id, $errors );
 
 	}
 
