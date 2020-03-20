@@ -107,8 +107,8 @@ class Avatars {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param int $avatar_id The avatar ID.
-	 * @param int $user_id The associated User ID. Defaults to current user ID.
+	 * @param int $avatar_id  The avatar ID.
+	 * @param int $user_id    The associated User ID. Defaults to current user ID.
 	 *
 	 * @return object|false  Avatar object or false.
 	 */
@@ -183,7 +183,7 @@ class Avatars {
 				return false;
 			}
 
-			$avatar = $this->get_current_avatar();
+			$avatar = $this->get_current_avatar( $user_id );
 			$status = $avatar ? 'active' : 'featured';
 			$data   = array(
 				'user_id'       => $user_id,
@@ -208,7 +208,7 @@ class Avatars {
 			$selected = (int) sanitize_text_field( $_POST['woocommerce_avatar_discounts_avatar'] );
 
 			// Make sure avatar belongs to this user.
-			if ( ! $this->validate( $selected ) ) {
+			if ( ! $this->validate( $selected, $user_id ) ) {
 				return;
 			}
 
@@ -263,12 +263,18 @@ class Avatars {
 	 *
 	 * @since 1.0.0
 	 *
+	 * @param int  $user_id  The User ID.
+	 *
 	 * @return array  Array of Avatars.
 	 */
-	public function get_user_avatars() {
+	public function get_user_avatars( $user_id = false ) {
+
+		if ( false === $user_id ) {
+			$user_id = get_current_user_id();
+		}
 
 		$args = array(
-			'user_id' => get_current_user_id(),
+			'user_id' => $user_id,
 		);
 
 		return $this->all( $args );
@@ -281,10 +287,12 @@ class Avatars {
 	 *
 	 * @since 1.0.0
 	 *
+	 * @param int  $user_id  The user ID to get.
+	 *
 	 * @return object  Avatar object.
 	 */
-	public function get_current_avatar() {
-		$avatars = $this->get_user_avatars();
+	public function get_current_avatar( $user_id = false ) {
+		$avatars = $this->get_user_avatars( $user_id );
 		if ( empty( $avatars ) ) {
 			return false;
 		}
@@ -325,6 +333,8 @@ class Avatars {
 	/**
 	 * Get the order avatar ID.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param int $order_id  The Order ID.
 	 *
 	 * @return int  Order Avatar ID.
@@ -344,11 +354,12 @@ class Avatars {
 	 * @since 1.0.0
 	 *
 	 * @param int $avatar_id  Avatar ID.
+	 * @param int $user_id  The User ID.
 	 *
 	 * @return bool  If valid.
 	 */
-	public function validate( $avatar_id ) {
-		$validate = $this->get( $avatar_id );
+	public function validate( $avatar_id, $user_id ) {
+		$validate = $this->get( $avatar_id, $user_id );
 		if ( ! $validate ) {
 			return false;
 		}
@@ -361,20 +372,25 @@ class Avatars {
 	 *
 	 * @since 1.0.0
 	 *
+	 * @param int $user_id  The user ID.
+	 *
 	 * @param string $interface  Either frontend or admin.
 	 *
 	 * @return string|null  HTML for manage avatars.
 	 */
-	public function manage( $echo = true, $interface = 'frontend' ) {
+	public function manage( $user_id = false, $echo = true, $interface = 'frontend' ) {
+
+		// TODO: Add Gravatar support.
+
 		woocommerce_avatar_discounts()->enqueue_script( 'manage-avatars' );
 		woocommerce_avatar_discounts()->enqueue_style( 'avatars' );
 
 		$output = '';
 
 		if ( 'frontend' === $interface ) {
-			$output = $this->frontend();
+			$output = $this->frontend( $user_id );
 		} elseif ( 'admin' === $interface ) {
-			$output = $this->admin();
+			$output = $this->admin( $user_id );
 		}
 
 		if ( true !== $echo ) {
@@ -418,12 +434,14 @@ class Avatars {
 	 *
 	 * @since 1.0.0
 	 *
+	 * @param int $user_id  The user ID.
+	 *
 	 * @return string  HTML for Manage Avatars (Frontend)
 	 */
-	private function frontend() {
+	private function frontend( $user_id = false ) {
 
 		// TODO: Display Frontend Manage Avatars Interface
-		return $this->manage_avatars();
+		return $this->manage_avatars( $user_id );
 
 	}
 
@@ -433,12 +451,14 @@ class Avatars {
 	 *
 	 * @since 1.0.0
 	 *
+	 * @param int $user_id  The user ID.
+	 *
 	 * @return string  HTML for Manage Avatars (Admin)
 	 */
-	private function admin() {
+	private function admin( $user_id = false ) {
 
 		// TODO: Display Admin Manage Avatars Interface
-		return $this->manage_avatars();
+		return $this->manage_avatars( $user_id );
 
 	}
 
@@ -448,14 +468,44 @@ class Avatars {
 	 *
 	 * @since 1.0.0
 	 *
+	 * @param int $user_id  The user ID.
+	 *
 	 * @return string  HTML for Manage Avatars.
 	 */
-	private function manage_avatars() {
-		$avatars = $this->get_user_avatars();
+	private function manage_avatars( $user_id = false ) {
+		$avatars = $this->get_user_avatars( $user_id );
 
 		$encourage_text = woocommerce_avatar_discounts()->admin_settings()->get_setting( 'encourage_text' );
 
-		return Loader::get_view( 'manage-avatars', compact( 'avatars', 'encourage_text' ) );
+		$selected    = '';
+		$classname   = empty( $avatars ) || is_admin() ? ' expanded' : '';
+		$count       =  0;
+		$button_text = __( 'Select Your Photo', 'woocommerce-avatar-discounts' );
+		$badge_title = '';
+		if ( ! empty( $avatars ) ) {
+			$button_text = __( 'Upload Another Photo', 'woocommerce-avatar-discounts' );
+			$count       = count( $avatars );
+			$badge_title = $count . ' ' . __( 'Avatars to choose from', 'woocommerce-avatar-discounts' );
+		}
+
+		if ( is_admin() && ! $count ) {
+			if ( $this->original ) {
+				return $this->original;
+			}
+			return esc_html__( 'No User Avatars found.', 'woocommerce-avatar-discounts' );
+		}
+
+		$vars = compact(
+			'avatars',
+			'encourage_text',
+			'selected',
+			'classname',
+			'count',
+			'button_text',
+			'badge_title'
+		);
+
+		return Loader::get_view( 'manage-avatars', $vars );
 	}
 
 

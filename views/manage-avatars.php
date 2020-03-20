@@ -25,17 +25,6 @@ if ( empty( $avatars ) && ! $encourage_text ) {
 	return;
 }
 
-$selected    = '';
-$classname   = empty( $avatars ) ? ' expanded' : '';
-$count       =  0;
-$button_text = __( 'Select Your Photo', 'woocommerce-avatar-discounts' );
-$badge_title = '';
-if ( ! empty( $avatars ) ) {
-	$button_text = __( 'Upload Another Photo', 'woocommerce-avatar-discounts' );
-	$count       = count( $avatars );
-	$badge_title = $count . ' ' . __( 'Avatars to choose from', 'woocommerce-avatar-discounts' );
-}
-
 ?>
 <div class="wc-ad-manage-avatars<?php echo esc_attr( $classname ); ?>">
 	<?php if ( $encourage_text && ! is_admin() ) : ?>

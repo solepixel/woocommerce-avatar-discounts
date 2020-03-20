@@ -85,6 +85,9 @@ WoocommerceAvatarDiscounts.ManageAvatars = ( function( $ ) {
 		collapseAvatars();
 	},
 
+	/**
+	 * Display upload filename after selecting file.
+	 */
 	handleUpload = function() {
 		$( '.wc-ad-upload' ).on( 'change', function() {
 			const $input = $( this ),
@@ -93,6 +96,13 @@ WoocommerceAvatarDiscounts.ManageAvatars = ( function( $ ) {
 		});
 	},
 
+	/**
+	 * Get filename from fake upload path.
+	 *
+	 * @param {string} fullPath  Full path.
+	 *
+	 * @return {string}  The file name.
+	 */
 	extractFilename = function( fullPath ) {
 		if ( fullPath ) {
 		    var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/')),

@@ -47,7 +47,11 @@ class Users {
 			return;
 		}
 
+		/** Insert Manage Avatars inteface where user avatar is displayed */
 		add_filter( 'get_avatar', array( $this, 'manage_avatars' ), 10, 6 );
+
+		/** Process User profile save. */
+		add_action( 'profile_update', array( $this, 'process_profile_update' ), 10, 2 );
 
 	}
 
@@ -97,8 +101,27 @@ class Users {
 		woocommerce_avatar_discounts()->avatars()->set_original( $avatar );
 		woocommerce_avatar_discounts()->avatars()->set_original_args( $args );
 
-		return woocommerce_avatar_discounts()->avatars()->manage( false, 'admin' );
+		$user_id = ! empty( $_GET['user_id'] ) ? (int) sanitize_text_field( $_GET['user_id'] ) : get_current_user_id();
 
+		return woocommerce_avatar_discounts()->avatars()->manage( $user_id, false, 'admin' );
+
+	}
+
+
+	/**
+	 * Save avatar information when user profile is updated.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param int $user_id  The edited user's ID.
+	 * @param array $old_user_data  Array of old user data.
+	 */
+	public function process_profile_update( $user_id, $old_user_data ) {
+		// Only do this once.
+		remove_action( 'profile_update', array( $this, 'process_profile_update' ), 10, 2 );
+
+		woocommerce_avatar_discounts()->avatars()->handle_avatar_upload( $user_id );
+		woocommerce_avatar_discounts()->avatars()->handle_featured_avatar( $user_id );
 	}
 
 
