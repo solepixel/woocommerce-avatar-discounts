@@ -65,7 +65,7 @@ class Avatars {
 		add_image_size( $thumb, 300, 300, true );
 
 		add_filter( 'woocommerce_edit_account_form_tag', array( $this, 'account_form_attr' ) );
-		add_action( 'woocommerce_save_account_details', array( $this, 'save_avatar_upload' ) );
+		add_action( 'woocommerce_save_account_details', array( $this, 'process_account_details' ) );
 
 	}
 
@@ -113,34 +113,81 @@ class Avatars {
 
 
 	/**
-	 * Save new Avatar uploads.
+	 * Save new Avatar uploads and update selected avatar.
 	 *
 	 * @param int $user_id  The User ID.
 	 */
-	public function save_avatar_upload( $user_id ) {
-		if ( ! function_exists( 'media_handle_upload' ) ) {
-			require_once( ABSPATH . 'wp-admin/includes/image.php' );
-			require_once( ABSPATH . 'wp-admin/includes/file.php' );
-			require_once( ABSPATH . 'wp-admin/includes/media.php' );
-		}
+	public function process_account_details( $user_id ) {
+		// Only do it once.
+		remove_action( 'woocommerce_save_account_details', array( $this, 'process_account_details' ) );
 
-		$post_data  = array(
-			'post_author' => $user_id,
-		);
-		$attachment = media_handle_upload( 'woocommerce_avatar_discounts_upload', 0, $post_data );
-		if ( is_wp_error( $attachment ) ) {
-			$this->error = $attachment->get_error_message();
-			return false;
-		}
+		$this->handle_avatar_upload( $user_id );
+		$this->handle_featured_avatar( $user_id );
+	}
 
-		$avatar = $this->get_current_avatar();
-		$status = $avatar ? 'active' : 'featured';
-		$data   = array(
-			'user_id'       => $user_id,
-			'attachment_id' => $attachment,
-			'status'        => $status,
-		);
-		$this->db->save( $data );
+
+	/**
+	 * Handle upload of avatar.
+	 *
+	 * @param int $user_id  User ID.
+	 */
+	public function handle_avatar_upload( $user_id ) {
+		if ( ! empty( $_FILES['woocommerce_avatar_discounts_upload'] ) ) {
+			if ( ! function_exists( 'media_handle_upload' ) ) {
+				require_once( ABSPATH . 'wp-admin/includes/image.php' );
+				require_once( ABSPATH . 'wp-admin/includes/file.php' );
+				require_once( ABSPATH . 'wp-admin/includes/media.php' );
+			}
+
+			$post_data  = array(
+				'post_author' => $user_id,
+			);
+			$attachment = media_handle_upload( 'woocommerce_avatar_discounts_upload', 0, $post_data );
+			if ( is_wp_error( $attachment ) ) {
+				$this->error = $attachment->get_error_message();
+				return false;
+			}
+
+			$avatar = $this->get_current_avatar();
+			$status = $avatar ? 'active' : 'featured';
+			$data   = array(
+				'user_id'       => $user_id,
+				'attachment_id' => $attachment,
+				'status'        => $status,
+				'url'           => wp_get_attachment_image_src( $attachment, 'full' ),
+			);
+			$this->db->save( $data );
+		}
+	}
+
+
+	/**
+	 * Handle switch of featured avatar
+	 *
+	 * @param int $user_id  User ID.
+	 */
+	public function handle_featured_avatar( $user_id ) {
+		if ( ! empty( $_POST['woocommerce_avatar_discounts_avatar'] ) ) {
+			$selected = (int) sanitize_text_field( $_POST['woocommerce_avatar_discounts_avatar'] );
+			$this->db->update(
+				array(
+					'status'  => 'active',
+				),
+				array(
+					'user_id' => $user_id,
+					'status'  => 'featured',
+				)
+			);
+			$this->db->update(
+				array(
+					'status'  => 'featured',
+				),
+				array(
+					'user_id' => $user_id,
+					'id'      => $selected,
+				)
+			);
+		}
 	}
 
 

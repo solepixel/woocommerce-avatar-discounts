@@ -63,8 +63,8 @@ body:not(.user-edit-php) .wc-ad-manage-avatars a.status-featured::before {
 	content: '\270E';
 	position: absolute;
 	z-index: 2;
-	top: 5px;
-	right: 5px;
+	top: 5%;
+	right: 5%;
 	border-radius: 100%;
 	width: 25px;
 	height: 25px;
