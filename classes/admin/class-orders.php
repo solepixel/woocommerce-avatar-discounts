@@ -54,7 +54,7 @@ class Orders {
 
 
 	/**
-	 * Show customer avatar into Order Detail meta box.
+	 * Show customer avatar in Order Detail meta box.
 	 *
 	 * @since 1.0.0
 	 *

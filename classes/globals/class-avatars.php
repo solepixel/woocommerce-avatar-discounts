@@ -37,6 +37,9 @@ class Avatars {
 	/** @var array Original Avatar args */
 	private $original_args;
 
+	/** @var WC_Order WC_Order object */
+	private $order;
+
 	/** @var Avatars class instance */
 	protected static $instance;
 
@@ -110,7 +113,11 @@ class Avatars {
 	 *
 	 * @param \WC_Order $order  WooCommerce Order object.
 	 */
-	public function order( $order ) {
+	public function order( $order = false ) {
+
+		if ( $order ) {
+			$this->order = $order;
+		}
 
 		// TODO: Display the user's avatar for the current order.
 

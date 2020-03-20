@@ -44,7 +44,6 @@ class Orders {
 
 		/** Show Order Avatar on Order Details page below Billing/Shipping Address */
 		add_action( 'woocommerce_order_details_after_customer_details', array( $this, 'show_avatar' ) );
-
 	}
 
 
@@ -55,7 +54,7 @@ class Orders {
 	 *
 	 * @param \WC_Order $order  WooCommerce Order object.
 	 */
-	public function show_avatar( $order ) {
+	public function show_avatar( $order = false ) {
 
 		woocommerce_avatar_discounts()->avatars()->order( $order );
 

@@ -95,6 +95,7 @@ class Users {
 		woocommerce_avatar_discounts()->avatars()->set_original_args( $args );
 
 		return woocommerce_avatar_discounts()->avatars()->manage( false, 'admin' );
+
 	}
 
 
