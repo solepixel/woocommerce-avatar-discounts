@@ -47,9 +47,26 @@ class Settings {
 			return;
 		}
 
-		// TODO: Hook into WooCommerce > Settings > Accounts & Privacy, Display setting to limit number of allowed user profile photos.
-		// TODO: Hook into WooCommerce > Settings > Accounts & Privacy, Display setting to add text to encourage customers to get their Avatar Discount.
+		/** Modify WooCommerce > Settings > Accounts & Privacy, Add Section for User Avatars. */
+		add_filter( 'woocommerce_account_settings', array( $this, 'insert_avatar_settings' ) );
 
+	}
+
+
+	/**
+	 * Modify Account Settings array to add new section for User Avatars.
+	 *
+	 * @param array $account_settings  Account Settings array.
+	 *
+	 * @return array  Modified account settings array.
+	 */
+	public function insert_avatar_settings( $account_settings ) {
+
+		// TODO: Insert section for User Avatars.
+		// TODO: Insert setting to limit number of allowed user profile photos.
+		// TODO: Insert setting to add text to encourage customers to get their Avatar Discount.
+
+		return $account_settings;
 	}
 
 
