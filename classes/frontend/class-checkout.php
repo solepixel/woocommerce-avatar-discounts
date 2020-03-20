@@ -43,7 +43,7 @@ class Checkout {
 	public function __construct() {
 
 		// TODO: Hook into Cart, Insert profile photo selection interface either below Order Notes or below Order total/summary.
-		// TODO: (Maybe) Hook into Order Confirmation Page, Display avatar used at time of purchase.
+		// TODO: Hook into Order Confirmation Page, Display avatar used at time of purchase.
 
 	}
 
