@@ -45,6 +45,7 @@ class Core {
 	// TODO: Frontend Checkout class instance property.
 	// TODO: Frontend Orders class instance property.
 	// TODO: Admin Users class instance property.
+	// TODO: Admin Settings class instance property.
 
 	/** @var Core plugin instance */
 	protected static $instance;
@@ -89,6 +90,7 @@ class Core {
 		//   Frontend Checkout class instance
 		//   Frontend Orders class instance
 		//   Admin Users class instance
+		//   Admin Settings class instance
 
 	}
 

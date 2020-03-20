@@ -19,26 +19,49 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
+namespace WooCommerceAvatarDiscounts\Admin;
+
 defined( 'ABSPATH' ) or exit;
 
 
 /**
- * Gets the singleton instance of WooCommerce Avatar Discounts.
+ * The Admin Settings class.
  *
  * @since 1.0.0
- *
- * return \WooCommerceAvatarDiscounts\Core
  */
-function woocommerce_avatar_discounts() {
+class Settings {
 
-	// Load necessary core classes.
-	WooCommerce_Avatar_Discounts_Loader::load_class( 'Core', 'class-core' );
-	// TODO: Load Frontend\Profile frontend/class-profile.
-	// TODO: Load Frontend\Checkout frontend/class-checkout.
-	// TODO: Load Frontend\Orders frontend/class-orders.
-	// TODO: Load Admin\Users admin/class-users.
-	// TODO: Load Admin\Settings admin/class-settings.
+	/** @var Settings class instance */
+	protected static $instance;
 
-	return \WooCommerceAvatarDiscounts\Core::instance();
+
+	/**
+	 * Admin Settings hooks.
+	 *
+	 * @since 1.0.0
+	 */
+	public function __construct() {
+
+		// TODO: Hook into WooCommerce > Settings > Accounts & Privacy, Display setting to limit number of allowed user profile photos.
+
+	}
+
+
+	/**
+	 * Gets the singleton instance of the profile.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return Settings
+	 */
+	public static function instance() {
+
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+
+
 }
-
