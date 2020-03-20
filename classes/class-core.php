@@ -113,17 +113,17 @@ class Core {
 	public function init() {
 
 		// Init core functionality.
-		$this->avatars_handler = new Avatars();
+		$this->avatars_handler = Avatars::instance();
 
 		$this->api_avatars_handler = new Avatars_API();
 
-		$this->frontend_profile_handler  = new Profile();
-		$this->frontend_checkout_handler = new Checkout();
-		$this->frontend_orders_handler   = new Frontend_Orders();
+		$this->frontend_profile_handler  = Profile::instance();
+		$this->frontend_checkout_handler = Checkout::instance();
+		$this->frontend_orders_handler   = Frontend_Orders::instance();
 
-		$this->admin_users_handler    = new Users();
-		$this->admin_settings_handler = new Settings();
-		$this->admin_orders_handler   = new Admin_Orders();
+		$this->admin_users_handler    = Users::instance();
+		$this->admin_settings_handler = Settings::instance();
+		$this->admin_orders_handler   = Admin_Orders::instance();
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'assets' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'assets' ) );
