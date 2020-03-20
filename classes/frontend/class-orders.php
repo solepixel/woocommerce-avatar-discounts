@@ -42,7 +42,20 @@ class Orders {
 	 */
 	public function __construct() {
 
-		// TODO: Hook into My Account > Orders > Order Details, Display profile photo used at time of purchase below Billing/Shipping Address.
+		/** Show Order Avatar on Order Details page below Billing/Shipping Address */
+		add_action( 'woocommerce_order_details_after_customer_details', array( $this, 'show_avatar' ) );
+
+	}
+
+
+	/**
+	 * Display Avatar at time of Order under My Account > Orders > Order Details
+	 *
+	 * @param \WooCommerce\Order $order  WooCommerce Order object.
+	 */
+	public function show_avatar( $order ) {
+
+		woocommerce_avatar_discounts()->avatars()->order( $order );
 
 	}
 

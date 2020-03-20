@@ -63,8 +63,10 @@ class Avatars {
 
 	/**
 	 * Display the avatar used at time of order.
+	 *
+	 * @param \WooCommerce\Order $order  WooCommerce Order object.
 	 */
-	public function order() {
+	public function order( $order ) {
 
 		// TODO: Display the user's avatar for the current order.
 
