@@ -77,6 +77,25 @@ class WooCommerce_Avatar_Discounts_Loader {
 
 
 	/**
+	 * Initializes the plugin.
+	 *
+	 * @since 1.0.0
+	 */
+	public function init_plugin() {
+		// Only init this plugin if environment is compatible.
+		if ( ! $this->is_environment_compatible() ) {
+			return;
+		}
+
+		// load required helper functions.
+		require_once( plugin_dir_path( __FILE__ ) . 'includes/helpers.php' );
+
+		// away we go!
+		woocommerce_avatar_discounts();
+	}
+
+
+	/**
 	 * Load a class file.
 	 *
 	 * @since 1.0.0
@@ -98,21 +117,86 @@ class WooCommerce_Avatar_Discounts_Loader {
 
 
 	/**
-	 * Initializes the plugin.
+	 * Get the path to a view.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @param string $view  View file.
+	 *
+	 * @return string|false  Path to view or false if doesn't exist.
 	 */
-	public function init_plugin() {
-		// Only init this plugin if environment is compatible.
-		if ( ! $this->is_environment_compatible() ) {
-			return;
+	public static function locate_view( $view ) {
+
+		$view_path     = self::$plugin_path . 'views/' . $view . '.php';
+		$view_override = locate_template( array( 'woocommerce-avatar-discounts/' . $view . '.php', str_replace( '/', '-', 'woocommerce-avatar-discounts-' . $view . '.php' ) ) );
+
+		if ( $view_override ) {
+			$view_path = $view_override;
 		}
 
-		// load required helper functions.
-		require_once( plugin_dir_path( __FILE__ ) . 'includes/helpers.php' );
+		if ( ! file_exists( apply_filters( 'woocommerce_avatar_discounts_view', $view_path ) ) ) {
+			return false;
+		}
 
-		// away we go!
-		woocommerce_avatar_discounts();
+		return $view_path;
+
+	}
+
+
+	/**
+	 * Display or return a view file.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $_view  View to load.
+	 * @param array  $vars   Array of variables to pass to view.
+	 * @param bool   $echo   Echo or return.
+	 *
+	 * @return string|null|false  String if returning view, false on error, otherwise null.
+	 */
+	public static function load_view( $_view, $vars = array(), $echo = true ) {
+
+		$_view_path = $this->locate_view( $_view );
+
+		if ( false === $_view_path ) {
+			return false;
+		}
+
+		if ( ! is_array( $vars ) ) {
+			$vars = array(); // Must be an array. Use compact.
+		}
+
+		if ( count( $vars ) ) {
+			extract( $vars );
+		}
+
+		ob_start();
+		include $_view_path;
+		$output = ob_get_clean();
+
+		if ( false === $echo ) {
+			return $output;
+		}
+
+		echo $output;
+
+	}
+
+
+	/**
+	 * Return a view file.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $_view  View to load.
+	 * @param array  $vars   Array of variables to pass to view.
+	 *
+	 * @return string|false  String if returning view, false on error.
+	 */
+	public static function get_view( $_view, $vars = array() ) {
+
+		return self::load_view( $_view, $vars, false );
+
 	}
 
 
