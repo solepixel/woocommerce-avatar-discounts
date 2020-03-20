@@ -1,6 +1,8 @@
 /**
  * TODO: Use Task runner and SASS.
  */
+
+ /** Manage Avatars */
 .wc-ad-manage-avatars {
 	margin: 20px 0;
 }
@@ -17,35 +19,38 @@
 	border: 4px solid transparent;
 }
 
-.wc-ad-manage-avatars a:focus {
-	outline: none;
-}
+/*.wc-ad-manage-avatars a:focus {
+	outline: none; /* This is an accessibility thing.
+}*/
 
-body:not(.wp-admin.user-edit-php) .wc-ad-manage-avatars a,
-body:not(.wp-admin.user-edit-php) .wc-ad-manage-avatars .upload-avatar {
+body:not(.user-edit-php) .wc-ad-manage-avatars a,
+body:not(.user-edit-php) .wc-ad-manage-avatars .upload-avatar {
 	max-width: 0;
 	overflow: hidden;
 }
-body:not(.wp-admin.user-edit-php) .wc-ad-manage-avatars .upload-avatar {
+body:not(.user-edit-php) .wc-ad-manage-avatars .upload-avatar {
 	max-height: 0;
 }
-body.wp-admin.user-edit-php .wc-ad-manage-avatars .upload-avatar {
+
+/** Hide Upload if Admin and Not Profile view */
+body.user-edit-php .wc-ad-manage-avatars .upload-avatar {
 	display: none;
 }
 
+/** Set smooth transitions for all the things. */
 .wc-ad-manage-avatars a,
 .wc-ad-manage-avatars a img,
 .wc-ad-manage-avatars .upload-avatar,
-body:not(.wp-admin.user-edit-php) .wc-ad-manage-avatars a.status-featured:hover::before {
+body:not(.user-edit-php) .wc-ad-manage-avatars a.status-featured:hover::before {
 	transition: all 200ms ease-in-out;
 }
 
-body:not(.wp-admin.user-edit-php) .wc-ad-manage-avatars a.status-featured,
-body:not(.wp-admin.user-edit-php) .wc-ad-manage-avatars.expanded a,
-body:not(.wp-admin.user-edit-php) .wc-ad-manage-avatars.expanded .upload-avatar {
+body:not(.user-edit-php) .wc-ad-manage-avatars a.status-featured,
+body:not(.user-edit-php) .wc-ad-manage-avatars.expanded a,
+body:not(.user-edit-php) .wc-ad-manage-avatars.expanded .upload-avatar {
 	max-width: 100%;
 }
-.wc-ad-manage-avatars.expanded .upload-avatar {
+body:not(.user-edit-php) .wc-ad-manage-avatars.expanded .upload-avatar {
 	max-height: 100%;
 }
 
@@ -53,7 +58,7 @@ body:not(.wp-admin.user-edit-php) .wc-ad-manage-avatars.expanded .upload-avatar 
 	border-color: red;
 }
 
-body:not(.wp-admin.user-edit-php) .wc-ad-manage-avatars a.status-featured::before {
+body:not(.user-edit-php) .wc-ad-manage-avatars a.status-featured::before {
 	content: '\270E';
 	position: absolute;
 	z-index: 2;
@@ -73,9 +78,14 @@ body:not(.wp-admin.user-edit-php) .wc-ad-manage-avatars a.status-featured::befor
 	opacity: 0;
 }
 
-body:not(.wp-admin.user-edit-php) .wc-ad-manage-avatars a.status-featured:hover::before {
+body:not(.user-edit-php) .wc-ad-manage-avatars a.status-featured:hover::before {
 	opacity: 1;
 }
-body:not(.wp-admin.user-edit-php) .wc-ad-manage-avatars.expanded a.status-featured:hover::before {
+body:not(.user-edit-php) .wc-ad-manage-avatars.expanded a.status-featured:hover::before {
 	opacity: 0;
+}
+
+/** Order Avatar */
+.wc-ad-order-avatar img {
+	max-width: 128px;
 }

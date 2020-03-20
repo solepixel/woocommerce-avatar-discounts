@@ -23,6 +23,6 @@ defined( 'ABSPATH' ) or exit;
 
 ?>
 <div class="wc-ad-order-avatar">
-	<p><?php esc_html_e( 'Avatar at time of order.', 'woocommerce-avatar-discounts' ); ?></p>
+	<p><?php esc_html_e( 'Avatar at time of order:', 'woocommerce-avatar-discounts' ); ?></p>
 	<img src="<?php echo $avatar['url']; ?>">
 </div>
