@@ -1,6 +1,8 @@
 /**
  * WoocommerceAvatarDiscounts Manage Avatars JS Class
  *
+ * TODO: Compile/Minify with Task runner.
+ *
  * @package WoocommerceAvatarDiscounts
  */
 

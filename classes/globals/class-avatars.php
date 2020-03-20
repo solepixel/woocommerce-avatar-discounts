@@ -188,9 +188,7 @@ class Avatars {
 	private function frontend() {
 
 		// TODO: Display Frontend Manage Avatars Interface
-		$avatars = $this->get_user_avatars();
-
-		return Loader::get_view( 'manage-avatars', compact( 'avatars' ) );
+		return $this->manage_avatars();
 
 	}
 
@@ -205,10 +203,22 @@ class Avatars {
 	private function admin() {
 
 		// TODO: Display Admin Manage Avatars Interface
+		return $this->manage_avatars();
+
+	}
+
+
+	/**
+	 * Temp function (maybe).
+	 *
+	 * @return string  HTML for Manage Avatars.
+	 */
+	private function manage_avatars() {
 		$avatars = $this->get_user_avatars();
 
-		return Loader::get_view( 'manage-avatars', compact( 'avatars' ) );
+		$encourage_text = woocommerce_avatar_discounts()->admin_settings()->get_setting( 'encourage_text' );
 
+		return Loader::get_view( 'manage-avatars', compact( 'avatars', 'encourage_text' ) );
 	}
 
 

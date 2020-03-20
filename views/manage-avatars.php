@@ -25,8 +25,7 @@ if ( empty( $avatars ) ) {
 	return;
 }
 
-$encourage_text = woocommerce_avatar_discounts()->admin_settings()->get_setting( 'encourage_text' );
-$selected       = '';
+$selected = '';
 
 ?>
 <div class="wc-ad-manage-avatars">
@@ -41,6 +40,7 @@ $selected       = '';
 
 		$avatar['id'] = $index; // TODO: Remove temorary ID.
 
+		// TODO: Set selected in class based on database data.
 		if ( 'featured' === $avatar['status'] ) {
 			$selected = $avatar['id'];
 		}
