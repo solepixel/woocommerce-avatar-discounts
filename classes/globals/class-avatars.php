@@ -174,6 +174,14 @@ class Avatars {
 				require_once( ABSPATH . 'wp-admin/includes/media.php' );
 			}
 
+			$avatars = $this->get_user_avatars( $user_id, true );
+			$count   = count( $avatars );
+			$limit   = woocommerce_avatar_discounts()->admin_settings()->get_setting( 'limit' );
+			if ( $count >= $limit ) {
+				$this->error = __( 'You have reached the maximum avatars of', 'woocommerce-avatar-discounts' ) . ' ' . $limit . '.';
+				return false;
+			}
+
 			$post_data  = array(
 				'post_author' => $user_id,
 			);
@@ -264,10 +272,11 @@ class Avatars {
 	 * @since 1.0.0
 	 *
 	 * @param int  $user_id  The User ID.
+	 * @param bool $active_only  Exclude deleted.
 	 *
 	 * @return array  Array of Avatars.
 	 */
-	public function get_user_avatars( $user_id = false ) {
+	public function get_user_avatars( $user_id = false, $active_only = false ) {
 
 		if ( false === $user_id ) {
 			$user_id = get_current_user_id();
@@ -276,6 +285,9 @@ class Avatars {
 		$args = array(
 			'user_id' => $user_id,
 		);
+		if ( $active_only ) {
+			$args['active_only'] = true;
+		}
 
 		return $this->all( $args );
 
@@ -292,7 +304,7 @@ class Avatars {
 	 * @return object  Avatar object.
 	 */
 	public function get_current_avatar( $user_id = false ) {
-		$avatars = $this->get_user_avatars( $user_id );
+		$avatars = $this->get_user_avatars( $user_id, true );
 		if ( empty( $avatars ) ) {
 			return false;
 		}
@@ -473,7 +485,7 @@ class Avatars {
 	 * @return string  HTML for Manage Avatars.
 	 */
 	private function manage_avatars( $user_id = false ) {
-		$avatars = $this->get_user_avatars( $user_id );
+		$avatars = $this->get_user_avatars( $user_id, true );
 
 		$encourage_text = woocommerce_avatar_discounts()->admin_settings()->get_setting( 'encourage_text' );
 

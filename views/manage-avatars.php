@@ -37,10 +37,6 @@ if ( empty( $avatars ) && ! $encourage_text ) {
 			<?php endif; ?>
 			<?php
 			foreach ( $avatars as $avatar ) :
-				if ( 'deleted' === $avatar->status ) :
-					continue;
-				endif;
-
 				// TODO: Set selected in class based on database data.
 				if ( 'featured' === $avatar->status ) {
 					$selected = $avatar->id;
