@@ -31,24 +31,30 @@ defined( 'ABSPATH' ) or exit;
  */
 function woocommerce_avatar_discounts() {
 
-	// Global classes.
-	WooCommerce_Avatar_Discounts_Loader::load_class( 'Globals\\Avatars', 'globals/class-avatars' );
+	$classes = array(
+		// Global classes.
+		'Globals\\Avatars' => 'globals/class-avatars',
 
-	// Rest API classes.
-	WooCommerce_Avatar_Discounts_Loader::load_class( 'API\\Avatars', 'api/class-avatars' );
+		// Rest API classes.
+		'API\\Avatars' =>  'api/class-avatars',
 
-	// Frontend classes.
-	WooCommerce_Avatar_Discounts_Loader::load_class( 'Frontend\\Profile', 'frontend/class-profile' );
-	WooCommerce_Avatar_Discounts_Loader::load_class( 'Frontend\\Checkout', 'frontend/class-checkout' );
-	WooCommerce_Avatar_Discounts_Loader::load_class( 'Frontend\\Orders', 'frontend/class-orders' );
+		// Frontend classes.
+		'Frontend\\Profile'  => 'frontend/class-profile',
+		'Frontend\\Checkout' => 'frontend/class-checkout',
+		'Frontend\\Orders'   => 'frontend/class-orders',
 
-	// Admin classes.
-	WooCommerce_Avatar_Discounts_Loader::load_class( 'Admin\\Users', 'admin/class-users' );
-	WooCommerce_Avatar_Discounts_Loader::load_class( 'Admin\\Settings', 'admin/class-settings' );
-	WooCommerce_Avatar_Discounts_Loader::load_class( 'Admin\\Orders', 'admin/class-orders' );
+		// Admin classes.
+		'Admin\\Users'    => 'admin/class-users',
+		'Admin\\Settings' => 'admin/class-settings',
+		'Admin\\Orders'   => 'admin/class-orders',
 
-	// Load the core Plugin class.
-	WooCommerce_Avatar_Discounts_Loader::load_class( 'Core', 'class-core' );
+		// The core Plugin class.
+		'Core' => 'class-core',
+	);
+
+	foreach ( $classes as $class_name => $class_path ) {
+		WooCommerce_Avatar_Discounts_Loader::load_class( $class_name, $class_path );
+	}
 
 	return \WooCommerceAvatarDiscounts\Core::instance();
 }
