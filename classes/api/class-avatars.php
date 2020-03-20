@@ -23,16 +23,26 @@ namespace WooCommerceAvatarDiscounts\API;
 
 defined( 'ABSPATH' ) or exit;
 
+use \WP_REST_Controller;
+use \WP_REST_Request;
+use \WP_REST_Response;
+use \WP_REST_Server;
 
 /**
  * The Rest API Avatars class.
  *
  * @since 1.0.0
  */
-class Avatars {
+class Avatars extends WP_REST_Controller {
 
-	/** @var Avatars class instance */
-	protected static $instance;
+	/** @var string API version */
+	protected $version = '1';
+
+	/** @var string API namespace */
+	protected $slug = 'wc-avatar-discounts';
+
+	/** @var string  API Endpoint */
+	protected $route = 'avatars';
 
 
 	/**
@@ -42,25 +52,51 @@ class Avatars {
 	 */
 	public function __construct() {
 
-		// TODO: Hook into Rest API init, Add endpoint for customer avatars.
+		/** Set the global namespace. */
+		$this->namespace = $this->slug . '/v' . $this->version;
+
+		/** Hook into Rest API init, Add endpoint for customer avatars. */
+		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
 
 	}
 
 
 	/**
-	 * Gets the singleton instance of the rest api avatars class.
+	 * Register Rest API Route for Avatars.
+	 *
+	 * @since 1.0.0
+	 */
+	public function register_routes() {
+		/** URL: /wp-json/wc-avatar-discounts/v1/avatars */
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->route,
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'get_avatars' ),
+				'permission_callback' => function () {
+					return (bool) wp_get_current_user();
+				},
+			)
+		);
+	}
+
+
+	/**
+	 * API Endpoint: avatars
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return Avatars
+	 * @param \WP_REST_Request $request  Rest Request object.
+	 *
+	 * @return \WP_REST_Response  Rest Response object.
 	 */
-	public static function instance() {
+	public function get_avatars( WP_REST_Request $request ) {
+		$data = array(
+			'avatars' => woocommerce_avatar_discounts()->avatars()->all(),
+		);
 
-		if ( null === self::$instance ) {
-			self::$instance = new self();
-		}
-
-		return self::$instance;
+		return new WP_REST_Response( $data, 200 );
 	}
 
 

@@ -57,6 +57,29 @@ class Avatars {
 	}
 
 
+	public function all() {
+		$avatars     = array();
+		$demo_avatar = 'https://www.gravatar.com/avatar/00000000000000000000000000000000';
+		$avatars[]   = array(
+			'url'    => $demo_avatar,
+			'status' => 'active',
+		);
+		$avatars[]   = array(
+			'url'    => $demo_avatar . '?d=mp&f=y',
+			'status' => 'active',
+		);
+		$avatars[]   = array(
+			'url'    => $demo_avatar . '?d=identicon&f=y',
+			'status' => 'deleted',
+		);
+		$avatars[]   = array(
+			'url'    => $demo_avatar . '?d=wavatar&f=y',
+			'status' => 'active',
+		);
+		return $avatars;
+	}
+
+
 	/**
 	 * Sets the original img from `get_avatar`.
 	 *
