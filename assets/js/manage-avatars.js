@@ -29,6 +29,7 @@ WoocommerceAvatarDiscounts.ManageAvatars = ( function( $ ) {
 			const id = $( this ).attr( 'data-avatar-id' );
 
 			if ( ! is_expanded() ) {
+				$( this ).blur();
 				expand_avatars();
 				return;
 			}
@@ -43,6 +44,10 @@ WoocommerceAvatarDiscounts.ManageAvatars = ( function( $ ) {
 	 * @return {Boolean}  If expanded or not.
 	 */
 	is_expanded = function() {
+		// Always return true for wp-admin.
+		if ( $( 'body' ).hasClass( 'wp-admin' ) ) {
+			return true;
+		}
 		return $( wrapper_class ).hasClass( 'expanded' );
 	},
 
@@ -71,7 +76,7 @@ WoocommerceAvatarDiscounts.ManageAvatars = ( function( $ ) {
 
 		// Change featured Avatar.
 		$( wrapper_class + ' a.status-featured' ).removeClass( 'status-featured' );
-		$( wrapper_class + ' a[data-avatar-id="' + id + '"]' ).addClass( 'status-featured' );
+		$( wrapper_class + ' a[data-avatar-id="' + id + '"]' ).addClass( 'status-featured' ).blur();
 
 		// Collapse interface.
 		collapse_avatars();

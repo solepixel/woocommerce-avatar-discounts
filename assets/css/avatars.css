@@ -1,0 +1,32 @@
+.wc-ad-manage-avatars a,
+.wc-ad-manage-avatars a img {
+	display: inline-block;
+}
+.wc-ad-manage-avatars a img {
+	border: 2px solid transparent;
+}
+
+.wc-ad-manage-avatars a:focus {
+	outline: none;
+}
+
+body:not(.wp-admin) .wc-ad-manage-avatars a,
+body:not(.wp-admin) .wc-ad-manage-avatars .upload-avatar {
+	max-width: 0;
+	overflow: hidden;
+}
+.wc-ad-manage-avatars a,
+.wc-ad-manage-avatars a img,
+.wc-ad-manage-avatars .upload-avatar {
+	transition: all 200ms ease-in-out;
+}
+
+.wc-ad-manage-avatars a.status-featured,
+.wc-ad-manage-avatars.expanded a,
+.wc-ad-manage-avatars.expanded .upload-avatar {
+	max-width: 100%;
+}
+
+.wc-ad-manage-avatars a.status-featured img {
+	border-color: blue;
+}
