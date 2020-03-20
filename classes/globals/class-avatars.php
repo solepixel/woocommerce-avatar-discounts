@@ -97,8 +97,29 @@ class Avatars {
 	 */
 	public function all( $args = array() ) {
 
-		return $this->db->all( $args );
+		$avatars = $this->db->all( $args );
+		$avatars = $this->add_mime_type_info( $avatars );
+		return $avatars;
 
+	}
+
+
+	/**
+	 * Inject any missing mime type information into the results.
+	 *
+	 * @param array $avatars  Array of Avatars.
+	 *
+	 * @param array  Updated avatars array
+	 */
+	public function add_mime_type_info( $avatars ) {
+		foreach ( $avatars as &$avatar ) {
+			if ( $avatar->mime_type ) {
+				continue;
+			}
+			$image             = $avatar->url;
+			$avatar->mime_type = exif_imagetype( $image );
+		}
+		return $avatars;
 	}
 
 

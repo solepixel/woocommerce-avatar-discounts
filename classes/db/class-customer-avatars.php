@@ -117,8 +117,9 @@ class Customer_Avatars extends Table {
 		}
 
 		$sql = sprintf(
-			'SELECT * FROM `%s` `a` %s %s;',
+			'SELECT `a`.*, `p`.`post_mime_type` AS `mime_type` FROM `%s` `a` LEFT JOIN %s `p` ON `a`.`attachment_id` = `p`.`ID` %s %s;',
 			$this->table(),
+			$this->wpdb->posts,
 			$where,
 			$orderby
 		);

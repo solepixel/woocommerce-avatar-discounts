@@ -58,6 +58,8 @@ class Avatars extends WP_REST_Controller {
 		/** Hook into Rest API init, Add endpoint for customer avatars. */
 		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
 
+		// add_filter( 'rest_authentication_errors', array( $this, 'require_authentication' ) );
+
 	}
 
 
@@ -73,10 +75,8 @@ class Avatars extends WP_REST_Controller {
 			'/' . $this->route,
 			array(
 				'methods'             => WP_REST_Server::READABLE,
-				'callback'            => array( $this, 'get_avatars' ),
-				'permission_callback' => function () {
-					return (bool) wp_get_current_user();
-				},
+				'callback'            => array( $this, 'get_items' ),
+				'permission_callback' => array( $this, 'get_items_permissions_check' ),
 			)
 		);
 	}
@@ -91,12 +91,29 @@ class Avatars extends WP_REST_Controller {
 	 *
 	 * @return \WP_REST_Response  Rest Response object.
 	 */
-	public function get_avatars( WP_REST_Request $request ) {
+	public function get_items( $request ) {
 		$data = array(
 			'avatars' => woocommerce_avatar_discounts()->avatars()->all(),
 		);
 
 		return new WP_REST_Response( $data, 200 );
+	}
+
+
+	/**
+	 * Check whether a given request has permission to read notes.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param  WP_REST_Request $request Full details about the request.
+	 * @return WP_Error|boolean
+	 */
+	public function get_items_permissions_check( $request ) {
+		if ( ! is_user_logged_in() ) {
+			return new \WP_Error( 'woocommerce_avatar_discounts_unauthorized', __( 'You must be authenticated to access this API Endpoint.', 'woocommerce-avatar-discounts' ), array( 'status' => rest_authorization_required_code() ) );
+		}
+
+		return true;
 	}
 
 
