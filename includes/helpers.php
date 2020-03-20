@@ -27,11 +27,13 @@ defined( 'ABSPATH' ) or exit;
  *
  * @since 1.0.0
  *
- * return \WooCommerceAvatarDiscounts\Plugin
+ * return \WooCommerceAvatarDiscounts\Core
  */
 function woocommerce_avatar_discounts() {
 
-	WooCommerce_Avatar_Discounts_Loader::load_class( 'Core', 'class-core.php' );
+	// Load necessary core classes.
+	WooCommerce_Avatar_Discounts_Loader::load_class( 'Core', 'class-core' );
+	// TODO: Load Frontend\Profile frontend/class-profile.
 
 	return \WooCommerceAvatarDiscounts\Core::instance();
 }

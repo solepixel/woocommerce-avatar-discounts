@@ -86,7 +86,7 @@ class WooCommerce_Avatar_Discounts_Loader {
 	 */
 	public static function load_class( $class_name, $file_path ) {
 		if ( ! class_exists( '\\WooCommerceAvatarDiscounts\\' . $class_name ) ) {
-			$class_path = self::$plugin_path . 'classes/' . $file_path;
+			$class_path = self::$plugin_path . 'classes/' . $file_path . '.php';
 
 			if ( ! file_exists( $class_path ) ) {
 				die( 'Unable to load ' . self::PLUGIN_NAME . ' ' . $class_name . ' class (' . $file_path . ').' );

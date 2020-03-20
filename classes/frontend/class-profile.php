@@ -19,81 +19,40 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
-namespace WooCommerceAvatarDiscounts;
+namespace WooCommerceAvatarDiscounts\Frontend;
 
 defined( 'ABSPATH' ) or exit;
 
-// TODO: Use Frontend Profile class.
 
 /**
- * The main plugin class.
+ * The Frontend Profile class.
  *
  * @since 1.0.0
  */
-class Core {
+class Profile {
 
-
-	/** plugin version number */
-	const VERSION = '1.0.0';
-
-	/** plugin ID */
-	const PLUGIN_ID = 'woocommerce-avatar-discounts';
-
-	// TODO: Frontend Profile class instance property.
-
-	/** @var Core plugin instance */
+	/** @var Profile class instance */
 	protected static $instance;
 
 
 	/**
-	 * Constructs the plugin.
+	 * Frontend profile hooks.
 	 *
 	 * @since 1.0.0
 	 */
 	public function __construct() {
 
-		/**
-		 * Fires upon plugin loaded.
-		 *
-		 * @since 1.0.0
-		 */
-		do_action( 'woocommerce_avatar_discounts_loaded' );
-
-		/** Init the plugin */
-		$this->init();
-
-		/**
-		 * Fires upon plugin initialized.
-		 *
-		 * @since 1.0.0
-		 */
-		do_action( 'woocommerce_avatar_discounts_initialized' );
+		// TODO: Hook into My Account > Account Details, Add profile photo selection interface.
 
 	}
 
 
 	/**
-	 * Initializes the general plugin functionality.
-	 *
-	 * @since 1.0.0
-	 */
-	public function init() {
-
-		// TODO: Init core functionality:
-		//   Frontend Profile class instance
-
-	}
-
-
-	// TODO: Frontend Profile Getter.
-
-
-	/**
-	 * Gets the singleton instance of the plugin.
+	 * Gets the singleton instance of the profile.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return Core
+	 * @return Profile
 	 */
 	public static function instance() {
 
