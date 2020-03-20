@@ -86,7 +86,10 @@ class Users {
 			return $avatar;
 		}
 
-		// TODO: Check permission if current user can modify active user.
+		// Check permission if current user can modify active user.
+		if ( ! current_user_can( 'edit_users' ) ) {
+			return $avatar;
+		}
 
 		woocommerce_avatar_discounts()->avatars()->set_original( $avatar );
 		woocommerce_avatar_discounts()->avatars()->set_original_args( $args );
