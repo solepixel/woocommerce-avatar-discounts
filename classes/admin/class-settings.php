@@ -57,6 +57,18 @@ class Settings {
 
 
 	/**
+	 * Get Settings Prefix
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string  Settings prefix.
+	 */
+	public function get_prefix() {
+		return $this->prefix;
+	}
+
+
+	/**
 	 * Get a setting value.
 	 *
 	 * @since 1.0.0

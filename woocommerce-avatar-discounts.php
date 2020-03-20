@@ -21,6 +21,7 @@
 
 defined( 'ABSPATH' ) or exit;
 
+
 /**
  * The plugin loader class.
  *
@@ -87,11 +88,111 @@ class WooCommerce_Avatar_Discounts_Loader {
 			return;
 		}
 
+		$this->includes();
+
+		// Setup Debugger.
+		$core      = \WooCommerceAvatarDiscounts\Core::instance();
+		$plugin_id = $core->get_plugin_id();
+
+		$debug = \WooCommerceAvatarDiscounts\Debug::instance();
+		$debug->set_plugin_slug( $plugin_id );
+
+		// Need to setup Database table before loading everything else.
+		$this->database_delta();
+
 		// load required helper functions.
 		require_once( plugin_dir_path( __FILE__ ) . 'includes/helpers.php' );
 
 		// away we go!
 		woocommerce_avatar_discounts();
+	}
+
+
+	/**
+	 * Load necessary classes
+	 *
+	 * @since 1.0.0
+	 */
+	public function includes() {
+
+		$classes = array(
+			// Global classes.
+			'Globals\\Avatars' => 'globals/class-avatars',
+
+			// Debugger class.
+			'Debug' => 'class-debug',
+
+			// DB classes.
+			'Db\\Core'             => 'db/class-core',
+			'Db\\Table'            => 'db/class-table',
+			'Db\\Customer_Avatars' => 'db/class-customer-avatars',
+
+			// Rest API classes.
+			'API\\Avatars' =>  'api/class-avatars',
+
+			// Frontend classes.
+			'Frontend\\Profile'  => 'frontend/class-profile',
+			'Frontend\\Checkout' => 'frontend/class-checkout',
+			'Frontend\\Orders'   => 'frontend/class-orders',
+
+			// Admin classes.
+			'Admin\\Users'    => 'admin/class-users',
+			'Admin\\Settings' => 'admin/class-settings',
+			'Admin\\Orders'   => 'admin/class-orders',
+
+			// The core Plugin class.
+			'Core' => 'class-core',
+		);
+
+		self::autoload( $classes );
+
+	}
+
+
+	/**
+	 * Trigger Database Deltas.
+	 *
+	 * @since 1.0.0
+	 */
+	public function database_delta() {
+
+		if ( ! function_exists( 'woocommerce_avatar_discounts' ) ) {
+			$settings        = \WooCommerceAvatarDiscounts\Admin\Settings::instance();
+			$settings_prefix = $settings->get_prefix();
+
+			$core         = \WooCommerceAvatarDiscounts\Core::instance();
+			$table_prefix = $core->get_table_prefix();
+		} else {
+			$settings_prefix = woocommerce_avatar_discounts()->admin_settings()->get_prefix();
+			$table_prefix    = woocommerce_avatar_discounts()->get_table_prefix();
+		}
+
+		// Init database deltas.
+		$db = \WooCommerceAvatarDiscounts\Db\Core::instance();
+		$db->set_setting_prefix( $settings_prefix );
+		$db->set_table_prefix( $table_prefix );
+
+		$avatars = \WooCommerceAvatarDiscounts\Globals\Avatars::instance();
+
+		$db->add_table( $avatars->get_table_schema() );
+
+		// Go!
+		$db->delta();
+
+	}
+
+
+	/**
+	 * Auto load array of classes.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $classes  Array of classes and file names.
+	 */
+	public static function autoload( $classes ) {
+		foreach ( $classes as $class_name => $class_path ) {
+			self::load_class( $class_name, $class_path );
+		}
 	}
 
 
@@ -203,6 +304,8 @@ class WooCommerce_Avatar_Discounts_Loader {
 	/**
 	 * Get Plugin Path
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return string  Path to plugin folder.
 	 */
 	public static function get_plugin_path() {
@@ -212,6 +315,8 @@ class WooCommerce_Avatar_Discounts_Loader {
 
 	/**
 	 * Get Plugin URL
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return string  URL to plugin folder.
 	 */

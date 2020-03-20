@@ -48,6 +48,9 @@ class Core {
 	/** plugin ID */
 	const PLUGIN_ID = 'woocommerce-avatar-discounts';
 
+	/** prefix for custom database tables */
+	const DB_TABLE_PREFIX = 'wcad_';
+
 
 	/** @var Globals\Avatars Avatars instance */
 	private $avatars_handler;
@@ -133,6 +136,8 @@ class Core {
 
 	/**
 	 * Register CSS/JS Assets.
+	 *
+	 * @since 1.0.0
 	 */
 	public function assets() {
 
@@ -160,6 +165,8 @@ class Core {
 	/**
 	 * Enqueue a JS file.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $script_name  Script name.
 	 */
 	public function enqueue_script( $script_name ) {
@@ -170,6 +177,8 @@ class Core {
 	/**
 	 * Enqueue a CSS file.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $style_name  Style name.
 	 */
 	public function enqueue_style( $style_name ) {
@@ -179,6 +188,8 @@ class Core {
 
 	/**
 	 * Gets the Global Avatars instance.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return Globals\Avatars
 	 */
@@ -192,6 +203,8 @@ class Core {
 	/**
 	 * Gets the Frontend Profile instance.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return Frontend\Profile
 	 */
 	public function frontend_profile() {
@@ -204,6 +217,8 @@ class Core {
 	/**
 	 * Gets the Frontend Checkout instance.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return Frontend\Checkout
 	 */
 	public function frontend_checkout() {
@@ -215,6 +230,8 @@ class Core {
 
 	/**
 	 * Gets the Frontend Orders instance.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return Frontend\Orders
 	 */
@@ -240,6 +257,8 @@ class Core {
 	/**
 	 * Gets the Admin Settings instance.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return Admin\Settings
 	 */
 	public function admin_settings() {
@@ -252,12 +271,38 @@ class Core {
 	/**
 	 * Gets the Admin Orders instance.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return Admin\Orders
 	 */
 	public function admin_orders() {
 
 		return $this->admin_orders_handler;
 
+	}
+
+
+	/**
+	 * Get the plugin ID.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string  The plugin ID.
+	 */
+	public function get_plugin_id() {
+		return self::PLUGIN_ID;
+	}
+
+
+	/**
+	 * Get the application table prefix.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string  The application table prefix.
+	 */
+	public function get_table_prefix() {
+		return self::DB_TABLE_PREFIX;
 	}
 
 

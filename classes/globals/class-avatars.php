@@ -24,6 +24,7 @@ namespace WooCommerceAvatarDiscounts\Globals;
 defined( 'ABSPATH' ) or exit;
 
 use \WooCommerce_Avatar_Discounts_Loader as Loader;
+use \WooCommerceAvatarDiscounts\Db\Customer_Avatars as Customer_Avatars;
 
 /**
  * The Avatars class.
@@ -31,6 +32,9 @@ use \WooCommerce_Avatar_Discounts_Loader as Loader;
  * @since 1.0.0
  */
 class Avatars {
+
+	/** @var \Db\Avatars Avatars database table */
+	private $db;
 
 	/** @var string Original Avatar image HTML */
 	private $original;
@@ -52,12 +56,33 @@ class Avatars {
 	 */
 	public function __construct() {
 
-		// Probably do nothing here.
+		$this->db = new Customer_Avatars();
 
 	}
 
 
+	/**
+	 * Get the Avatars table schema.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string
+	 */
+	public function get_table_schema() {
+		return $this->db->get_schema();
+	}
+
+
+	/**
+	 * Get All Avatars.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return array  Array of avatars.
+	 */
 	public function all() {
+		return $this->db->all();
+
 		$avatars     = array();
 		$demo_avatar = 'https://www.gravatar.com/avatar/00000000000000000000000000000000';
 		$avatars[]   = array(
@@ -233,6 +258,8 @@ class Avatars {
 
 	/**
 	 * Temp function (maybe).
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return string  HTML for Manage Avatars.
 	 */

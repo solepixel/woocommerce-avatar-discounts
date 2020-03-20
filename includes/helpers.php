@@ -30,32 +30,6 @@ defined( 'ABSPATH' ) or exit;
  * return \WooCommerceAvatarDiscounts\Core
  */
 function woocommerce_avatar_discounts() {
-
-	$classes = array(
-		// Global classes.
-		'Globals\\Avatars' => 'globals/class-avatars',
-
-		// Rest API classes.
-		'API\\Avatars' =>  'api/class-avatars',
-
-		// Frontend classes.
-		'Frontend\\Profile'  => 'frontend/class-profile',
-		'Frontend\\Checkout' => 'frontend/class-checkout',
-		'Frontend\\Orders'   => 'frontend/class-orders',
-
-		// Admin classes.
-		'Admin\\Users'    => 'admin/class-users',
-		'Admin\\Settings' => 'admin/class-settings',
-		'Admin\\Orders'   => 'admin/class-orders',
-
-		// The core Plugin class.
-		'Core' => 'class-core',
-	);
-
-	foreach ( $classes as $class_name => $class_path ) {
-		WooCommerce_Avatar_Discounts_Loader::load_class( $class_name, $class_path );
-	}
-
 	return \WooCommerceAvatarDiscounts\Core::instance();
 }
 
