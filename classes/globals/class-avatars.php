@@ -64,7 +64,7 @@ class Avatars {
 	/**
 	 * Display the avatar used at time of order.
 	 *
-	 * @param \WooCommerce\Order $order  WooCommerce Order object.
+	 * @param \WC_Order $order  WooCommerce Order object.
 	 */
 	public function order( $order ) {
 

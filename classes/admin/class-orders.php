@@ -56,7 +56,7 @@ class Orders {
 	/**
 	 * Insert customer avatar into Order Detail meta box.
 	 *
-	 * @param \WooCommerce\Order $order  WooCommerce Order object.
+	 * @param \WC_Order $order  WooCommerce Order object.
 	 */
 	public function insert_customer_avatar( $order ) {
 
