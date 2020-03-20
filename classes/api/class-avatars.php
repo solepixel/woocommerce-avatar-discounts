@@ -58,8 +58,6 @@ class Avatars extends WP_REST_Controller {
 		/** Hook into Rest API init, Add endpoint for customer avatars. */
 		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
 
-		// add_filter( 'rest_authentication_errors', array( $this, 'require_authentication' ) );
-
 	}
 
 
