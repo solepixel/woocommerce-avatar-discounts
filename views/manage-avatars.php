@@ -25,12 +25,15 @@ if ( empty( $avatars ) && ! $encourage_text ) {
 	return;
 }
 
-$selected  = '';
-$classname = empty( $avatars ) ? ' expanded' : '';
-if ( empty( $avatars ) ) {
-	$button_text = __( 'Select Your Photo', 'woocommerce-avatar-discounts' );
-} else {
+$selected    = '';
+$classname   = empty( $avatars ) ? ' expanded' : '';
+$count       =  0;
+$button_text = __( 'Select Your Photo', 'woocommerce-avatar-discounts' );
+$badge_title = '';
+if ( ! empty( $avatars ) ) {
 	$button_text = __( 'Upload Another Photo', 'woocommerce-avatar-discounts' );
+	$count       = count( $avatars );
+	$badge_title = $count . ' ' . __( 'Avatars to choose from', 'woocommerce-avatar-discounts' );
 }
 
 ?>
@@ -38,27 +41,30 @@ if ( empty( $avatars ) ) {
 	<?php if ( $encourage_text && ! is_admin() ) : ?>
 		<p class="encourage-text"><?php echo esc_html( $encourage_text ); ?></p>
 	<?php endif; ?>
-	<?php
-	if ( ! empty( $avatars ) ) :
-		foreach ( $avatars as $avatar ) :
-			if ( 'deleted' === $avatar->status ) :
-				continue;
-			endif;
+	<?php if ( ! empty( $avatars ) ) : ?>
+		<div class="wc-ad-avatar-selection">
+			<?php if ( $badge_title ) : ?>
+				<b class="badge-count" title="<?php echo esc_attr( $badge_title ); ?>"><?php echo esc_html( $count ); ?></b>
+			<?php endif; ?>
+			<?php
+			foreach ( $avatars as $avatar ) :
+				if ( 'deleted' === $avatar->status ) :
+					continue;
+				endif;
 
-			// TODO: Set selected in class based on database data.
-			if ( 'featured' === $avatar->status ) {
-				$selected = $avatar->id;
-			}
-			?>
-			<a href="#avatar" class="status-<?php echo esc_attr( $avatar->status ); ?>" data-avatar-id="<?php echo esc_attr( $avatar->id ); ?>">
-				<!--<button class="edit-avatar">Edit</button>-->
-				<!--<button class="delete-avatar">Delete</button>-->
-				<img src="<?php echo esc_attr( $avatar->url ); ?>">
-			</a>
-		<?php
-		endforeach;
-	endif;
-	?>
+				// TODO: Set selected in class based on database data.
+				if ( 'featured' === $avatar->status ) {
+					$selected = $avatar->id;
+				}
+				?>
+				<a href="#avatar" class="status-<?php echo esc_attr( $avatar->status ); ?>" data-avatar-id="<?php echo esc_attr( $avatar->id ); ?>">
+					<!--<button class="edit-avatar">Edit</button>-->
+					<!--<button class="delete-avatar">Delete</button>-->
+					<img src="<?php echo esc_attr( $avatar->url ); ?>">
+				</a>
+			<?php endforeach; ?>
+		</div>
+	<?php endif; ?>
 	<div class="upload-avatar">
 		<button class="upload-button">
 			<?php echo esc_html( $button_text ); ?>
