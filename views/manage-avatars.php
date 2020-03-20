@@ -21,12 +21,13 @@
 
 defined( 'ABSPATH' ) or exit;
 
-if ( ! empty( $return ) ) {
-	echo $return;
+if ( empty( $avatars ) ) {
 	return;
 }
 
 ?>
 <div class="wc-ad-manage-avatars">
-	MANAGE AVATARS
+	<?php foreach ( $avatars as $avatar ) : ?>
+		<img src="<?php echo esc_attr( $avatar['url'] ); ?>">
+	<?php endforeach; ?>
 </div>

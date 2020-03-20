@@ -81,6 +81,47 @@ class Avatars {
 
 
 	/**
+	 * Get Current Users Avatars.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return array  Array of Avatars.
+	 */
+	public function get_user_avatars() {
+
+		// TODO: Populate with real data.
+		$avatars = array();
+		if ( ! empty( $this->original_args['url'] ) ) {
+			$avatars[] = array(
+				'url'    => $this->original_args['url'],
+				'status' => 'featured',
+			);
+		}
+
+		$demo_avatar = 'https://www.gravatar.com/avatar/00000000000000000000000000000000';
+		$avatars[]   = array(
+			'url'    => $demo_avatar,
+			'status' => 'active',
+		);
+		$avatars[]   = array(
+			'url'    => $demo_avatar . '?d=mp&f=y',
+			'status' => 'active',
+		);
+		$avatars[]   = array(
+			'url'    => $demo_avatar . '?d=identicon&f=y',
+			'status' => 'deleted',
+		);
+		$avatars[]   = array(
+			'url'    => $demo_avatar . '?d=wavatar&f=y',
+			'status' => 'active',
+		);
+
+		return $avatars;
+
+	}
+
+
+	/**
 	 * Outputs the Manage Avatars interface
 	 *
 	 * @since 1.0.0
@@ -134,8 +175,9 @@ class Avatars {
 	private function frontend() {
 
 		// TODO: Display Frontend Manage Avatars Interface
+		$avatars = $this->get_user_avatars();
 
-		return \WooCommerce_Avatar_Discounts_Loader::get_view( 'manage-avatars' );
+		return \WooCommerce_Avatar_Discounts_Loader::get_view( 'manage-avatars', compact( 'avatars' ) );
 
 	}
 
@@ -150,12 +192,9 @@ class Avatars {
 	private function admin() {
 
 		// TODO: Display Admin Manage Avatars Interface
-		$return = '';
-		if ( $this->original ) {
-			$return = $this->original;
-		}
+		$avatars = $this->get_user_avatars();
 
-		return \WooCommerce_Avatar_Discounts_Loader::get_view( 'manage-avatars', compact( 'return' ) );
+		return \WooCommerce_Avatar_Discounts_Loader::get_view( 'manage-avatars', compact( 'avatars' ) );
 
 	}
 
