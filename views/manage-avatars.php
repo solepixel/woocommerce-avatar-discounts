@@ -21,38 +21,43 @@
 
 defined( 'ABSPATH' ) or exit;
 
-if ( empty( $avatars ) ) {
+if ( empty( $avatars ) && ! $encourage_text ) {
 	return;
 }
 
-$selected = '';
+$selected  = '';
+$classname = empty( $avatars ) ? ' expanded' : '';
 
 ?>
-<div class="wc-ad-manage-avatars">
+<div class="wc-ad-manage-avatars<?php echo esc_attr( $classname ); ?>">
 	<?php if ( $encourage_text && ! is_admin() ) : ?>
 		<p class="encourage-text"><?php echo esc_html( $encourage_text ); ?></p>
 	<?php endif; ?>
 	<?php
-	foreach ( $avatars as $index => $avatar ) :
-		if ( 'deleted' === $avatar['status'] ) :
-			continue;
-		endif;
+	if ( ! empty( $avatars ) ) :
+		foreach ( $avatars as $index => $avatar ) :
+			if ( 'deleted' === $avatar['status'] ) :
+				continue;
+			endif;
 
-		$avatar['id'] = $index; // TODO: Remove temorary ID.
+			$avatar['id'] = $index; // TODO: Remove temorary ID.
 
-		// TODO: Set selected in class based on database data.
-		if ( 'featured' === $avatar['status'] ) {
-			$selected = $avatar['id'];
-		}
-		?>
-		<a href="#avatar" class="status-<?php echo esc_attr( $avatar['status'] ); ?>" data-avatar-id="<?php echo esc_attr( $avatar['id'] ); ?>">
-			<!--<button class="edit-avatar">Edit</button>-->
-			<!--<button class="delete-avatar">Delete</button>-->
-			<img src="<?php echo esc_attr( $avatar['url'] ); ?>">
-		</a>
-	<?php endforeach; ?>
+			// TODO: Set selected in class based on database data.
+			if ( 'featured' === $avatar['status'] ) {
+				$selected = $avatar['id'];
+			}
+			?>
+			<a href="#avatar" class="status-<?php echo esc_attr( $avatar['status'] ); ?>" data-avatar-id="<?php echo esc_attr( $avatar['id'] ); ?>">
+				<!--<button class="edit-avatar">Edit</button>-->
+				<!--<button class="delete-avatar">Delete</button>-->
+				<img src="<?php echo esc_attr( $avatar['url'] ); ?>">
+			</a>
+		<?php
+		endforeach;
+	endif;
+	?>
 	<div class="upload-avatar">
-		<button>Upload New Avatar</button>
+		<button id="avatar-upload" class="secondary"><?php esc_html_e( 'Upload Your Avatar', 'woocommerce-avatar-discounts' ); ?></button>
 	</div>
 	<input type="hidden" name="woocommerce_avatar_discounts_avatar" value="<?php echo esc_attr( $selected ); ?>">
 </div>

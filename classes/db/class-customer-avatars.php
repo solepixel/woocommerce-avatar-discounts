@@ -83,14 +83,26 @@ class Customer_Avatars extends Table {
 
 
 	/**
-	 * All Records
+	 * All Records (filterable by args array)
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return array  Array of results.
 	 */
-	public function all() {
-		$sql  = sprintf( 'SELECT * FROM `%s`;', $this->table() );
+	public function all( $args = array() ) {
+		$where   = '';
+		$orderby = '';
+
+		if ( ! empty( $args['user_id'] ) ) {
+			$where .= $this->wpdb->prepare( 'WHERE `user_id` = %d', (int) $args['user_id'] );
+		}
+
+		if ( ! empty( $args['orderby'] ) ) {
+			$order    = ! empty( $args['order'] ) ? strtoupper( $args['order'] ) : 'ASC';
+			$orderby .= sprintf( 'ORDER BY `%s` %s', $args['orderby'], $order );
+		}
+
+		$sql  = sprintf( 'SELECT * FROM `%s` %s %s;', $this->table(), $where, $orderby );
 		$rows = $this->wpdb->get_results( $sql );
 		if ( ! $rows ) {
 			return array();

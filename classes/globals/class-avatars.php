@@ -69,39 +69,27 @@ class Avatars {
 	 * @return string
 	 */
 	public function get_table_schema() {
+
 		return $this->db->get_schema();
+
 	}
 
 
 	/**
 	 * Get All Avatars.
 	 *
+	 * Args can be passed to filter/sort data.
+	 *
 	 * @since 1.0.0
+	 *
+	 * @param array $args  Array of args.
 	 *
 	 * @return array  Array of avatars.
 	 */
-	public function all() {
-		return $this->db->all();
+	public function all( $args = array() ) {
 
-		$avatars     = array();
-		$demo_avatar = 'https://www.gravatar.com/avatar/00000000000000000000000000000000';
-		$avatars[]   = array(
-			'url'    => $demo_avatar,
-			'status' => 'active',
-		);
-		$avatars[]   = array(
-			'url'    => $demo_avatar . '?d=mp&f=y',
-			'status' => 'active',
-		);
-		$avatars[]   = array(
-			'url'    => $demo_avatar . '?d=identicon&f=y',
-			'status' => 'deleted',
-		);
-		$avatars[]   = array(
-			'url'    => $demo_avatar . '?d=wavatar&f=y',
-			'status' => 'active',
-		);
-		return $avatars;
+		return $this->db->all( $args );
+
 	}
 
 
@@ -138,38 +126,11 @@ class Avatars {
 	 */
 	public function get_user_avatars() {
 
-		// TODO: Populate with real data.
-		$avatars = array();
-		$active  = 0;
-		if ( ! empty( $this->original_args['url'] ) ) {
-			$avatars[] = array(
-				'url'    => $this->original_args['url'],
-				'status' => 'featured',
-			);
-		}
-
-		$demo_avatar = 'https://www.gravatar.com/avatar/00000000000000000000000000000000';
-		$avatars[]   = array(
-			'url'    => $demo_avatar,
-			'status' => 'active',
-		);
-		$avatars[]   = array(
-			'url'    => $demo_avatar . '?d=mp&f=y',
-			'status' => 'active',
-		);
-		$avatars[]   = array(
-			'url'    => $demo_avatar . '?d=identicon&f=y',
-			'status' => 'deleted',
-		);
-		$avatars[]   = array(
-			'url'    => $demo_avatar . '?d=wavatar&f=y',
-			'status' => 'active',
+		$args = array(
+			'user_id' => get_current_user_id(),
 		);
 
-		// Set Featured for demo purposes.
-		$avatars[ $active ]['status'] = 'featured';
-
-		return $avatars;
+		return $this->db->all( $args );
 
 	}
 
