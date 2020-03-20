@@ -60,7 +60,7 @@ class Orders {
 	 */
 	public function insert_customer_avatar( $order ) {
 
-		// TODO: Display order avatar.
+		woocommerce_avatar_discounts()->avatars()->order( $order );
 
 	}
 
