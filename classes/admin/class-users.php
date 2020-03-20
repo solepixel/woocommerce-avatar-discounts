@@ -71,7 +71,20 @@ class Users {
 	 */
 	public function manage_avatars( $avatar, $id_or_email, $size, $default, $alt, $args ) {
 
-		// TODO: Make sure we're only changing the Avatar on the Edit User screen.
+		// Make sure we can get the current screen.
+		if ( ! did_action( 'admin_init' ) ) {
+			return $avatar;
+		}
+
+		// Make sure we're only changing the Avatar on the Edit User screen.
+		$screen = get_current_screen();
+		if ( ! $screen ) {
+			return $avatar;
+		}
+
+		if ( empty( $screen->id ) || 'profile' !== $screen->id ) {
+			return $avatar;
+		}
 
 		// TODO: Check permission if current user can modify active user.
 
