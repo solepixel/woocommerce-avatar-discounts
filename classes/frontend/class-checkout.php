@@ -42,6 +42,7 @@ class Checkout {
 	 */
 	public function __construct() {
 
+		// TODO: Hook into order processing, attach user photo attachment ID to order postmeta.
 		// TODO: Hook into Cart, Insert profile photo selection interface either below Order Notes or below Order total/summary.
 		// TODO: Hook into Order Confirmation Page, Display avatar used at time of purchase.
 
