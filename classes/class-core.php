@@ -23,9 +23,14 @@ namespace WooCommerceAvatarDiscounts;
 
 defined( 'ABSPATH' ) or exit;
 
-// TODO: Use Frontend Profile class.
-// TODO: Use Frontend Checkout class.
-// TODO: Use Frontend Orders class.
+use WooCommerceAvatarDiscounts\Globals\Avatars;
+use WooCommerceAvatarDiscounts\API\Avatars as Avatars_API;
+use WooCommerceAvatarDiscounts\Frontend\Profile;
+use WooCommerceAvatarDiscounts\Frontend\Checkout;
+use WooCommerceAvatarDiscounts\Frontend\Orders as Frontend_Orders;
+use WooCommerceAvatarDiscounts\Admin\Users;
+use WooCommerceAvatarDiscounts\Admin\Settings;
+use WooCommerceAvatarDiscounts\Admin\Orders as Admin_Orders;
 
 /**
  * The main plugin class.
@@ -41,14 +46,31 @@ class Core {
 	/** plugin ID */
 	const PLUGIN_ID = 'woocommerce-avatar-discounts';
 
-	// TODO: Rest API Avatars class instance property.
-	// TODO: Globals Avatars class instance property.
-	// TODO: Frontend Profile class instance property.
-	// TODO: Frontend Checkout class instance property.
-	// TODO: Frontend Orders class instance property.
-	// TODO: Admin Users class instance property.
-	// TODO: Admin Settings class instance property.
-	// TODO: Admin Orders class instance property.
+
+	/** @var Globals\Avatars Avatars instance */
+	private $avatars_handler;
+
+	/** @var API\Avatars Rest API instance for Avatars */
+	private $api_avatars_handler;
+
+	/** @var Frontend\Profile Profile instance */
+	private $frontend_profile_handler;
+
+	/** @var Frontend\Checkout Checkout instance */
+	private $frontend_checkout_handler;
+
+	/** @var Frontend\Orders Orders instance */
+	private $frontend_orders_handler;
+
+	/** @var Admin\Users Users instance */
+	private $admin_users_handler;
+
+	/** @var Admin\Settings Settings instance */
+	private $admin_settings_handler;
+
+	/** @var Admin\Orders Orders instance */
+	private $admin_orders_handler;
+
 
 	/** @var Core plugin instance */
 	protected static $instance;
@@ -88,26 +110,104 @@ class Core {
 	 */
 	public function init() {
 
-		// TODO: Init core functionality:
-		//   Rest API Avatars class instance
-		//   Globals Avatars class instance
-		//   Frontend Profile class instance
-		//   Frontend Checkout class instance
-		//   Frontend Orders class instance
-		//   Admin Users class instance
-		//   Admin Settings class instance
-		//   Admin Orders class instance
+		// Init core functionality.
+		$this->avatars_handler = new Avatars();
+
+		$this->api_avatars_handler = new Avatars_API();
+
+		$this->frontend_profile_handler  = new Profile();
+		$this->frontend_checkout_handler = new Checkout();
+		$this->frontend_orders_handler   = new Frontend_Orders();
+
+		$this->admin_users_handler    = new Users();
+		$this->admin_settings_handler = new Settings();
+		$this->admin_orders_handler   = new Admin_Orders();
 
 	}
 
 
-	// TODO: Globals Avatars Getter.
-	// TODO: Frontend Profile Getter.
-	// TODO: Frontend Checkout Getter.
-	// TODO: Frontend Orders Getter.
-	// TODO: Admin Users Getter.
-	// TODO: Admin Settings Getter.
-	// TODO: Admin Orders Getter.
+	/**
+	 * Gets the Global Avatars instance.
+	 *
+	 * @return Globals\Avatars
+	 */
+	public function avatars() {
+
+		return $this->avatars_handler;
+
+	}
+
+
+	/**
+	 * Gets the Frontend Profile instance.
+	 *
+	 * @return Frontend\Profile
+	 */
+	public function frontend_profile() {
+
+		return $this->frontend_profile_handler;
+
+	}
+
+
+	/**
+	 * Gets the Frontend Checkout instance.
+	 *
+	 * @return Frontend\Checkout
+	 */
+	public function frontend_checkout() {
+
+		return $this->frontend_checkout_handler;
+
+	}
+
+
+	/**
+	 * Gets the Frontend Orders instance.
+	 *
+	 * @return Frontend\Orders
+	 */
+	public function frontend_orders() {
+
+		return $this->frontend_orders_handler;
+
+	}
+
+
+	/**
+	 * Gets the Admin Users instance.
+	 *
+	 * @return Admin\Users
+	 */
+	public function admin_users() {
+
+		return $this->admin_users_handler;
+
+	}
+
+
+	/**
+	 * Gets the Admin Settings instance.
+	 *
+	 * @return Admin\Settings
+	 */
+	public function admin_settings() {
+
+		return $this->admin_settings_handler;
+
+	}
+
+
+	/**
+	 * Gets the Admin Orders instance.
+	 *
+	 * @return Admin\Orders
+	 */
+	public function admin_orders() {
+
+		return $this->admin_orders_handler;
+
+	}
 
 
 	/**
