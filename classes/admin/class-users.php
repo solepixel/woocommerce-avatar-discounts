@@ -42,7 +42,13 @@ class Users {
 	 */
 	public function __construct() {
 
+		/** Bail early if we're not in the admin. */
+		if ( ! is_admin() ) {
+			return;
+		}
+
 		// TODO: Hook into Users > Edit > About Yourself > Profile Picture, Insert profile photo selection interface.
+		// TODO: Use filter 'get_avatar'. Check permission if current user can modify active user.
 
 	}
 

@@ -42,6 +42,11 @@ class Settings {
 	 */
 	public function __construct() {
 
+		/** Bail early if we're not in the admin. */
+		if ( ! is_admin() ) {
+			return;
+		}
+
 		// TODO: Hook into WooCommerce > Settings > Accounts & Privacy, Display setting to limit number of allowed user profile photos.
 		// TODO: Hook into WooCommerce > Settings > Accounts & Privacy, Display setting to add text to encourage customers to get their Avatar Discount.
 

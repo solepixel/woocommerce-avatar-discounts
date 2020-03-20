@@ -42,6 +42,11 @@ class Orders {
 	 */
 	public function __construct() {
 
+		/** Bail early if we're not in the admin. */
+		if ( ! is_admin() ) {
+			return;
+		}
+
 		/** Add customer avatar field to Order Details meta box, below Billing/Shipping address */
 		add_action( 'woocommerce_admin_order_data_after_shipping_address', array( $this, 'insert_customer_avatar' ) );
 
