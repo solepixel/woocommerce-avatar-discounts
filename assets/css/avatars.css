@@ -18,28 +18,28 @@
 	outline: none;
 }
 
-body:not(.wp-admin) .wc-ad-manage-avatars a,
-body:not(.wp-admin) .wc-ad-manage-avatars .upload-avatar {
+body:not(.wp-admin.user-edit-php) .wc-ad-manage-avatars a,
+body:not(.wp-admin.user-edit-php) .wc-ad-manage-avatars .upload-avatar {
 	max-width: 0;
 	overflow: hidden;
 }
-body:not(.wp-admin) .wc-ad-manage-avatars .upload-avatar {
+body:not(.wp-admin.user-edit-php) .wc-ad-manage-avatars .upload-avatar {
 	max-height: 0;
 }
-body.wp-admin .wc-ad-manage-avatars .upload-avatar {
+body.wp-admin.user-edit-php .wc-ad-manage-avatars .upload-avatar {
 	display: none;
 }
 
 .wc-ad-manage-avatars a,
 .wc-ad-manage-avatars a img,
 .wc-ad-manage-avatars .upload-avatar,
-body:not(.wp-admin) .wc-ad-manage-avatars a.status-featured:hover::before {
+body:not(.wp-admin.user-edit-php) .wc-ad-manage-avatars a.status-featured:hover::before {
 	transition: all 200ms ease-in-out;
 }
 
-body:not(.wp-admin) .wc-ad-manage-avatars a.status-featured,
-body:not(.wp-admin) .wc-ad-manage-avatars.expanded a,
-body:not(.wp-admin) .wc-ad-manage-avatars.expanded .upload-avatar {
+body:not(.wp-admin.user-edit-php) .wc-ad-manage-avatars a.status-featured,
+body:not(.wp-admin.user-edit-php) .wc-ad-manage-avatars.expanded a,
+body:not(.wp-admin.user-edit-php) .wc-ad-manage-avatars.expanded .upload-avatar {
 	max-width: 100%;
 }
 .wc-ad-manage-avatars.expanded .upload-avatar {
@@ -50,7 +50,7 @@ body:not(.wp-admin) .wc-ad-manage-avatars.expanded .upload-avatar {
 	border-color: red;
 }
 
-body:not(.wp-admin) .wc-ad-manage-avatars a.status-featured::before {
+body:not(.wp-admin.user-edit-php) .wc-ad-manage-avatars a.status-featured::before {
 	content: '\270E';
 	position: absolute;
 	z-index: 2;
@@ -70,9 +70,9 @@ body:not(.wp-admin) .wc-ad-manage-avatars a.status-featured::before {
 	opacity: 0;
 }
 
-body:not(.wp-admin) .wc-ad-manage-avatars a.status-featured:hover::before {
+body:not(.wp-admin.user-edit-php) .wc-ad-manage-avatars a.status-featured:hover::before {
 	opacity: 1;
 }
-body:not(.wp-admin) .wc-ad-manage-avatars.expanded a.status-featured:hover::before {
+body:not(.wp-admin.user-edit-php) .wc-ad-manage-avatars.expanded a.status-featured:hover::before {
 	opacity: 0;
 }

@@ -30,7 +30,7 @@ $selected       = '';
 
 ?>
 <div class="wc-ad-manage-avatars">
-	<?php if ( $encourage_text ) : ?>
+	<?php if ( $encourage_text && ! is_admin() ) : ?>
 		<p class="encourage-text"><?php echo esc_html( $encourage_text ); ?></p>
 	<?php endif; ?>
 	<?php

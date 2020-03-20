@@ -170,7 +170,10 @@ class Avatars {
 			$this->order = $order;
 		}
 
-		Loader::load_view( 'order-avatar' );
+		$avatars = $this->get_user_avatars();
+		$avatar  = $avatars[0];
+
+		Loader::load_view( 'order-avatar', compact( 'avatar' ) );
 
 	}
 
