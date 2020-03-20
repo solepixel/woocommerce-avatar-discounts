@@ -92,6 +92,7 @@ class Avatars {
 
 		// TODO: Populate with real data.
 		$avatars = array();
+		$active  = 0;
 		if ( ! empty( $this->original_args['url'] ) ) {
 			$avatars[] = array(
 				'url'    => $this->original_args['url'],
@@ -116,6 +117,9 @@ class Avatars {
 			'url'    => $demo_avatar . '?d=wavatar&f=y',
 			'status' => 'active',
 		);
+
+		// Set Featured for demo purposes.
+		$avatars[ $active ]['status'] = 'featured';
 
 		return $avatars;
 
