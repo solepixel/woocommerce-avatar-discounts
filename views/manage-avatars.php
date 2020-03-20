@@ -27,7 +27,12 @@ if ( empty( $avatars ) ) {
 
 ?>
 <div class="wc-ad-manage-avatars">
-	<?php foreach ( $avatars as $avatar ) : ?>
+	<?php
+	foreach ( $avatars as $avatar ) :
+		if ( 'deleted' === $avatar['status'] ) :
+			continue;
+		endif;
+		?>
 		<img src="<?php echo esc_attr( $avatar['url'] ); ?>">
 	<?php endforeach; ?>
 </div>
