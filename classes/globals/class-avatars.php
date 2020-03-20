@@ -284,6 +284,8 @@ class Avatars {
 
 		$args = array(
 			'user_id' => $user_id,
+			'orderby' => 'modified',
+			'order'   => 'DESC',
 		);
 		if ( $active_only ) {
 			$args['active_only'] = true;
