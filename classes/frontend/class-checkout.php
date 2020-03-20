@@ -42,9 +42,25 @@ class Checkout {
 	 */
 	public function __construct() {
 
-		// TODO: Hook into order processing, attach user photo attachment ID to order postmeta.
+		/** Order processed hook to store current user profile photo. */
+		add_action( 'woocommerce_checkout_order_processed', array( $this, 'save_user_avatar' ), 10, 3 );
+
 		// TODO: Hook into Cart, Insert profile photo selection interface either below Order Notes or below Order total/summary.
 		// TODO: Hook into Order Confirmation Page, Display avatar used at time of purchase.
+
+	}
+
+
+	/**
+	 * Save current user avatar into order meta.
+	 *
+	 * @param int $order_id  The order ID.
+	 * @param array $posted_data  Posted data array.
+	 * @param \WooCommerce\Order $order  WooCommerce Order object
+	 */
+	public function save_user_avatar( $order_id, $posted_data, $order ) {
+
+		// TODO: Save user avatar.
 
 	}
 
