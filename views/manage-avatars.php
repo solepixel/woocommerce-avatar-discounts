@@ -39,11 +39,13 @@ $selected       = '';
 			continue;
 		endif;
 
+		$avatar['id'] = $index; // TODO: Remove temorary ID.
+
 		if ( 'featured' === $avatar['status'] ) {
-			$selected = $index;
+			$selected = $avatar['id'];
 		}
 		?>
-		<a href="#avatar" class="status-<?php echo esc_attr( $avatar['status'] ); ?>" data-avatar-id="<?php echo esc_attr( $index ); ?>">
+		<a href="#avatar" class="status-<?php echo esc_attr( $avatar['status'] ); ?>" data-avatar-id="<?php echo esc_attr( $avatar['id'] ); ?>">
 			<!--<button class="edit-avatar">Edit</button>-->
 			<img src="<?php echo esc_attr( $avatar['url'] ); ?>">
 		</a>
