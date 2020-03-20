@@ -23,6 +23,8 @@ namespace WooCommerceAvatarDiscounts;
 
 defined( 'ABSPATH' ) or exit;
 
+use \WooCommerce_Avatar_Discounts_Loader as Loader;
+
 use WooCommerceAvatarDiscounts\Globals\Avatars;
 use WooCommerceAvatarDiscounts\API\Avatars as Avatars_API;
 use WooCommerceAvatarDiscounts\Frontend\Profile;
@@ -123,6 +125,36 @@ class Core {
 		$this->admin_settings_handler = new Settings();
 		$this->admin_orders_handler   = new Admin_Orders();
 
+		add_action( 'wp_enqueue_scripts', array( $this, 'assets' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'assets' ) );
+
+	}
+
+
+	/**
+	 * Register CSS/JS Assets.
+	 */
+	public function assets() {
+
+		$js_file = 'assets/js/manage-avatars.js';
+		$js_url  = Loader::get_plugin_url() . $js_file;
+		$js_path = Loader::get_plugin_path() . $js_file;
+
+		if ( file_exists( $js_path ) ) {
+			$version = filemtime( $js_path );
+			wp_register_script( self::PLUGIN_ID . '-manage-avatars', $js_url, array( 'jquery' ), $version, true );
+		}
+
+	}
+
+
+	/**
+	 * Enqueue a JS file.
+	 *
+	 * @param string $script_name  Script name.
+	 */
+	public function enqueue_script( $script_name ) {
+		wp_enqueue_script( self::PLUGIN_ID . '-' . $script_name );
 	}
 
 

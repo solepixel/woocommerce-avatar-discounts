@@ -201,6 +201,26 @@ class WooCommerce_Avatar_Discounts_Loader {
 
 
 	/**
+	 * Get Plugin Path
+	 *
+	 * @return string  Path to plugin folder.
+	 */
+	public static function get_plugin_path() {
+		return self::$plugin_path;
+	}
+
+
+	/**
+	 * Get Plugin URL
+	 *
+	 * @return string  URL to plugin folder.
+	 */
+	public static function get_plugin_url() {
+		return self::$plugin_url;
+	}
+
+
+	/**
 	 * Checks the server environment and other factors and deactivates plugins as necessary.
 	 *
 	 * Based on http://wptavern.com/how-to-prevent-wordpress-plugins-from-activating-on-sites-with-incompatible-hosting-environments

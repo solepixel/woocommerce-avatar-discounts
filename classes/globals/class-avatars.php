@@ -23,6 +23,7 @@ namespace WooCommerceAvatarDiscounts\Globals;
 
 defined( 'ABSPATH' ) or exit;
 
+use \WooCommerce_Avatar_Discounts_Loader as Loader;
 
 /**
  * The Avatars class.
@@ -160,7 +161,7 @@ class Avatars {
 			$this->order = $order;
 		}
 
-		\WooCommerce_Avatar_Discounts_Loader::load_view( 'order-avatar' );
+		Loader::load_view( 'order-avatar' );
 
 	}
 
@@ -174,10 +175,12 @@ class Avatars {
 	 */
 	private function frontend() {
 
+		woocommerce_avatar_discounts()->enqueue_script( 'manage-avatars' );
+
 		// TODO: Display Frontend Manage Avatars Interface
 		$avatars = $this->get_user_avatars();
 
-		return \WooCommerce_Avatar_Discounts_Loader::get_view( 'manage-avatars', compact( 'avatars' ) );
+		return Loader::get_view( 'manage-avatars', compact( 'avatars' ) );
 
 	}
 
@@ -191,10 +194,12 @@ class Avatars {
 	 */
 	private function admin() {
 
+		woocommerce_avatar_discounts()->enqueue_script( 'manage-avatars' );
+
 		// TODO: Display Admin Manage Avatars Interface
 		$avatars = $this->get_user_avatars();
 
-		return \WooCommerce_Avatar_Discounts_Loader::get_view( 'manage-avatars', compact( 'avatars' ) );
+		return Loader::get_view( 'manage-avatars', compact( 'avatars' ) );
 
 	}
 

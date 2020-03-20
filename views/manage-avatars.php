@@ -32,7 +32,9 @@ if ( empty( $avatars ) ) {
 		if ( 'deleted' === $avatar['status'] ) :
 			continue;
 		endif;
+
 		$href = '#select-avatar';
+
 		if ( 'featured' === $avatar['status'] ) {
 			$href = '#choose-avatar';
 		}
