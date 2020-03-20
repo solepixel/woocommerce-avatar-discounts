@@ -31,16 +31,24 @@ defined( 'ABSPATH' ) or exit;
  */
 function woocommerce_avatar_discounts() {
 
-	// Load necessary core classes.
+	// Global classes.
+	WooCommerce_Avatar_Discounts_Loader::load_class( 'Globals\\Avatars', 'globals/class-avatars' );
+
+	// Rest API classes.
+	WooCommerce_Avatar_Discounts_Loader::load_class( 'API\\Avatars', 'api/class-avatars' );
+
+	// Frontend classes.
+	WooCommerce_Avatar_Discounts_Loader::load_class( 'Frontend\\Profile', 'frontend/class-profile' );
+	WooCommerce_Avatar_Discounts_Loader::load_class( 'Frontend\\Checkout', 'frontend/class-checkout' );
+	WooCommerce_Avatar_Discounts_Loader::load_class( 'Frontend\\Orders', 'frontend/class-orders' );
+
+	// Admin classes.
+	WooCommerce_Avatar_Discounts_Loader::load_class( 'Admin\\Users', 'admin/class-users' );
+	WooCommerce_Avatar_Discounts_Loader::load_class( 'Admin\\Settings', 'admin/class-settings' );
+	WooCommerce_Avatar_Discounts_Loader::load_class( 'Admin\\Orders', 'admin/class-orders' );
+
+	// Load the core Plugin class.
 	WooCommerce_Avatar_Discounts_Loader::load_class( 'Core', 'class-core' );
-	// TODO: Load API\Avatars api/class-avatars.
-	// TODO: Load Globals\Avatars globals/class-avatars.
-	// TODO: Load Frontend\Profile frontend/class-profile.
-	// TODO: Load Frontend\Checkout frontend/class-checkout.
-	// TODO: Load Frontend\Orders frontend/class-orders.
-	// TODO: Load Admin\Users admin/class-users.
-	// TODO: Load Admin\Settings admin/class-settings.
-	// TODO: Load Admin\Orders admin/class-orders.
 
 	return \WooCommerceAvatarDiscounts\Core::instance();
 }
