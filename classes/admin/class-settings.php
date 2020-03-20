@@ -54,7 +54,63 @@ class Settings {
 
 
 	/**
+	 * Get Admin Settings array.
+	 *
+	 * @return array  Array of settings.
+	 */
+	public function get_settings() {
+
+		return apply_filters(
+			'woocommerce_avatar_discounts_settings',
+			array(
+				array(
+					'title' => __( 'User Avatars', 'woocommerce-avatar-discounts' ),
+					'type'  => 'title',
+					'id'    => 'user_avatar_options',
+					'desc'  => __( 'This section controls some of the aspects of Avatar Discounts', 'woocommerce-avatar-discounts' ),
+				),
+
+				/** Max Avatars Allowed */
+				array(
+					'title'            => __( 'Maximum Allowed Avatars', 'woocommerce-avatar-discounts' ),
+					'desc_tip'         => __( 'Set a limit on how many avatars your customers can upload to their profile. Zero (0) will allow unlimited photo uploads.', 'woocommerce-avatar-discounts' ),
+					'id'               => 'woocommerce_avatar_discounts_limit',
+					'default'          => 0,
+					'type'             => 'number',
+					'css'              => 'width: 60px; text-align: center;',
+					'autoload'         => false,
+					'custom_attributes' => array(
+						'min'       => '0',
+						'inputmode' => 'numeric',
+						'pattern'   => '[0-9]*',
+					),
+				),
+
+				/** Encouragement Text */
+				array(
+					'title'    => __( 'Avatar Instruction Text', 'woocommerce-avatar-discounts' ),
+					'desc_tip' => __( 'Tell your users why they should upload a photo to their account.', 'woocommerce-avatar-discounts' ),
+					'id'       => 'woocommerce_avatar_discounts_encourage_text',
+					'default'  => __( 'Upload your photo to get discounts on your orders!', 'woocommerce-avatar-discounts' ),
+					'type'     => 'textarea',
+					'css'      => 'min-width: 50%; height: 75px;',
+					'autoload' => false,
+				),
+
+				array(
+					'type' => 'sectionend',
+					'id'   => 'user_avatar_options',
+				),
+			)
+		);
+
+	}
+
+
+	/**
 	 * Modify Account Settings array to add new section for User Avatars.
+	 *
+	 * // TODO: Check WC Version Compatibility.
 	 *
 	 * @param array $account_settings  Account Settings array.
 	 *
@@ -62,11 +118,26 @@ class Settings {
 	 */
 	public function insert_avatar_settings( $account_settings ) {
 
-		// TODO: Insert section for User Avatars.
-		// TODO: Insert setting to limit number of allowed user profile photos.
-		// TODO: Insert setting to add text to encourage customers to get their Avatar Discount.
+		$modified_settings = array();
 
-		return $account_settings;
+		foreach ( $account_settings as $setting_array ) {
+			// Only insert our settings before the Privacy Policy Options Title.
+			if (
+				! empty( $setting_array['id'] ) &&
+				! empty( $setting_array['type'] ) &&
+				'privacy_policy_options' === $setting_array['id'] &&
+				'title' === $setting_array['type']
+			) {
+				foreach ( $this->get_settings() as $plugin_setting ) {
+					$modified_settings[] = $plugin_setting;
+				}
+			}
+
+			$modified_settings[] = $setting_array;
+
+		}
+
+		return $modified_settings;
 	}
 
 
