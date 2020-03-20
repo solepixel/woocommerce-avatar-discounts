@@ -19,29 +19,49 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
+namespace WooCommerceAvatarDiscounts\API;
+
 defined( 'ABSPATH' ) or exit;
 
 
 /**
- * Gets the singleton instance of WooCommerce Avatar Discounts.
+ * The Rest API Avatars class.
  *
  * @since 1.0.0
- *
- * return \WooCommerceAvatarDiscounts\Core
  */
-function woocommerce_avatar_discounts() {
+class Avatars {
 
-	// Load necessary core classes.
-	WooCommerce_Avatar_Discounts_Loader::load_class( 'Core', 'class-core' );
-	// TODO: Load API\Avatars api/class-avatars.
-	// TODO: Load Globals\Avatars globals/class-avatars.
-	// TODO: Load Frontend\Profile frontend/class-profile.
-	// TODO: Load Frontend\Checkout frontend/class-checkout.
-	// TODO: Load Frontend\Orders frontend/class-orders.
-	// TODO: Load Admin\Users admin/class-users.
-	// TODO: Load Admin\Settings admin/class-settings.
-	// TODO: Load Admin\Orders admin/class-orders.
+	/** @var Avatars class instance */
+	protected static $instance;
 
-	return \WooCommerceAvatarDiscounts\Core::instance();
+
+	/**
+	 * Rest API Avatars hooks.
+	 *
+	 * @since 1.0.0
+	 */
+	public function __construct() {
+
+		// TODO: Hook into Rest API init, Add endpoint for customer avatars.
+
+	}
+
+
+	/**
+	 * Gets the singleton instance of the rest api avatars class.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return Avatars
+	 */
+	public static function instance() {
+
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+
+
 }
-

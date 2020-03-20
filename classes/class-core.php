@@ -41,6 +41,7 @@ class Core {
 	/** plugin ID */
 	const PLUGIN_ID = 'woocommerce-avatar-discounts';
 
+	// TODO: Rest API Avatars class instance property.
 	// TODO: Globals Avatars class instance property.
 	// TODO: Frontend Profile class instance property.
 	// TODO: Frontend Checkout class instance property.
@@ -88,6 +89,7 @@ class Core {
 	public function init() {
 
 		// TODO: Init core functionality:
+		//   Rest API Avatars class instance
 		//   Globals Avatars class instance
 		//   Frontend Profile class instance
 		//   Frontend Checkout class instance
@@ -99,7 +101,13 @@ class Core {
 	}
 
 
+	// TODO: Globals Avatars Getter.
 	// TODO: Frontend Profile Getter.
+	// TODO: Frontend Checkout Getter.
+	// TODO: Frontend Orders Getter.
+	// TODO: Admin Users Getter.
+	// TODO: Admin Settings Getter.
+	// TODO: Admin Orders Getter.
 
 
 	/**
