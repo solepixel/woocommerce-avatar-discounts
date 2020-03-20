@@ -98,6 +98,11 @@ class Customer_Avatars extends Table {
 			$where .= $this->wpdb->prepare( '`a`.`user_id` = %d', (int) $args['user_id'] );
 		}
 
+		if ( ! empty( $args['id'] ) ) {
+			$where .= $where ? ' AND ' : 'WHERE ';
+			$where .= $this->wpdb->prepare( '`a`.`id` = %d', (int) $args['id'] );
+		}
+
 		if ( ! empty( $args['status'] ) ) {
 			$where .= $where ? ' AND ' : 'WHERE ';
 			$where .= $this->wpdb->prepare( '`a`.`status` = %s', $args['status'] );

@@ -62,7 +62,31 @@ class Checkout {
 	 */
 	public function save_user_avatar( $order_id, $posted_data, $order ) {
 
-		// TODO: Save user avatar.
+		$avatar_id = false;
+
+		// First check for Posted Avatar ID.
+		if ( ! empty( $posted_data['woocommerce_avatar_discounts_avatar'] ) ) {
+			$avatar_id = (int) $posted_data['woocommerce_avatar_discounts_avatar'];
+
+			// Make sure avatar belongs to this user.
+			if ( ! $avatar_id || ! woocommerce_avatar_discounts()->avatars()->validate( $avatar_id ) ) {
+				return;
+			}
+		}
+
+		if ( ! $avatar_id ) {
+			// Now check for active avatar in DB.
+			$current_avatar = woocommerce_avatar_discounts()->avatars()->get_current_avatar();
+			if ( $current_avatar ) {
+				$avatar_id = $current_avatar->id;
+			}
+		}
+
+		if ( ! $avatar_id ) {
+			return;
+		}
+
+		update_post_meta( $order_id, woocommerce_avatar_discounts()->avatars()->get_avatar_meta_key(), $avatar_id );
 
 	}
 

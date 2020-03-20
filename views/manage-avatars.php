@@ -39,7 +39,7 @@ if ( ! empty( $avatars ) ) {
 ?>
 <div class="wc-ad-manage-avatars<?php echo esc_attr( $classname ); ?>">
 	<?php if ( $encourage_text && ! is_admin() ) : ?>
-		<p class="encourage-text"><?php echo esc_html( $encourage_text ); ?></p>
+		<h4 class="encourage-text"><?php echo esc_html( $encourage_text ); ?></h4>
 	<?php endif; ?>
 	<?php if ( ! empty( $avatars ) ) : ?>
 		<div class="wc-ad-avatar-selection">

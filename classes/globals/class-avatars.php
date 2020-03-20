@@ -103,7 +103,38 @@ class Avatars {
 
 
 	/**
+	 * Get a single avatar by ID.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param int $avatar_id The avatar ID.
+	 * @param int $user_id The associated User ID. Defaults to current user ID.
+	 *
+	 * @return object|false  Avatar object or false.
+	 */
+	public function get( $avatar_id, $user_id = false ) {
+		if ( false === $user_id ) {
+			$user_id = get_current_user_id();
+		}
+		$avatars = $this->all(
+			array(
+				'user_id' => $user_id,
+				'id'      => $avatar_id,
+			)
+		);
+
+		if ( 1 !== count( $avatars ) ) {
+			return false;
+		}
+
+		return $avatars[0];
+	}
+
+
+	/**
 	 * Add enctype attribute to EditAccountForm
+	 *
+	 * @since 1.0.0
 	 */
 	public function account_form_attr() {
 
@@ -114,6 +145,8 @@ class Avatars {
 
 	/**
 	 * Save new Avatar uploads and update selected avatar.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param int $user_id  The User ID.
 	 */
@@ -128,6 +161,8 @@ class Avatars {
 
 	/**
 	 * Handle upload of avatar.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param int $user_id  User ID.
 	 */
@@ -164,11 +199,19 @@ class Avatars {
 	/**
 	 * Handle switch of featured avatar
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param int $user_id  User ID.
 	 */
 	public function handle_featured_avatar( $user_id ) {
 		if ( ! empty( $_POST['woocommerce_avatar_discounts_avatar'] ) ) {
 			$selected = (int) sanitize_text_field( $_POST['woocommerce_avatar_discounts_avatar'] );
+
+			// Make sure avatar belongs to this user.
+			if ( ! $this->validate( $selected ) ) {
+				return;
+			}
+
 			$this->db->update(
 				array(
 					'status'  => 'active',
@@ -236,6 +279,8 @@ class Avatars {
 	/**
 	 * Get the current featured avatar for user.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return object  Avatar object.
 	 */
 	public function get_current_avatar() {
@@ -259,6 +304,55 @@ class Avatars {
 		}
 
 		return $current;
+	}
+
+
+	/**
+	 * Get order meta key where avatar is stored.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string  Meta key.
+	 */
+	public function get_avatar_meta_key() {
+
+		$settings_prefix = woocommerce_avatar_discounts()->admin_settings()->get_prefix();
+		return '_' . $settings_prefix . 'featured-avatar';
+
+	}
+
+
+	/**
+	 * Get the order avatar ID.
+	 *
+	 * @param int $order_id  The Order ID.
+	 *
+	 * @return int  Order Avatar ID.
+	 */
+	public function get_order_avatar( $order_id ) {
+		$avatar_id = (int) get_post_meta( $order_id, $this->get_avatar_meta_key(), true );
+		if ( ! $avatar_id ) {
+			return false;
+		}
+		return $this->get( $avatar_id );
+	}
+
+
+	/**
+	 * Make sure Avatar belongs to this user.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param int $avatar_id  Avatar ID.
+	 *
+	 * @return bool  If valid.
+	 */
+	public function validate( $avatar_id ) {
+		$validate = $this->get( $avatar_id );
+		if ( ! $validate ) {
+			return false;
+		}
+		return true;
 	}
 
 
@@ -300,15 +394,20 @@ class Avatars {
 	 */
 	public function order( $order = false ) {
 
-		woocommerce_avatar_discounts()->enqueue_style( 'avatars' );
-
 		if ( $order ) {
 			$this->order = $order;
 		}
 
-		$avatars = $this->get_user_avatars();
-		$avatar  = $avatars[0];
+		if ( ! $this->order ) {
+			return;
+		}
 
+		$avatar = $this->get_order_avatar( $this->order->get_order_number() );
+		if ( ! $avatar ) {
+			return;
+		}
+
+		woocommerce_avatar_discounts()->enqueue_style( 'avatars' );
 		Loader::load_view( 'order-avatar', compact( 'avatar' ) );
 
 	}
