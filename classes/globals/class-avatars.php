@@ -195,6 +195,19 @@ class Avatars {
 			return;
 		}
 
+		$allowed_types = array(
+			'image/jpeg',
+			'image/png',
+			'image/gif',
+			'image/tiff',
+			'image/bmp',
+		);
+
+		if ( ! in_array( $file_array['type'], $allowed_types, true ) ) {
+			$errors->add( 'woocommerce-avatar-discounts-invalid-file', __( 'Only images are allowed for your avatar. Note: SVG is not allowed.', 'woocommerce-avatar-discounts' ) );
+			return false;
+		}
+
 		if ( ! function_exists( 'media_handle_upload' ) ) {
 			require_once( ABSPATH . 'wp-admin/includes/image.php' );
 			require_once( ABSPATH . 'wp-admin/includes/file.php' );
