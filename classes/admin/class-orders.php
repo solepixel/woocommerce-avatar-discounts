@@ -48,17 +48,17 @@ class Orders {
 		}
 
 		/** Add customer avatar field to Order Details meta box, below Billing/Shipping address */
-		add_action( 'woocommerce_admin_order_data_after_shipping_address', array( $this, 'insert_customer_avatar' ) );
+		add_action( 'woocommerce_admin_order_data_after_shipping_address', array( $this, 'show_avatar' ) );
 
 	}
 
 
 	/**
-	 * Insert customer avatar into Order Detail meta box.
+	 * Show customer avatar into Order Detail meta box.
 	 *
 	 * @param \WC_Order $order  WooCommerce Order object.
 	 */
-	public function insert_customer_avatar( $order ) {
+	public function show_avatar( $order ) {
 
 		woocommerce_avatar_discounts()->avatars()->order( $order );
 
