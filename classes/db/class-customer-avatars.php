@@ -70,7 +70,7 @@ class Customer_Avatars extends Table {
 				{$this->primary_key} bigint(25) unsigned NOT NULL AUTO_INCREMENT,
 				user_id bigint(20) NOT NULL,
 				attachment_id bigint(20) DEFAULT NULL,
-				avatar_url varchar(255) DEFAULT NULL,
+				url varchar(255) DEFAULT NULL,
 				status varchar(25) DEFAULT NULL,
 				modified timestamp NULL DEFAULT CURRENT_TIMESTAMP,
 				PRIMARY KEY  ({$this->primary_key}),
@@ -94,15 +94,27 @@ class Customer_Avatars extends Table {
 		$orderby = '';
 
 		if ( ! empty( $args['user_id'] ) ) {
-			$where .= $this->wpdb->prepare( 'WHERE `user_id` = %d', (int) $args['user_id'] );
+			$where .= $where ? ' AND ' : 'WHERE ';
+			$where .= $this->wpdb->prepare( '`a`.`user_id` = %d', (int) $args['user_id'] );
+		}
+
+		if ( ! empty( $args['status'] ) ) {
+			$where .= $where ? ' AND ' : 'WHERE ';
+			$where .= $this->wpdb->prepare( '`a`.`status` = %s', $args['status'] );
 		}
 
 		if ( ! empty( $args['orderby'] ) ) {
 			$order    = ! empty( $args['order'] ) ? strtoupper( $args['order'] ) : 'ASC';
-			$orderby .= sprintf( 'ORDER BY `%s` %s', $args['orderby'], $order );
+			$orderby .= sprintf( 'ORDER BY `a`.`%s` %s', $args['orderby'], $order );
 		}
 
-		$sql  = sprintf( 'SELECT * FROM `%s` %s %s;', $this->table(), $where, $orderby );
+		$sql = sprintf(
+			'SELECT * FROM `%s` `a` %s %s;',
+			$this->table(),
+			$where,
+			$orderby
+		);
+
 		$rows = $this->wpdb->get_results( $sql );
 		if ( ! $rows ) {
 			return array();

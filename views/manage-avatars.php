@@ -27,6 +27,11 @@ if ( empty( $avatars ) && ! $encourage_text ) {
 
 $selected  = '';
 $classname = empty( $avatars ) ? ' expanded' : '';
+if ( empty( $avatars ) ) {
+	$button_text = __( 'Select Your Photo', 'woocommerce-avatar-discounts' );
+} else {
+	$button_text = __( 'Upload Another Photo', 'woocommerce-avatar-discounts' );
+}
 
 ?>
 <div class="wc-ad-manage-avatars<?php echo esc_attr( $classname ); ?>">
@@ -35,29 +40,31 @@ $classname = empty( $avatars ) ? ' expanded' : '';
 	<?php endif; ?>
 	<?php
 	if ( ! empty( $avatars ) ) :
-		foreach ( $avatars as $index => $avatar ) :
-			if ( 'deleted' === $avatar['status'] ) :
+		foreach ( $avatars as $avatar ) :
+			if ( 'deleted' === $avatar->status ) :
 				continue;
 			endif;
 
-			$avatar['id'] = $index; // TODO: Remove temorary ID.
-
 			// TODO: Set selected in class based on database data.
-			if ( 'featured' === $avatar['status'] ) {
-				$selected = $avatar['id'];
+			if ( 'featured' === $avatar->status ) {
+				$selected = $avatar->id;
 			}
 			?>
-			<a href="#avatar" class="status-<?php echo esc_attr( $avatar['status'] ); ?>" data-avatar-id="<?php echo esc_attr( $avatar['id'] ); ?>">
+			<a href="#avatar" class="status-<?php echo esc_attr( $avatar->status ); ?>" data-avatar-id="<?php echo esc_attr( $avatar->id ); ?>">
 				<!--<button class="edit-avatar">Edit</button>-->
 				<!--<button class="delete-avatar">Delete</button>-->
-				<img src="<?php echo esc_attr( $avatar['url'] ); ?>">
+				<img src="<?php echo esc_attr( $avatar->url ); ?>">
 			</a>
 		<?php
 		endforeach;
 	endif;
 	?>
 	<div class="upload-avatar">
-		<button id="avatar-upload" class="secondary"><?php esc_html_e( 'Upload Your Avatar', 'woocommerce-avatar-discounts' ); ?></button>
+		<button class="upload-button">
+			<?php echo esc_html( $button_text ); ?>
+			<input type="file" class="wc-ad-upload" name="woocommerce_avatar_discounts_upload">
+		</button>
+		<span class="wc-ad-file-display"></span>
 	</div>
 	<input type="hidden" name="woocommerce_avatar_discounts_avatar" value="<?php echo esc_attr( $selected ); ?>">
 </div>

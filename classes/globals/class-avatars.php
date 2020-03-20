@@ -45,6 +45,9 @@ class Avatars {
 	/** @var WC_Order WC_Order object */
 	private $order;
 
+	/** @var string Upload error message */
+	private $error;
+
 	/** @var Avatars class instance */
 	protected static $instance;
 
@@ -57,6 +60,12 @@ class Avatars {
 	public function __construct() {
 
 		$this->db = new Customer_Avatars();
+		$thumb    = 'woocommerce-avatar-discounts';
+
+		add_image_size( $thumb, 300, 300, true );
+
+		add_filter( 'woocommerce_edit_account_form_tag', array( $this, 'account_form_attr' ) );
+		add_action( 'woocommerce_save_account_details', array( $this, 'save_avatar_upload' ) );
 
 	}
 
@@ -90,6 +99,48 @@ class Avatars {
 
 		return $this->db->all( $args );
 
+	}
+
+
+	/**
+	 * Add enctype attribute to EditAccountForm
+	 */
+	public function account_form_attr() {
+
+		echo 'enctype="multipart/form-data"';
+
+	}
+
+
+	/**
+	 * Save new Avatar uploads.
+	 *
+	 * @param int $user_id  The User ID.
+	 */
+	public function save_avatar_upload( $user_id ) {
+		if ( ! function_exists( 'media_handle_upload' ) ) {
+			require_once( ABSPATH . 'wp-admin/includes/image.php' );
+			require_once( ABSPATH . 'wp-admin/includes/file.php' );
+			require_once( ABSPATH . 'wp-admin/includes/media.php' );
+		}
+
+		$post_data  = array(
+			'post_author' => $user_id,
+		);
+		$attachment = media_handle_upload( 'woocommerce_avatar_discounts_upload', 0, $post_data );
+		if ( is_wp_error( $attachment ) ) {
+			$this->error = $attachment->get_error_message();
+			return false;
+		}
+
+		$avatar = $this->get_current_avatar();
+		$status = $avatar ? 'active' : 'featured';
+		$data   = array(
+			'user_id'       => $user_id,
+			'attachment_id' => $attachment,
+			'status'        => $status,
+		);
+		$this->db->save( $data );
 	}
 
 
@@ -130,8 +181,37 @@ class Avatars {
 			'user_id' => get_current_user_id(),
 		);
 
-		return $this->db->all( $args );
+		return $this->all( $args );
 
+	}
+
+
+	/**
+	 * Get the current featured avatar for user.
+	 *
+	 * @return object  Avatar object.
+	 */
+	public function get_current_avatar() {
+		$avatars = $this->get_user_avatars();
+		if ( empty( $avatars ) ) {
+			return false;
+		}
+		$current = false;
+		foreach ( $avatars as $avatar ) {
+			if ( 'featured' === $avatar->status ) {
+				$current = $avatar;
+			}
+		}
+
+		if ( $current ) {
+			// Replace URL with smaller thumbnail.
+			if ( $current->attachment_id ) {
+				$thumb        = 'woocommerce-avatar-discounts';
+				$current->url = wp_get_attachment_thumb_url( $current->attachment_id, $thumb );
+			}
+		}
+
+		return $current;
 	}
 
 

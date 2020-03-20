@@ -12,31 +12,32 @@ WoocommerceAvatarDiscounts.ManageAvatars = ( function( $ ) {
 	'use strict';
 
 	/** @type {string} Wrapper selector */
-	const wrapper_class = '.wc-ad-manage-avatars',
+	const wrapperClass = '.wc-ad-manage-avatars',
 
 	/**
 	 * Initialize this class.
 	 */
 	init = function() {
-		bind_avatars();
+		bindAvatars();
+		handleUpload();
 	},
 
 	/**
 	 * Bind Avatars to manage interface.
 	 */
-	bind_avatars = function() {
-		$( wrapper_class + ' a' ).on( 'click', function( e ) {
+	bindAvatars = function() {
+		$( wrapperClass + ' a' ).on( 'click', function( e ) {
 			e.preventDefault();
 
 			const id = $( this ).attr( 'data-avatar-id' );
 
-			if ( ! is_expanded() ) {
+			if ( ! isExpanded() ) {
 				$( this ).blur();
-				expand_avatars();
+				expandAvatars();
 				return;
 			}
 
-			set_avatar( id );
+			setAvatar( id );
 		});
 	},
 
@@ -45,26 +46,26 @@ WoocommerceAvatarDiscounts.ManageAvatars = ( function( $ ) {
 	 *
 	 * @return {Boolean}  If expanded or not.
 	 */
-	is_expanded = function() {
+	isExpanded = function() {
 		// Always return true for wp-admin.
 		if ( $( 'body' ).hasClass( 'wp-admin' ) ) {
 			return true;
 		}
-		return $( wrapper_class ).hasClass( 'expanded' );
+		return $( wrapperClass ).hasClass( 'expanded' );
 	},
 
 	/**
 	 * Expand the avatars element.
 	 */
-	expand_avatars = function() {
-		$( wrapper_class ).addClass( 'expanded' );
+	expandAvatars = function() {
+		$( wrapperClass ).addClass( 'expanded' );
 	},
 
 	/**
 	 * Collapse the avatars element.
 	 */
-	collapse_avatars = function() {
-		$( wrapper_class ).removeClass( 'expanded' );
+	collapseAvatars = function() {
+		$( wrapperClass ).removeClass( 'expanded' );
 	},
 
 	/**
@@ -72,16 +73,36 @@ WoocommerceAvatarDiscounts.ManageAvatars = ( function( $ ) {
 	 *
 	 * @param {int} id  The avatar ID.
 	 */
-	set_avatar = function( id ) {
+	setAvatar = function( id ) {
 		// Set hidden input to Avatar ID.
 		$( 'input[name="woocommerce_avatar_discounts_avatar"]' ).val( id );
 
 		// Change featured Avatar.
-		$( wrapper_class + ' a.status-featured' ).removeClass( 'status-featured' );
-		$( wrapper_class + ' a[data-avatar-id="' + id + '"]' ).addClass( 'status-featured' ).blur();
+		$( wrapperClass + ' a.status-featured' ).removeClass( 'status-featured' );
+		$( wrapperClass + ' a[data-avatar-id="' + id + '"]' ).addClass( 'status-featured' ).blur();
 
 		// Collapse interface.
-		collapse_avatars();
+		collapseAvatars();
+	},
+
+	handleUpload = function() {
+		$( '.wc-ad-upload' ).on( 'change', function() {
+			const $input = $( this ),
+				$display = $( '.wc-ad-file-display' ).html( extractFilename( $input.val() ) );
+
+		});
+	},
+
+	extractFilename = function( fullPath ) {
+		if ( fullPath ) {
+		    var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/')),
+		    	filename = fullPath.substring(startIndex);
+
+		    if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+		        filename = filename.substring(1);
+		    }
+		    return filename;
+		}
 	};
 
 	return {
