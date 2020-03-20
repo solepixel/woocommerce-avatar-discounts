@@ -9,12 +9,21 @@ var WoocommerceAvatarDiscounts = window.WoocommerceAvatarDiscounts || {};
 WoocommerceAvatarDiscounts.ManageAvatars = ( function( $ ) {
 	'use strict';
 
-	const init = function() {
+	/** @type {string} Wrapper selector */
+	const wrapper_class = '.wc-ad-manage-avatars',
+
+	/**
+	 * Initialize this class.
+	 */
+	init = function() {
 		bind_avatars();
 	},
 
+	/**
+	 * Bind Avatars to manage interface.
+	 */
 	bind_avatars = function() {
-		$( '.wc-ad-manage-avatars a' ).on( 'click', function( e ) {
+		$( wrapper_class + ' a' ).on( 'click', function( e ) {
 			e.preventDefault();
 
 			const id = $( this ).attr( 'data-avatar-id' );
@@ -28,25 +37,41 @@ WoocommerceAvatarDiscounts.ManageAvatars = ( function( $ ) {
 		});
 	},
 
+	/**
+	 * Check if wrapper element is already expanded.
+	 *
+	 * @return {Boolean}  If expanded or not.
+	 */
 	is_expanded = function() {
-		return $( '.wc-ad-manage-avatars' ).hasClass( 'expanded' );
+		return $( wrapper_class ).hasClass( 'expanded' );
 	},
 
+	/**
+	 * Expand the avatars element.
+	 */
 	expand_avatars = function() {
-		$( '.wc-ad-manage-avatars' ).addClass( 'expanded' );
+		$( wrapper_class ).addClass( 'expanded' );
 	},
 
+	/**
+	 * Collapse the avatars element.
+	 */
 	collapse_avatars = function() {
-		$( '.wc-ad-manage-avatars' ).removeClass( 'expanded' );
+		$( wrapper_class ).removeClass( 'expanded' );
 	},
 
+	/**
+	 * Set the new avatar ID.
+	 *
+	 * @param {int} id  The avatar ID.
+	 */
 	set_avatar = function( id ) {
 		// Set hidden input to Avatar ID.
 		$( 'input[name="woocommerce_avatar_discounts_avatar"]' ).val( id );
 
 		// Change featured Avatar.
-		$( '.wc-ad-manage-avatars a.status-featured' ).removeClass( 'status-featured' );
-		$( '.wc-ad-manage-avatars a[data-avatar-id="' + id + '"]' ).addClass( 'status-featured' );
+		$( wrapper_class + ' a.status-featured' ).removeClass( 'status-featured' );
+		$( wrapper_class + ' a[data-avatar-id="' + id + '"]' ).addClass( 'status-featured' );
 
 		// Collapse interface.
 		collapse_avatars();
