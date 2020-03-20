@@ -1,2 +1,3 @@
-# woocommerce-avatar-discounts
-Provide discounts to users
+# Woocommerce Avatar Discounts
+
+Provide discounts to users based on their profile photo.
