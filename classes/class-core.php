@@ -25,6 +25,7 @@ defined( 'ABSPATH' ) or exit;
 
 // TODO: Use Frontend Profile class.
 // TODO: Use Frontend Checkout class.
+// TODO: Use Frontend Orders class.
 
 /**
  * The main plugin class.
@@ -42,6 +43,7 @@ class Core {
 
 	// TODO: Frontend Profile class instance property.
 	// TODO: Frontend Checkout class instance property.
+	// TODO: Frontend Orders class instance property.
 
 	/** @var Core plugin instance */
 	protected static $instance;
@@ -84,6 +86,7 @@ class Core {
 		// TODO: Init core functionality:
 		//   Frontend Profile class instance
 		//   Frontend Checkout class instance
+		//   Frontend Orders class instance
 
 	}
 

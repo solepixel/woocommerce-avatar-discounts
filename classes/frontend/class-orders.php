@@ -19,24 +19,50 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
+namespace WooCommerceAvatarDiscounts\Frontend;
+
 defined( 'ABSPATH' ) or exit;
 
 
 /**
- * Gets the singleton instance of WooCommerce Avatar Discounts.
+ * The Frontend Orders class.
  *
  * @since 1.0.0
- *
- * return \WooCommerceAvatarDiscounts\Core
  */
-function woocommerce_avatar_discounts() {
+class Orders {
 
-	// Load necessary core classes.
-	WooCommerce_Avatar_Discounts_Loader::load_class( 'Core', 'class-core' );
-	// TODO: Load Frontend\Profile frontend/class-profile.
-	// TODO: Load Frontend\Checkout frontend/class-checkout.
-	// TODO: Load Frontend\Orders frontend/class-orders.
+	/** @var Orders class instance */
+	protected static $instance;
 
-	return \WooCommerceAvatarDiscounts\Core::instance();
+
+	/**
+	 * Frontend orders hooks.
+	 *
+	 * @since 1.0.0
+	 */
+	public function __construct() {
+
+		// TODO: (Maybe) Hook into My Account > Orders, Display profile photo used at time of purchase next to each order.
+		// TODO: Hook into My Account > Orders > Order Details, Display profile photo used at time of purchase below Billing/Shipping Address.
+
+	}
+
+
+	/**
+	 * Gets the singleton instance of the profile.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return Orders
+	 */
+	public static function instance() {
+
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+
+
 }
-
