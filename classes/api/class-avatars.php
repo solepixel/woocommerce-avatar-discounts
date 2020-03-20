@@ -63,6 +63,20 @@ class Avatars extends WP_REST_Controller {
 	}
 
 
+	/*public function require_authentication( $result ) {
+		if ( ! is_user_logged_in() ) {
+			return new WP_Error(
+				'woocommerce_avatar_discounts_unauthorized',
+				__( 'You must be authenticated to access this API Endpoint.', 'woocommerce-avatar-discounts' ),
+				array(
+					'status' => rest_authorization_required_code(),
+				)
+			);
+		}
+		return $result;
+	}*/
+
+
 	/**
 	 * Register Rest API Route for Avatars.
 	 *
