@@ -115,6 +115,9 @@ WoocommerceAvatarDiscounts.Manage = ( function( $ ) {
 	 * Collapse the avatars element.
 	 */
 	collapseAvatars = function() {
+		if ( $( 'body' ).hasClass( 'wp-admin' ) ) {
+			return;
+		}
 		$( wrapperClass ).removeClass( 'expanded' );
 	},
 
