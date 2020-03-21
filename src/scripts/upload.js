@@ -58,12 +58,12 @@ WoocommerceAvatarDiscounts.Upload = ( function( $ ) {
 			}
 
 			formData.append( name, fileData );
-			formData.append( 'user_id', userID );
+			formData.append( 'user', userID );
 
 			showLoader();
 
 			$.ajax({
-				url: wcad_vars.ajax_url + '?action=wcad_ajax_file_upload',
+				url: wcad_vars.ajax_url + '?action=wcad_upload_avatar',
 				dataType: 'text',
 				cache: false,
 				contentType: false,
@@ -80,7 +80,7 @@ WoocommerceAvatarDiscounts.Upload = ( function( $ ) {
 					if ( response.success ) {
 						WoocommerceAvatarDiscounts.Manage.clearFeatured();
 						$( '.wc-ad-avatar-selection' ).append( response.html );
-						WoocommerceAvatarDiscounts.Manage.bindAvatars();
+						WoocommerceAvatarDiscounts.Manage.init();
 						WoocommerceAvatarDiscounts.Manage.collapseAvatars();
 					} else {
 						alert( response.error );
@@ -113,7 +113,9 @@ WoocommerceAvatarDiscounts.Upload = ( function( $ ) {
 	};
 
 	return {
-		init: init
+		init: init,
+		showLoader: showLoader,
+		hideLoader: hideLoader
 	};
 } ) ( jQuery );
 

@@ -29,6 +29,6 @@ defined( 'ABSPATH' ) or exit;
 		controls to edit/delete avatars.
 	-->
 	<!--<button class="edit-avatar">Edit</button>-->
-	<!--<button class="delete-avatar">Delete</button>-->
+	<button class="delete-avatar" title="<?php echo esc_attr__( 'Delete', 'woocommerce-avatar-discounts' ); ?>">&times;</button>
 	<img src="<?php echo esc_attr( $avatar->url ); ?>">
 </a>

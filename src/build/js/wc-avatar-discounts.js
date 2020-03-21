@@ -17,6 +17,7 @@ WoocommerceAvatarDiscounts.Manage = ( function( $ ) {
 	 */
 	init = function() {
 		bindAvatars();
+		bindDelete();
 	},
 
 	/**
@@ -35,6 +36,48 @@ WoocommerceAvatarDiscounts.Manage = ( function( $ ) {
 			}
 
 			setAvatar( id );
+		});
+	},
+
+	bindDelete = function() {
+		$( wrapperClass + ' a .delete-avatar' ).off( 'click' ).on( 'click', function( e ) {
+			e.preventDefault();
+			e.stopPropagation();
+
+			if ( ! confirm( 'Are you sure you want to delete this Avatar?' ) ) {
+				return false;
+			}
+
+			WoocommerceAvatarDiscounts.Upload.showLoader();
+
+			var $el = $( this ).parents( 'a' ),
+				id = $el.attr( 'data-avatar-id' ),
+				userID = $( 'input[name="woocommerce_avatar_discounts_user"]' ).val(),
+				$avatar_input = $( 'input[name="woocommerce_avatar_discounts_avatar"]' );
+
+			if ( id == $avatar_input.val() ) {
+				var $next = $( wrapperClass + ' a:not([data-avatar-id="' + id + '"])' ).first();
+				if ( $next.length ) {
+					setAvatar( $next.attr( 'data-avatar-id' ) );
+				}
+			}
+
+			$.ajax({
+				url: wcad_vars.ajax_url,
+				type: 'post',
+				data: { action: 'wcad_delete_avatar', avatar: id, user: userID },
+				success: function( response ) {
+
+					if ( response.success ) {
+						$el.fadeOut( 'fast', function() {
+							$el.remove();
+						});
+					} else {
+						alert( response.error );
+					}
+					WoocommerceAvatarDiscounts.Upload.hideLoader();
+				}
+			});
 		});
 	},
 
@@ -92,8 +135,7 @@ WoocommerceAvatarDiscounts.Manage = ( function( $ ) {
 	return {
 		init: init,
 		clearFeatured: clearFeatured,
-		collapseAvatars: collapseAvatars,
-		bindAvatars: bindAvatars
+		collapseAvatars: collapseAvatars
 	};
 } ) ( jQuery );
 
@@ -159,12 +201,12 @@ WoocommerceAvatarDiscounts.Upload = ( function( $ ) {
 			}
 
 			formData.append( name, fileData );
-			formData.append( 'user_id', userID );
+			formData.append( 'user', userID );
 
 			showLoader();
 
 			$.ajax({
-				url: wcad_vars.ajax_url + '?action=wcad_ajax_file_upload',
+				url: wcad_vars.ajax_url + '?action=wcad_upload_avatar',
 				dataType: 'text',
 				cache: false,
 				contentType: false,
@@ -181,7 +223,7 @@ WoocommerceAvatarDiscounts.Upload = ( function( $ ) {
 					if ( response.success ) {
 						WoocommerceAvatarDiscounts.Manage.clearFeatured();
 						$( '.wc-ad-avatar-selection' ).append( response.html );
-						WoocommerceAvatarDiscounts.Manage.bindAvatars();
+						WoocommerceAvatarDiscounts.Manage.init();
 						WoocommerceAvatarDiscounts.Manage.collapseAvatars();
 					} else {
 						alert( response.error );
@@ -214,7 +256,9 @@ WoocommerceAvatarDiscounts.Upload = ( function( $ ) {
 	};
 
 	return {
-		init: init
+		init: init,
+		showLoader: showLoader,
+		hideLoader: hideLoader
 	};
 } ) ( jQuery );
 

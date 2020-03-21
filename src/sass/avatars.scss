@@ -29,6 +29,39 @@ $spinner-color: #333;
 		display: inline-block;
 	}
 
+	.delete-avatar {
+		position: absolute;
+		top: 50%;
+		margin-top: -21px;
+		left: -2px;
+		width: 26px;
+		height: 26px;
+		background-color: #fff;
+		border-radius: 100%;
+		font-size: 18px;
+		text-align: center;
+		line-height: 26px;
+		color: red;
+		padding: 0;
+		z-index: 8;
+		-webkit-box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.25);
+		-moz-box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.25);
+		box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.25);
+		opacity: 0;
+		visibility: hidden;
+
+		&:hover {
+			background-color: red;
+			color: #fff;
+		}
+	}
+
+	&.expanded .delete-avatar {
+		visibility: visible;
+		opacity: 1;
+		cursor: pointer;
+	}
+
 	.wcad-loader {
 		position: absolute;
 		z-index: 50;
