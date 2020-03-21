@@ -17,14 +17,13 @@ WoocommerceAvatarDiscounts.Manage = ( function( $ ) {
 	 */
 	init = function() {
 		bindAvatars();
-		fileInputChange();
 	},
 
 	/**
 	 * Bind Avatars to manage interface.
 	 */
 	bindAvatars = function() {
-		$( wrapperClass + ' a' ).on( 'click', function( e ) {
+		$( wrapperClass + ' a' ).off( 'click' ).on( 'click', function( e ) {
 			e.preventDefault();
 
 			var id = $( this ).attr( 'data-avatar-id' );
@@ -76,7 +75,7 @@ WoocommerceAvatarDiscounts.Manage = ( function( $ ) {
 		$( 'input[name="woocommerce_avatar_discounts_avatar"]' ).val( id );
 
 		// Change featured Avatar.
-		$( wrapperClass + ' a.status-featured' ).removeClass( 'status-featured' );
+		clearFeatured()
 		$( wrapperClass + ' a[data-avatar-id="' + id + '"]' ).addClass( 'status-featured' ).blur();
 
 		// Collapse interface.
@@ -84,37 +83,17 @@ WoocommerceAvatarDiscounts.Manage = ( function( $ ) {
 	},
 
 	/**
-	 * Display upload filename after selecting file.
+	 * Clear Featured Image status.
 	 */
-	fileInputChange = function() {
-		$( '.wc-ad-upload' ).on( 'change', function() {
-			var $input = $( this ),
-				$display = $( '.wc-ad-file-display' ).html( extractFilename( $input.val() ) );
-
-		});
-	},
-
-	/**
-	 * Get filename from fake upload path.
-	 *
-	 * @param {string} fullPath  Full path.
-	 *
-	 * @return {string}  The file name.
-	 */
-	extractFilename = function( fullPath ) {
-		if ( fullPath ) {
-		    var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/')),
-		    	filename = fullPath.substring(startIndex);
-
-		    if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
-		        filename = filename.substring(1);
-		    }
-		    return filename;
-		}
+	clearFeatured = function() {
+		$( wrapperClass + ' a.status-featured' ).removeClass( 'status-featured' );
 	};
 
 	return {
-		init: init
+		init: init,
+		clearFeatured: clearFeatured,
+		collapseAvatars: collapseAvatars,
+		bindAvatars: bindAvatars
 	};
 } ) ( jQuery );
 

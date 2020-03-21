@@ -47,18 +47,9 @@ if ( empty( $avatars ) && ! $encourage_text ) {
 				if ( 'featured' === $avatar->status ) {
 					$selected = $avatar->id;
 				}
-				?>
-				<a href="#avatar" class="status-<?php echo esc_attr( $avatar->status ); ?>" data-avatar-id="<?php echo esc_attr( $avatar->id ); ?>">
-					<!--
-						These buttons would be hidden with CSS until the parent
-						element has "expanded" class. Then they can be bound to
-						controls to edit/delete avatars.
-					-->
-					<!--<button class="edit-avatar">Edit</button>-->
-					<!--<button class="delete-avatar">Delete</button>-->
-					<img src="<?php echo esc_attr( $avatar->url ); ?>">
-				</a>
-			<?php endforeach; ?>
+				\WooCommerce_Avatar_Discounts_Loader::load_view( 'avatar', compact( 'avatar' ) );
+			endforeach;
+			?>
 		</div>
 
 	<?php endif; ?>
@@ -70,5 +61,6 @@ if ( empty( $avatars ) && ! $encourage_text ) {
 		</button>
 		<span class="wc-ad-file-display"></span>
 	</div>
+	<input type="hidden" name="woocommerce_avatar_discounts_user" value="<?php echo esc_attr( $user_id ); ?>">
 	<input type="hidden" name="woocommerce_avatar_discounts_avatar" value="<?php echo esc_attr( $selected ); ?>">
 </div>

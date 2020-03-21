@@ -9,6 +9,7 @@ $button-hover-text: #fff;
 /** Manage Avatars */
 .wc-ad-manage-avatars {
 	margin: 20px 0;
+	position: relative;
 
 	a {
 		position: relative;
@@ -27,6 +28,15 @@ $button-hover-text: #fff;
 		display: inline-block;
 	}
 
+	.wcad-loader {
+		position: absolute;
+		z-index: 50;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba( 255, 255, 255, 0.95 );
+	}
 }
 
 .wc-ad-manage-avatars a img,

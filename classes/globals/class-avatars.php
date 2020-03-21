@@ -61,6 +61,9 @@ class Avatars {
 
 		add_image_size( $thumb, 300, 300, true );
 
+		add_action( 'wp_ajax_wcad_ajax_file_upload', array( $this, 'ajax_file_upload' ) );
+		add_action( 'wp_ajax_nopriv_wcad_ajax_file_upload', array( $this, 'ajax_file_upload' ) );
+
 		/** Add multipart form-data to form */
 		add_filter( 'woocommerce_edit_account_form_tag', array( $this, 'account_form_attr' ) );
 
@@ -513,6 +516,9 @@ class Avatars {
 	 * @return string  HTML for Manage Avatars.
 	 */
 	private function manage_avatars( $user_id = false ) {
+		if ( ! $user_id ) {
+			$user_id = get_current_user_id();
+		}
 		$avatars = $this->get_user_avatars( $user_id, true );
 
 		$encourage_text = woocommerce_avatar_discounts()->admin_settings()->get_setting( 'encourage_text' );
@@ -538,6 +544,7 @@ class Avatars {
 		}
 
 		$vars = compact(
+			'user_id',
 			'avatars',
 			'encourage_text',
 			'selected',
@@ -548,6 +555,112 @@ class Avatars {
 		);
 
 		return Loader::get_view( 'manage-avatars', $vars );
+	}
+
+
+	/**
+	 * Handle File upload via AJAX
+	 *
+	 * @since 1.0.0
+	 */
+	public function ajax_file_upload() {
+		$response = array(
+			'success' => false,
+			'status'  => null,
+			'error'   => '',
+			'data'    => array(),
+		);
+
+		$file_array = isset( $_FILES['woocommerce_avatar_discounts_upload'] ) ? $_FILES['woocommerce_avatar_discounts_upload'] : false;
+
+		if ( empty( $file_array ) || UPLOAD_ERR_NO_FILE === $file_array['error'] ) {
+			$response['status'] = 'empty';
+			wp_send_json( $response );
+			exit();
+		}
+
+		$allowed_types = array(
+			'image/jpeg',
+			'image/png',
+			'image/gif',
+			'image/tiff',
+			'image/bmp',
+		);
+
+		if ( ! in_array( $file_array['type'], $allowed_types, true ) ) {
+			$response['status'] = 'invalid';
+			$response['error']  = esc_html__( 'Only images are allowed for your avatar. Note: SVG is not allowed.', 'woocommerce-avatar-discounts' );
+			wp_send_json( $response );
+			exit();
+		}
+
+		$user_id = ! empty( $_POST['user'] ) ? (int) sanitize_text_field( $_POST['user'] ) : false;
+		if ( ! $user_id ) {
+			$user_id = get_current_user_id();
+		}
+
+		if ( ! $user_id ) {
+			$response['status'] = 'unauthorized';
+			$response['error']  = esc_html__( 'No user found.', 'woocommerce-avatar-discounts' );
+			wp_send_json( $response );
+			exit();
+		}
+
+		if ( ! function_exists( 'media_handle_upload' ) ) {
+			require_once( ABSPATH . 'wp-admin/includes/image.php' );
+			require_once( ABSPATH . 'wp-admin/includes/file.php' );
+			require_once( ABSPATH . 'wp-admin/includes/media.php' );
+		}
+
+		$avatars = $this->get_user_avatars( $user_id, true );
+		$count   = count( $avatars );
+		$limit   = woocommerce_avatar_discounts()->admin_settings()->get_setting( 'limit' );
+		if ( $limit > 0 && $count >= $limit ) {
+			$response['status'] = 'limited';
+			$response['error']  = esc_html__( 'You have reached the maximum number of avatars', 'woocommerce-avatar-discounts' ) . ': ' . $limit . '.';
+			wp_send_json( $response );
+			exit();
+		}
+
+		$post_data  = array(
+			'post_author' => $user_id,
+		);
+		$attachment = media_handle_upload( 'woocommerce_avatar_discounts_upload', 0, $post_data );
+		if ( is_wp_error( $attachment ) ) {
+			$response['status'] = 'upload';
+			$response['error']  = esc_html__( 'There was an error processing your upload.', 'woocommerce-avatar-discounts' ) . ': ' . $attachment->get_error_message();
+			wp_send_json( $response );
+			exit();
+		}
+
+		$image  = wp_get_attachment_image_src( $attachment, 'full' );
+		$avatar = $this->get_current_avatar( $user_id );
+		$status = $avatar ? 'active' : 'featured';
+		$data   = array(
+			'user_id'       => $user_id,
+			'attachment_id' => $attachment,
+			'status'        => $status,
+			'url'           => $image[0],
+		);
+
+		$save = $this->db->save( $data );
+
+		if ( false === $save ) {
+			$response['status'] = 'failed';
+			$response['error']  = __( 'There was an error saving your avatar.', 'woocommerce-avatar-discounts' );
+			wp_send_json( $response );
+			exit();
+		}
+
+		$this->set_featured_avatar( $save );
+
+		$avatar = $this->get( $save, $user_id );
+
+		$response['success'] = true;
+		$response['status']  = 'OK';
+		$response['html']    = Loader::get_view( 'avatar', compact( 'avatar' ) );
+		wp_send_json( $response );
+		exit();
 	}
 
 

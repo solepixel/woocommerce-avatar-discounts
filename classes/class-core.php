@@ -148,6 +148,14 @@ class Core {
 		if ( file_exists( $js_path ) ) {
 			$version = filemtime( $js_path );
 			wp_register_script( self::PLUGIN_ID . '-manage-avatars', $js_url, array( 'jquery' ), $version, true );
+
+			wp_localize_script(
+				self::PLUGIN_ID . '-manage-avatars',
+				'wcad_vars',
+				array(
+					'ajax_url' => admin_url( 'admin-ajax.php' ),
+				)
+			);
 		}
 
 		$css_file = 'assets/css/avatars.min.css';
