@@ -71,6 +71,7 @@ WoocommerceAvatarDiscounts.Manage = ( function( $ ) {
 					if ( response.success ) {
 						$el.fadeOut( 'fast', function() {
 							$el.remove();
+							updateCount();
 						});
 					} else {
 						alert( response.error );
@@ -79,6 +80,15 @@ WoocommerceAvatarDiscounts.Manage = ( function( $ ) {
 				}
 			});
 		});
+	},
+
+	/**
+	 * Update Avatar Count
+	 */
+	updateCount = function() {
+		var $count = $( 'b.badge-count' ),
+			count = $( '.wc-ad-avatar-selection > a' ).length;
+		$count.html( count ).attr( 'title', count + ' Avatars to choose from' );
 	},
 
 	/**
@@ -135,7 +145,8 @@ WoocommerceAvatarDiscounts.Manage = ( function( $ ) {
 	return {
 		init: init,
 		clearFeatured: clearFeatured,
-		collapseAvatars: collapseAvatars
+		collapseAvatars: collapseAvatars,
+		updateCount: updateCount
 	};
 } ) ( jQuery );
 
@@ -224,6 +235,7 @@ WoocommerceAvatarDiscounts.Upload = ( function( $ ) {
 						WoocommerceAvatarDiscounts.Manage.clearFeatured();
 						$( '.wc-ad-avatar-selection' ).append( response.html );
 						WoocommerceAvatarDiscounts.Manage.init();
+						WoocommerceAvatarDiscounts.Manage.updateCount();
 						WoocommerceAvatarDiscounts.Manage.collapseAvatars();
 					} else {
 						alert( response.error );

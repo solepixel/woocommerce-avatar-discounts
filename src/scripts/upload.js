@@ -81,6 +81,7 @@ WoocommerceAvatarDiscounts.Upload = ( function( $ ) {
 						WoocommerceAvatarDiscounts.Manage.clearFeatured();
 						$( '.wc-ad-avatar-selection' ).append( response.html );
 						WoocommerceAvatarDiscounts.Manage.init();
+						WoocommerceAvatarDiscounts.Manage.updateCount();
 						WoocommerceAvatarDiscounts.Manage.collapseAvatars();
 					} else {
 						alert( response.error );
