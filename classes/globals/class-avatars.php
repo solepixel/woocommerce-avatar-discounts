@@ -69,6 +69,10 @@ class Avatars {
 		add_action( 'wp_ajax_wcad_delete_avatar', array( $this, 'ajax_delete_avatar' ) );
 		add_action( 'wp_ajax_nopriv_wcad_delete_avatar', array( $this, 'ajax_delete_avatar' ) );
 
+		/** Avatar Set Featured */
+		add_action( 'wp_ajax_wcad_feature_avatar', array( $this, 'ajax_feature_avatar' ) );
+		add_action( 'wp_ajax_nopriv_wcad_feature_avatar', array( $this, 'ajax_feature_avatar' ) );
+
 		/** Add multipart form-data to form */
 		add_filter( 'woocommerce_edit_account_form_tag', array( $this, 'account_form_attr' ) );
 
@@ -297,8 +301,7 @@ class Avatars {
 		}
 		$this->db->update(
 			array(
-				'status'   => 'active',
-				'modified' => current_time( 'mysql' ),
+				'status' => 'active',
 			),
 			array(
 				'user_id' => $user_id,
@@ -719,6 +722,8 @@ class Avatars {
 	/**
 	 * Delete Avatar from user's account.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param int $avatar_id  Avatar ID.
 	 *
 	 * @return bool  If deleted.
@@ -734,6 +739,46 @@ class Avatars {
 		}
 
 		return true;
+	}
+
+
+	/**
+	 * Handle Feature Avatar via AJAX
+	 *
+	 * @since 1.0.0
+	 */
+	public function ajax_feature_avatar() {
+		$response = array(
+			'success' => false,
+			'error'   => '',
+		);
+
+		$avatar_id = ! empty( $_POST['avatar'] )  ? (int) sanitize_text_field( $_POST['avatar'] ) : false;
+
+		if ( isset( $_POST['user'] ) ) {
+			$user_id =  (int) sanitize_text_field( $_POST['user'] );
+		} else {
+			$user_id = get_current_user_id();
+		}
+
+		if ( ! $user_id || ! $avatar_id ) {
+			$response['status'] = 'invalid';
+			$response['error']  = esc_html__( 'Missing required data.', 'woocommerce-avatar-discounts' );
+			wp_send_json( $response );
+			exit();
+		}
+
+		if ( ! $this->validate( $avatar_id, $user_id ) ) {
+			$response['error'] = __( 'Error trying to set featured avatar.', 'woocommerce-avatar-discounts' );
+			wp_send_json( $response );
+			exit();
+		}
+
+		$this->set_featured_avatar( $avatar_id );
+
+		$response['success'] = true;
+		wp_send_json( $response );
+		exit();
 	}
 
 

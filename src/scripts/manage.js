@@ -122,20 +122,37 @@ WoocommerceAvatarDiscounts.Manage = ( function( $ ) {
 	},
 
 	/**
-	 * Set the new avatar ID.
+	 * Set the new featured avatar ID.
 	 *
 	 * @param {int} id  The avatar ID.
 	 */
 	setAvatar = function( id ) {
-		// Set hidden input to Avatar ID.
-		$( 'input[name="woocommerce_avatar_discounts_avatar"]' ).val( id );
+		WoocommerceAvatarDiscounts.Upload.showLoader();
 
-		// Change featured Avatar.
-		clearFeatured()
-		$( wrapperClass + ' a[data-avatar-id="' + id + '"]' ).addClass( 'status-featured' ).blur();
+		var userID = $( 'input[name="woocommerce_avatar_discounts_user"]' ).val();
 
-		// Collapse interface.
-		collapseAvatars();
+		$.ajax({
+			url: wcad_vars.ajax_url,
+			type: 'post',
+			data: { action: 'wcad_feature_avatar', avatar: id, user: userID },
+			success: function( response ) {
+
+				if ( response.success ) {
+					// Set hidden input to Avatar ID.
+					$( 'input[name="woocommerce_avatar_discounts_avatar"]' ).val( id );
+
+					// Change featured Avatar.
+					clearFeatured();
+					$( wrapperClass + ' a[data-avatar-id="' + id + '"]' ).addClass( 'status-featured' ).blur();
+
+					// Collapse interface.
+					collapseAvatars();
+				} else {
+					alert( response.error );
+				}
+				WoocommerceAvatarDiscounts.Upload.hideLoader();
+			}
+		});
 	},
 
 	/**
