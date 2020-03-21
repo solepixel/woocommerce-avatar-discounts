@@ -16,6 +16,10 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: ../views/avatar.php:32
+msgid "Delete"
+msgstr ""
+
 #: ../views/order-avatar.php:26
 msgid "Avatar at time of order:"
 msgstr ""
@@ -52,40 +56,64 @@ msgstr ""
 msgid "You must be authenticated to access this API Endpoint."
 msgstr ""
 
-#: ../classes/globals/class-avatars.php:207
+#: ../classes/globals/class-avatars.php:219, ../classes/globals/class-avatars.php:604
 msgid "Only images are allowed for your avatar. Note: SVG is not allowed."
 msgstr ""
 
-#: ../classes/globals/class-avatars.php:221
+#: ../classes/globals/class-avatars.php:233, ../classes/globals/class-avatars.php:633
 msgid "You have reached the maximum number of avatars"
 msgstr ""
 
-#: ../classes/globals/class-avatars.php:230
+#: ../classes/globals/class-avatars.php:242, ../classes/globals/class-avatars.php:644
 msgid "There was an error processing your upload."
 msgstr ""
 
-#: ../classes/globals/class-avatars.php:247
+#: ../classes/globals/class-avatars.php:259
 msgid "There was an error saving your profile."
 msgstr ""
 
-#: ../classes/globals/class-avatars.php:269
+#: ../classes/globals/class-avatars.php:281
 msgid "Avatar ID does not match user."
 msgstr ""
 
-#: ../classes/globals/class-avatars.php:523
+#: ../classes/globals/class-avatars.php:541
 msgid "Select Your Photo"
 msgstr ""
 
-#: ../classes/globals/class-avatars.php:527
+#: ../classes/globals/class-avatars.php:545
 msgid "Upload Another Photo"
 msgstr ""
 
-#: ../classes/globals/class-avatars.php:529
+#: ../classes/globals/class-avatars.php:547
 msgid "Avatars to choose from"
 msgstr ""
 
-#: ../classes/globals/class-avatars.php:537
+#: ../classes/globals/class-avatars.php:555
 msgid "No User Avatars found."
+msgstr ""
+
+#: ../classes/globals/class-avatars.php:617
+msgid "No user found."
+msgstr ""
+
+#: ../classes/globals/class-avatars.php:663
+msgid "There was an error saving your avatar."
+msgstr ""
+
+#: ../classes/globals/class-avatars.php:701, ../classes/globals/class-avatars.php:768
+msgid "Missing required data."
+msgstr ""
+
+#: ../classes/globals/class-avatars.php:707
+msgid "Error trying to delete avatar."
+msgstr ""
+
+#: ../classes/globals/class-avatars.php:713
+msgid "There was an error deleting your avatar."
+msgstr ""
+
+#: ../classes/globals/class-avatars.php:774
+msgid "Error trying to set featured avatar."
 msgstr ""
 
 #: ../node_modules/grunt-wp-i18n/test/fixtures/basic-theme/page-templates/full-width.php:3
