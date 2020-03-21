@@ -215,6 +215,7 @@ body .wc-ad-manage-avatars.expanded .wc-ad-avatar-selection .badge-count {
 		position: relative;
 		overflow: hidden;
 		display: inline-block;
+		white-space: nowrap;
 
 		&:hover {
 			background-color: $button-hover-bg;

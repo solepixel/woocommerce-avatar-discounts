@@ -154,6 +154,10 @@ WoocommerceAvatarDiscounts.Upload = ( function( $ ) {
 				formData = new FormData(),
 				userID = $( 'input[name="woocommerce_avatar_discounts_user"]' ).val();
 
+			if ( ! fileData ){
+				return;
+			}
+
 			formData.append( name, fileData );
 			formData.append( 'user_id', userID );
 
