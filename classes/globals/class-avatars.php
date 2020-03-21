@@ -342,6 +342,8 @@ class Avatars {
 	 */
 	public function set_original_args( $args ) {
 		$this->original_args = $args;
+
+		// TODO: Insert Gravatar URL into database (once).
 	}
 
 
