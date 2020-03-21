@@ -195,9 +195,11 @@ WoocommerceAvatarDiscounts.Upload = ( function( $ ) {
 		var $loader = $( '.wcad-loader' );
 		if ( ! $loader.length ) {
 			$loader = $( '<div />' ).addClass( 'wcad-loader' );
+			var $spinner = $( '<span />' ).addClass( 'spinner' );
+			$loader.append( $spinner );
 			$( '.wc-ad-manage-avatars' ).prepend( $loader );
 		}
-		$loading.addClass( 'active' );
+		$loader.addClass( 'active' );
 	},
 
 	/**
