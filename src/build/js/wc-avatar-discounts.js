@@ -1,25 +1,23 @@
 /**
  * WoocommerceAvatarDiscounts Manage Avatars JS Class
  *
- * TODO: Compile/Minify with Task runner.
- *
  * @package WoocommerceAvatarDiscounts
  */
 
 var WoocommerceAvatarDiscounts = window.WoocommerceAvatarDiscounts || {};
 
-WoocommerceAvatarDiscounts.ManageAvatars = ( function( $ ) {
+WoocommerceAvatarDiscounts.Manage = ( function( $ ) {
 	'use strict';
 
 	/** @type {string} Wrapper selector */
-	const wrapperClass = '.wc-ad-manage-avatars',
+	var wrapperClass = '.wc-ad-manage-avatars',
 
 	/**
 	 * Initialize this class.
 	 */
 	init = function() {
 		bindAvatars();
-		handleUpload();
+		fileInputChange();
 	},
 
 	/**
@@ -29,7 +27,7 @@ WoocommerceAvatarDiscounts.ManageAvatars = ( function( $ ) {
 		$( wrapperClass + ' a' ).on( 'click', function( e ) {
 			e.preventDefault();
 
-			const id = $( this ).attr( 'data-avatar-id' );
+			var id = $( this ).attr( 'data-avatar-id' );
 
 			if ( ! isExpanded() ) {
 				$( this ).blur();
@@ -88,9 +86,9 @@ WoocommerceAvatarDiscounts.ManageAvatars = ( function( $ ) {
 	/**
 	 * Display upload filename after selecting file.
 	 */
-	handleUpload = function() {
+	fileInputChange = function() {
 		$( '.wc-ad-upload' ).on( 'change', function() {
-			const $input = $( this ),
+			var $input = $( this ),
 				$display = $( '.wc-ad-file-display' ).html( extractFilename( $input.val() ) );
 
 		});
@@ -120,4 +118,38 @@ WoocommerceAvatarDiscounts.ManageAvatars = ( function( $ ) {
 	};
 } ) ( jQuery );
 
-jQuery( window ).on( 'load', WoocommerceAvatarDiscounts.ManageAvatars.init );
+jQuery( window ).on( 'load', WoocommerceAvatarDiscounts.Manage.init );
+
+/**
+ * WoocommerceAvatarDiscounts Upload Avatars JS Class
+ *
+ * @package WoocommerceAvatarDiscounts
+ */
+
+var WoocommerceAvatarDiscounts = window.WoocommerceAvatarDiscounts || {};
+
+WoocommerceAvatarDiscounts.Upload = ( function( $ ) {
+	'use strict';
+
+	/**
+	 * Initialize this class.
+	 */
+	init = function() {
+		handleUpload();
+	},
+
+	/**
+	 * Upload file to server via AJAX.
+	 */
+	handleUpload = function() {
+		$( '.wc-ad-upload' ).on( 'change', function() {
+
+		});
+	};
+
+	return {
+		init: init
+	};
+} ) ( jQuery );
+
+jQuery( window ).on( 'load', WoocommerceAvatarDiscounts.Upload.init );

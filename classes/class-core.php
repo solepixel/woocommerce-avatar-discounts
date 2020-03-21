@@ -141,7 +141,7 @@ class Core {
 	 */
 	public function assets() {
 
-		$js_file = 'assets/js/manage-avatars.js';
+		$js_file = 'assets/js/wc-avatar-discounts.min.js';
 		$js_url  = Loader::get_plugin_url() . $js_file;
 		$js_path = Loader::get_plugin_path() . $js_file;
 
@@ -150,7 +150,7 @@ class Core {
 			wp_register_script( self::PLUGIN_ID . '-manage-avatars', $js_url, array( 'jquery' ), $version, true );
 		}
 
-		$css_file = 'assets/css/avatars.css';
+		$css_file = 'assets/css/avatars.min.css';
 		$css_url  = Loader::get_plugin_url() . $css_file;
 		$css_path = Loader::get_plugin_path() . $css_file;
 

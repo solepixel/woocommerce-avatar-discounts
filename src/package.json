@@ -1,0 +1,30 @@
+{
+  "name": "WooCommerceAvatarDiscounts",
+  "description": "Provide discounts to users based on their profile photo.",
+  "author": "briandichiara",
+  "version": "1.0.0",
+  "license": "GPL-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/solepixel/woocommerce-avatar-discounts"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "browser-sync": "^2.11.1",
+    "gulp": "^4.0.0",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-concat": "^2.5.2",
+    "gulp-filter": "^5.1.0",
+    "gulp-imagemin": "^5.0.3",
+    "gulp-line-ending-corrector": "^1.0.1",
+    "gulp-merge-media-queries": "^0.2.1",
+    "gulp-replace": "^1.0.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.1",
+    "gulp-sort": "^2.0.0",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^3.0.1",
+    "gulp-uglifycss": "^1.0.6",
+    "gulp-wp-pot": "^2.3.2"
+  }
+}

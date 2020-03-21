@@ -1,0 +1,93 @@
+# Copyright (C) 2020 WooCommerceAvatarDiscounts
+# This file is distributed under the same license as the WooCommerceAvatarDiscounts package.
+msgid ""
+msgstr ""
+"Project-Id-Version: WooCommerceAvatarDiscounts\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-Team: Brian DiCHiara <briandichiara@gmail.com>\n"
+"Last-Translator: Brian DiChiara <briandichiara@gmail.com>\n"
+"Report-Msgid-Bugs-To: https://github.com/solepixel/woocommerce-avatar-discounts\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../views/order-avatar.php:26
+msgid "Avatar at time of order:"
+msgstr ""
+
+#: ../classes/admin/class-settings.php:100
+msgid "Upload your photo to get discounts on your orders!"
+msgstr ""
+
+#: ../classes/admin/class-settings.php:121
+msgid "User Avatars"
+msgstr ""
+
+#: ../classes/admin/class-settings.php:124
+msgid "This section controls some of the aspects of Avatar Discounts"
+msgstr ""
+
+#: ../classes/admin/class-settings.php:129
+msgid "Maximum Allowed Avatars"
+msgstr ""
+
+#: ../classes/admin/class-settings.php:130
+msgid "Set a limit on how many avatars your customers can upload to their profile. Zero (0) will allow unlimited photo uploads."
+msgstr ""
+
+#: ../classes/admin/class-settings.php:145
+msgid "Avatar Instruction Text"
+msgstr ""
+
+#: ../classes/admin/class-settings.php:146
+msgid "Tell your users why they should upload a photo to their account."
+msgstr ""
+
+#: ../classes/api/class-avatars.php:111
+msgid "You must be authenticated to access this API Endpoint."
+msgstr ""
+
+#: ../classes/globals/class-avatars.php:207
+msgid "Only images are allowed for your avatar. Note: SVG is not allowed."
+msgstr ""
+
+#: ../classes/globals/class-avatars.php:221
+msgid "You have reached the maximum number of avatars"
+msgstr ""
+
+#: ../classes/globals/class-avatars.php:230
+msgid "There was an error processing your upload."
+msgstr ""
+
+#: ../classes/globals/class-avatars.php:247
+msgid "There was an error saving your profile."
+msgstr ""
+
+#: ../classes/globals/class-avatars.php:269
+msgid "Avatar ID does not match user."
+msgstr ""
+
+#: ../classes/globals/class-avatars.php:523
+msgid "Select Your Photo"
+msgstr ""
+
+#: ../classes/globals/class-avatars.php:527
+msgid "Upload Another Photo"
+msgstr ""
+
+#: ../classes/globals/class-avatars.php:529
+msgid "Avatars to choose from"
+msgstr ""
+
+#: ../classes/globals/class-avatars.php:537
+msgid "No User Avatars found."
+msgstr ""
+
+#: ../node_modules/grunt-wp-i18n/test/fixtures/basic-theme/page-templates/full-width.php:3
+msgid "Full Width"
+msgstr ""
