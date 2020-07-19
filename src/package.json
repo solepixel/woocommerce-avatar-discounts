@@ -9,7 +9,7 @@
     "url": "https://github.com/solepixel/woocommerce-avatar-discounts"
   },
   "dependencies": {
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "lodash.template": "^4.5.0"
   },
   "devDependencies": {
